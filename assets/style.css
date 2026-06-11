@@ -106,16 +106,8 @@ section { padding: 104px 0; position: relative; }
 }
 .section-title p { color: var(--text-secondary); max-width: 660px; margin: 18px auto 0; font-size: 1.0625rem; }
 
-/* ===== TOPO CONTOUR BACKDROP (hero + establisher) ===== */
+/* (topo-contour backdrop removed 2026-06-11 — owner: "remove the weird circles") */
 .topo-bg { position: relative; overflow: hidden; }
-.topo-bg::before {
-  content: "";
-  position: absolute; inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='720' height='720' viewBox='0 0 720 720'%3E%3Cg fill='none' stroke='%230EA5E9' stroke-opacity='0.10' stroke-width='1.4'%3E%3Cpath d='M160 600c-60-90-70-210 0-300s210-110 300-40 120 200 60 300-120 130-220 110-90-10-140-70z'/%3E%3Cpath d='M200 560c-45-70-52-165 0-235s165-86 235-31 94 156 47 235-94 102-172 86-71-8-110-55z'/%3E%3Cpath d='M240 520c-30-50-35-120 0-170s120-62 170-22 68 112 34 170-68 73-124 62-51-6-80-40z'/%3E%3Cpath d='M280 480c-18-30-21-75 0-105s75-38 105-13 42 69 21 105-42 45-77 38-31-4-49-25z'/%3E%3Ccircle cx='345' cy='428' r='14'/%3E%3C/g%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right -120px top -80px;
-  pointer-events: none;
-}
 
 /* ===== HEADER / NAV ===== */
 .site-header {
