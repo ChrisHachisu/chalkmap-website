@@ -338,7 +338,6 @@ section { padding: 104px 0; position: relative; }
 .steps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
 .step { text-align: center; padding: 8px 18px; }
 .step-number {
-  font-family: var(--font-mono);
   width: 48px; height: 48px;
   display: flex; align-items: center; justify-content: center;
   margin: 0 auto 18px;
@@ -346,12 +345,21 @@ section { padding: 104px 0; position: relative; }
   background: var(--accent-tint);
   color: var(--accent-strong);
   border-radius: 999px;
-  font-weight: 700; font-size: 1rem;
 }
+.step-number svg { width: 23px; height: 23px; display: block; }
 .step h3 {
   font-family: var(--font-display);
   font-size: 1.1rem; font-weight: 650;
-  margin-bottom: 9px;
+  margin-bottom: 5px;
+}
+.step-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent-strong);
+  margin-bottom: 10px;
 }
 .step p { color: var(--text-secondary); font-size: 0.975rem; line-height: 1.65; }
 
