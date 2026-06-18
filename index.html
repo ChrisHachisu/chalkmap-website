@@ -93,15 +93,15 @@
       </div>
       <div class="screens-rail">
         <div class="phone">
-          <img src="assets/images/screen-map.png" alt="Map view with crag pins" loading="lazy">
+          <img src="assets/images/screen-map.png" data-src-en="assets/images/screen-map.png" data-src-ja="assets/images/screen-map-ja.png" alt="Map view with crag pins" loading="lazy">
           <p class="phone-caption" data-en="Map · Crags &amp; Boulders" data-ja="地図 · エリアとボルダー"></p>
         </div>
         <div class="phone">
-          <img src="assets/images/screen-line.png" alt="Problem line drawn on a boulder photo" loading="lazy">
+          <img src="assets/images/screen-line.png" data-src-en="assets/images/screen-line.png" data-src-ja="assets/images/screen-line-ja.png" alt="Problem line drawn on a boulder photo" loading="lazy">
           <p class="phone-caption" data-en="Lines · Drawn on the rock" data-ja="ライン · 岩の上に表示"></p>
         </div>
         <div class="phone">
-          <img src="assets/images/screen-recap.png" alt="Climbing recap card" loading="lazy">
+          <img src="assets/images/screen-recap.png" data-src-en="assets/images/screen-recap.png" data-src-ja="assets/images/screen-recap-ja.png" alt="Climbing recap card" loading="lazy">
           <p class="phone-caption" data-en="Recap · Your climbing" data-ja="まとめ · あなたの記録"></p>
         </div>
       </div>
@@ -400,6 +400,11 @@
       document.querySelectorAll('[data-en]').forEach(function (el) {
         var t = el.getAttribute('data-' + lang);
         if (t !== null) el.textContent = t;
+      });
+      // Language-aware screenshots: swap the in-app rail images to the matching locale.
+      document.querySelectorAll('img[data-src-en]').forEach(function (img) {
+        var s = img.getAttribute('data-src-' + lang);
+        if (s) img.src = s;
       });
       document.getElementById('langLabel').textContent = (lang === 'en') ? '日本語' : 'EN';
       document.title = TITLES[lang];
