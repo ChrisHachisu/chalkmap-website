@@ -106,6 +106,34 @@ section { padding: 104px 0; position: relative; }
 }
 .section-title p { color: var(--text-secondary); max-width: 660px; margin: 18px auto 0; font-size: 1.0625rem; }
 
+/* ===== Responsive, language-aware line-breaking =====
+   Headings + short blocks balance their lines evenly; paragraphs use
+   `pretty` for better last-line / orphan handling. Both re-flow at every
+   viewport width, so break points adapt to PC vs phone automatically —
+   no manual <br> required. Japanese additionally gets kinsoku
+   (line-break: strict) + phrase-aware CJK breaking (word-break:
+   auto-phrase — progressive enhancement; ignored where unsupported). */
+.hero h1,
+.hero .tagline,
+.hero .subtitle,
+.kicker,
+.section-title h2 { text-wrap: balance; }
+
+.hero .description,
+.section-title p,
+.overview-content p { text-wrap: pretty; }
+
+body[data-lang="ja"] .hero .tagline,
+body[data-lang="ja"] .hero .subtitle,
+body[data-lang="ja"] .hero .description,
+body[data-lang="ja"] .kicker,
+body[data-lang="ja"] .section-title h2,
+body[data-lang="ja"] .section-title p,
+body[data-lang="ja"] .overview-content p {
+  line-break: strict;
+  word-break: auto-phrase;
+}
+
 /* (topo-contour backdrop removed 2026-06-11 — owner: "remove the weird circles") */
 .topo-bg { position: relative; overflow: hidden; }
 
