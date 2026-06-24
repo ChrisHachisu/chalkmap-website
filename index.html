@@ -419,7 +419,7 @@
         var s = img.getAttribute('data-src-' + lang);
         if (s) img.src = s;
       });
-      document.getElementById('langLabel').textContent = (lang === 'en') ? '日本語' : 'EN';
+      document.getElementById('langLabel').textContent = (lang === 'en') ? '日本語' : 'English';
       document.title = TITLES[lang];
       try { localStorage.setItem('cmLang', lang); } catch (e) {}
     }
