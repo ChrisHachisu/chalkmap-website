@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChalkMap</title>
+  <meta name="robots" content="noindex">
+  <!-- Link-preview card for chat apps. Deliberately generic and code-free:
+       an invite link is usually pasted into a chat, and the card must not
+       announce the code or any crag name to everyone in the thread.
+       Note the page is served with a 404 status (GitHub Pages fallback), so
+       some crawlers will skip the card entirely. That is acceptable. -->
+  <meta property="og:title" content="You've been invited to ChalkMap">
+  <meta property="og:description" content="Open this link on your phone to join.">
+  <meta property="og:image" content="https://chalkmap.com/assets/images/og-icon-basshi.png">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:image" content="https://chalkmap.com/assets/images/og-icon-basshi.png">
+  <link rel="icon" type="image/png" href="/assets/images/chalkmap_logo.png">
+  <link rel="apple-touch-icon" href="https://chalkmap.com/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600;650;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/style.css">
+  <style>
+    .invite-wrap { max-width: 34rem; margin: 0 auto; padding: 3rem 1.25rem 4rem; text-align: center; }
+    /* style.css sets images to display:block, so text-align on the wrapper
+       does not centre them. Centre explicitly. */
+    .invite-logo { width: 72px; height: 72px; margin: 0 auto 1.25rem; display: block; }
+    /* style.css gives every <section> 76px of vertical padding for the
+       landing page's bands. This page is a single centred column, so reset it. */
+    .invite-wrap section { padding: 0; }
+    .invite-wrap h1 { font-size: clamp(1.5rem, 5vw, 2rem); margin: 0 0 0.75rem; }
+    .invite-lede { opacity: 0.85; }
+    .invite-code {
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-weight: 600; font-size: clamp(1.35rem, 5.5vw, 2rem);
+      letter-spacing: 0.06em; word-break: break-all;
+      padding: 1rem 1.25rem; margin: 1.5rem 0 0.5rem;
+      border: 1px solid rgba(128, 128, 128, 0.35); border-radius: 0.75rem;
+    }
+    .invite-hint { font-size: 0.9rem; opacity: 0.75; margin-top: 0.75rem; }
+    .invite-actions { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1.5rem; }
+    .invite-actions .btn { width: 100%; justify-content: center; }
+    .copied { font-size: 0.9rem; min-height: 1.25rem; margin-top: 0.75rem; }
+    .invite-foot { margin-top: 2.5rem; font-size: 0.9rem; opacity: 0.75; }
+    [hidden] { display: none !important; }
+  </style>
+</head>
+<body data-lang="en">
+  <main class="invite-wrap">
+    <img src="/assets/images/chalkmap_logo.png" alt="ChalkMap" class="invite-logo" width="72" height="72">
+
+    <!-- Invite view: rendered only when the path parses to a valid code. -->
+    <section id="inviteView" hidden>
+      <h1 data-en="You've been invited to ChalkMap" data-ja="ChalkMapへの招待"></h1>
+      <p class="invite-lede" id="inviteLede"></p>
+
+      <div class="invite-code" id="codeText"></div>
+      <p class="invite-hint" data-en="Keep this code. You enter it once in the app." data-ja="このコードはアプリで一度だけ入力します。"></p>
+
+      <div class="invite-actions">
+        <a class="btn btn-primary" id="storeBtn" href="#"
+           data-en="Copy code and get ChalkMap" data-ja="コードをコピーしてChalkMapを入手"></a>
+        <button class="btn btn-secondary" id="copyBtn" type="button"
+           data-en="Copy code only" data-ja="コードだけコピー"></button>
+      </div>
+      <p class="copied" id="copiedMsg" aria-live="polite"></p>
+
+      <p class="invite-foot" data-en="Already have ChalkMap? Open this link on your phone and the code fills in for you." data-ja="すでにChalkMapをお使いの方は、スマートフォンでこのリンクを開くとコードが自動で入力されます。"></p>
+    </section>
+
+    <!-- Not-found view: also the genuine 404 for any other unmatched path. -->
+    <section id="notFoundView" hidden>
+      <h1 data-en="Page not found" data-ja="ページが見つかりません"></h1>
+      <p class="invite-lede" data-en="That link does not look right. Check that it was copied in full." data-ja="リンクが正しくないようです。全体がコピーされているかご確認ください。"></p>
+      <div class="invite-actions">
+        <a class="btn btn-primary" href="/" data-en="Go to ChalkMap" data-ja="ChalkMapへ"></a>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Invite landing page. GitHub Pages serves this file for any unmatched
+    // path, so it doubles as the router for /invite/<code> and
+    // /crag-invite/<code>.
+    //
+    // It performs NO lookup: nothing here turns a code into a crag name or a
+    // climber name. That is deliberate (design 2026-08-09) so private crag
+    // names never reach the open web and a harvested code reveals nothing.
+    //
+    // On iOS with the app installed this page is never seen: the Universal
+    // Link opens the app directly, because the live AASA matches /*.
+
+    // Mirrors the app exactly:
+    //   src/features/establisher/RedeemCodeScreen.tsx        CODE_REGEX
+    //   src/features/startup-gate/CragInvitePromptSheet.tsx  CODE_RE
+    // Crockford-leaning alphabet: no 0, 1, I, L or O.
+    var FLOWS = {
+      'invite':      { re: /^CMAP-[A-HJKMNP-Z2-9]{8}$/,  kind: 'establisher' },
+      'crag-invite': { re: /^CMAPC-[A-HJKMNP-Z2-9]{8}$/, kind: 'crag' }
+    };
+
+    // The heading already establishes that this is an invitation, so the lede
+    // says what the code does rather than repeating "invited" / 招待.
+    var LEDE = {
+      establisher: {
+        en: 'The code below makes you the establisher of a crag.',
+        ja: '下のコードで、エリアの開拓者になれます。'
+      },
+      crag: {
+        en: 'The code below gives you access to a private crag.',
+        ja: '下のコードで、非公開エリアにアクセスできます。'
+      }
+    };
+
+    var IOS_URL = 'https://apps.apple.com/app/id6767085401';
+    var PLAY_URL = 'https://play.google.com/store/apps/details?id=app.chalkmap.v2';
+
+    function parseInvite(pathname) {
+      var parts = pathname.replace(/^\/+|\/+$/g, '').split('/');
+      if (parts.length !== 2) return null;
+      var flow = FLOWS[parts[0]];
+      if (!flow) return null;
+      var code;
+      try { code = decodeURIComponent(parts[1]).toUpperCase(); } catch (e) { return null; }
+      if (!flow.re.test(code)) return null;
+      return { kind: flow.kind, code: code, url: 'https://chalkmap.com/' + parts[0] + '/' + code };
+    }
+
+    function storeUrlFor(code) {
+      // Play Install Referrer carries the code through the store install, so
+      // Android needs no paste step after installing. The value must be
+      // percent-encoded or Play drops everything after the '='.
+      if (/android/i.test(navigator.userAgent || '')) {
+        return PLAY_URL + '&referrer=' + encodeURIComponent('code=' + code);
+      }
+      return IOS_URL;
+    }
+
+    var invite = parseInvite(location.pathname);
+
+    var lang = 'en';
+    try {
+      lang = localStorage.getItem('cmLang') || (/^ja/i.test(navigator.language || '') ? 'ja' : 'en');
+    } catch (e) {
+      lang = /^ja/i.test(navigator.language || '') ? 'ja' : 'en';
+    }
+
+    function setLang(l) {
+      document.documentElement.lang = l;
+      document.body.setAttribute('data-lang', l);
+      document.querySelectorAll('[data-en]').forEach(function (el) {
+        var t = el.getAttribute('data-' + l);
+        if (t !== null) el.textContent = t;
+      });
+      if (invite) document.getElementById('inviteLede').textContent = LEDE[invite.kind][l];
+    }
+
+    if (invite) {
+      document.getElementById('inviteView').hidden = false;
+      document.getElementById('codeText').textContent = invite.code;
+      document.getElementById('storeBtn').href = storeUrlFor(invite.code);
+    } else {
+      document.getElementById('notFoundView').hidden = false;
+    }
+
+    setLang(lang === 'ja' ? 'ja' : 'en');
+
+    if (invite) {
+      var copiedMsg = document.getElementById('copiedMsg');
+      var COPIED = { en: 'Code copied', ja: 'コードをコピーしました' };
+
+      // writeText must run inside the click handler: iOS Safari grants
+      // clipboard access only on a user gesture.
+      function copyThen(next) {
+        var done = function () {
+          copiedMsg.textContent = COPIED[document.body.getAttribute('data-lang')];
+          if (next) next();
+        };
+        try {
+          var p = navigator.clipboard && navigator.clipboard.writeText(invite.url);
+          if (p && typeof p.then === 'function') { p.then(done, done); } else { done(); }
+        } catch (e) {
+          done();
+        }
+      }
+
+      document.getElementById('copyBtn').addEventListener('click', function () {
+        copyThen(null);
+      });
+
+      document.getElementById('storeBtn').addEventListener('click', function (ev) {
+        ev.preventDefault();
+        var href = this.href;
+        // Navigate regardless of the clipboard outcome. The code is on screen
+        // either way, so a clipboard failure costs a paste, not the invite.
+        copyThen(function () {
+          setTimeout(function () { location.href = href; }, 150);
+        });
+      });
+    }
+  </script>
+</body>
+</html>
