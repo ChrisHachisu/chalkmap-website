@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ChalkMap public web — SEO acquisition surface (v1 concept)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Pulse Azure Dark — from chalkmap-v2/src/theme/colors.ts */
+  --bg:#0A0A0A; --bg-deep:#000000; --surface:#141414; --surface-2:#1C1C1C;
+  --border:#262626; --border-soft:#1F1F1F;
+  --text-1:#FAFAFA; --text-2:#A3A3A3; --text-3:#71717A;
+  --azure:#38BDF8; --azure-bright:#7DD3FC; --azure-dim:rgba(56,189,248,0.12);
+  --green:#10B981; --green-dim:rgba(16,185,129,0.12);
+  --amber:#F59E0B; --amber-dim:rgba(245,158,11,0.12);
+  --font-display:'Inter Tight','Noto Sans JP',sans-serif;
+  --font-body:'Inter','Noto Sans JP',sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg-deep);color:var(--text-1);font-family:var(--font-body);-webkit-font-smoothing:antialiased;line-height:1.55}
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:100;opacity:.035;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.doc{max-width:1180px;margin:0 auto;padding:0 28px 140px}
+.doc-head{padding:80px 0 44px;border-bottom:1px solid var(--border)}
+.eyebrow{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--azure);margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.eyebrow::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--azure-dim),transparent)}
+h1{font-family:var(--font-display);font-size:clamp(34px,5vw,54px);font-weight:800;letter-spacing:-.03em;line-height:1.05}
+h1 em{font-style:normal;color:var(--azure)}
+.dek{color:var(--text-2);font-size:16.5px;max-width:66ch;margin-top:20px}
+.dek strong{color:var(--text-1);font-weight:600}
+.legend{display:flex;gap:22px;flex-wrap:wrap;margin-top:30px}
+.legend-item{display:flex;align-items:center;gap:9px;font-size:12.5px;color:var(--text-2)}
+.swatch{width:11px;height:11px;border-radius:3px;flex:none}
+.sw-pub{background:var(--azure);box-shadow:0 0 12px rgba(56,189,248,.55)}
+.sw-gate{background:var(--amber);box-shadow:0 0 12px rgba(245,158,11,.45)}
+.changebar{
+  margin-top:34px;border-left:2px solid var(--green);background:var(--green-dim);
+  border-radius:0 10px 10px 0;padding:15px 20px;
+}
+.changebar b{color:var(--green);font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;display:block;margin-bottom:6px}
+.changebar p{font-size:13.5px;color:var(--text-2);line-height:1.65}
+.changebar p em{font-style:normal;color:var(--text-1);font-weight:600}
+
+section.step{padding:82px 0 0}
+.step-head{display:flex;align-items:baseline;gap:18px;margin-bottom:8px}
+.step-n{font-family:var(--font-mono);font-size:12px;color:var(--text-3);letter-spacing:.14em;padding-top:6px}
+h2{font-family:var(--font-display);font-size:clamp(23px,3vw,31px);font-weight:700;letter-spacing:-.02em}
+.step-note{color:var(--text-2);font-size:15px;max-width:72ch;margin:12px 0 34px}
+.step-note code{font-family:var(--font-mono);font-size:.87em;color:var(--azure-bright);background:var(--azure-dim);padding:1px 6px;border-radius:4px}
+.step-note b{color:var(--text-1);font-weight:600}
+
+/* SERP */
+.serp{background:#fff;border-radius:14px;padding:30px 34px 34px;max-width:720px;box-shadow:0 30px 70px -20px rgba(0,0,0,.9);color:#202124;font-family:arial,sans-serif;position:relative}
+.serp-bar{display:flex;align-items:center;gap:12px;border:1px solid #dfe1e5;border-radius:24px;padding:10px 18px;font-size:15px;margin-bottom:26px}
+.serp-r{margin-bottom:26px}.serp-r:last-child{margin-bottom:0}
+.serp-url{display:flex;align-items:center;gap:9px;font-size:12.5px;color:#202124;margin-bottom:3px}
+.serp-fav{width:19px;height:19px;border-radius:50%;background:#0A0A0A;display:grid;place-items:center;flex:none}
+.serp-fav span{color:#38BDF8;font-size:10px;font-weight:800;font-family:var(--font-display)}
+.serp-url b{font-weight:400}.serp-url i{font-style:normal;color:#5f6368}
+.serp-title{color:#1a0dab;font-size:19px;line-height:1.3;margin-bottom:4px}
+.serp-desc{color:#4d5156;font-size:13.5px;line-height:1.58}
+.serp-desc mark{background:none;font-weight:700;color:#4d5156}
+.serp-sub{display:flex;gap:20px;margin-top:9px}
+.serp-sub a{color:#1a0dab;font-size:13px;text-decoration:none}
+.serp-dim{opacity:.42;filter:saturate(.4)}
+.serp-tag{position:absolute;right:-14px;top:-14px;background:var(--azure);color:#03202e;font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:.1em;padding:6px 11px;border-radius:6px;text-transform:uppercase}
+
+/* frame */
+.frame{border:1px solid var(--border);border-radius:16px;overflow:hidden;background:var(--bg);box-shadow:0 40px 90px -30px #000}
+.frame-bar{display:flex;align-items:center;gap:8px;padding:12px 16px;background:var(--surface);border-bottom:1px solid var(--border)}
+.dot{width:10px;height:10px;border-radius:50%;background:#333}
+.frame-url{flex:1;margin-left:12px;background:var(--bg-deep);border:1px solid var(--border);border-radius:7px;padding:5px 12px;font-family:var(--font-mono);font-size:11.5px;color:var(--text-2)}
+.frame-url b{color:var(--text-1);font-weight:500}
+.site-nav{display:flex;align-items:center;justify-content:space-between;padding:16px 30px;border-bottom:1px solid var(--border-soft)}
+.wordmark{font-family:var(--font-display);font-weight:800;font-size:17px;letter-spacing:-.02em}
+.wordmark span{color:var(--azure)}
+.nav-links{display:flex;gap:24px;font-size:13px;color:var(--text-2)}
+.btn-sm{background:var(--azure);color:#03202e;font-weight:700;font-size:12.5px;padding:8px 16px;border-radius:8px;border:none;font-family:var(--font-body);cursor:pointer}
+.btn-ghost{background:transparent;color:var(--text-1);border:1px solid var(--border);font-size:12.5px;padding:8px 14px;border-radius:8px;cursor:pointer;font-family:var(--font-body)}
+
+/* hero */
+.hero{position:relative;height:250px;overflow:hidden}
+.hero-img{position:absolute;inset:0;background:radial-gradient(120% 90% at 20% 15%,rgba(56,189,248,.16),transparent 60%),linear-gradient(155deg,#1b2733 0%,#0f1720 45%,#0A0A0A 100%)}
+.hero-img::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(112deg,rgba(255,255,255,.022) 0 2px,transparent 2px 9px),repeating-linear-gradient(38deg,rgba(0,0,0,.20) 0 3px,transparent 3px 14px)}
+.hero-scrim{position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(10,10,10,.94) 100%)}
+.hero-body{position:absolute;left:30px;right:30px;bottom:22px}
+.crumb{font-size:12px;color:var(--text-3);margin-bottom:8px;font-family:var(--font-mono);letter-spacing:.06em}
+.crumb b{color:var(--azure);font-weight:500}
+.hero-title{font-family:var(--font-display);font-size:38px;font-weight:800;letter-spacing:-.03em;line-height:1.05}
+.hero-title small{display:block;font-size:14px;font-weight:500;color:var(--text-2);letter-spacing:0;margin-top:5px}
+
+.metastrip{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--border-soft)}
+.meta{padding:16px 22px;border-right:1px solid var(--border-soft)}
+.meta:last-child{border-right:none}
+.meta-k{font-size:10.5px;color:var(--text-3);text-transform:uppercase;letter-spacing:.13em;font-family:var(--font-mono);margin-bottom:5px}
+.meta-v{font-family:var(--font-display);font-size:19px;font-weight:700}
+.meta-v em{font-style:normal;font-size:12px;color:var(--text-2);font-weight:500;margin-left:4px}
+
+.pagebody{display:grid;grid-template-columns:1fr 292px;gap:34px;padding:30px}
+.h3{font-family:var(--font-display);font-size:15px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.pill{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:5px;font-weight:700}
+.pill-pub{background:var(--azure-dim);color:var(--azure-bright);border:1px solid rgba(56,189,248,.3)}
+.pill-gate{background:var(--amber-dim);color:var(--amber);border:1px solid rgba(245,158,11,.3)}
+.prose{color:var(--text-2);font-size:14px;line-height:1.75;margin-bottom:30px}
+.prose b{color:var(--text-1);font-weight:600}
+
+.boulders{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:34px}
+.bcard{border:1px solid var(--border);border-radius:11px;overflow:hidden;background:var(--surface)}
+.bthumb{height:92px;position:relative;background:linear-gradient(160deg,#243240,#131a22);overflow:hidden}
+.bthumb::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(108deg,rgba(255,255,255,.025) 0 2px,transparent 2px 10px)}
+.bchip{
+  position:absolute;left:8px;bottom:8px;z-index:2;display:flex;align-items:center;gap:5px;
+  background:rgba(10,10,10,.82);border:1px solid rgba(245,158,11,.3);border-radius:6px;
+  padding:3px 7px;font-family:var(--font-mono);font-size:9px;color:var(--amber);letter-spacing:.06em;
+}
+.bmeta{padding:10px 12px}
+.bname{font-family:var(--font-display);font-size:14px;font-weight:700}
+.bsub{font-size:11.5px;color:var(--text-3);margin-top:2px;font-family:var(--font-mono)}
+
+/* PUBLIC problem list */
+.plist{border:1px solid var(--border);border-radius:13px;overflow:hidden;background:var(--surface)}
+.prow{display:flex;align-items:center;gap:14px;padding:13px 16px;border-bottom:1px solid var(--border-soft)}
+.prow:last-child{border-bottom:none}
+.grade{font-family:var(--font-mono);font-size:13px;font-weight:700;color:var(--azure);min-width:46px;text-align:center;background:var(--azure-dim);border-radius:6px;padding:4px 0}
+.pname{font-size:14px;font-weight:600;flex:1}
+.pname i{font-style:normal;display:block;font-size:11px;color:var(--text-3);font-weight:400;margin-top:1px}
+.plock{display:flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:9.5px;color:var(--amber);letter-spacing:.06em;background:var(--amber-dim);border:1px solid rgba(245,158,11,.25);border-radius:6px;padding:4px 8px;white-space:nowrap}
+
+/* sidebar */
+.side{display:flex;flex-direction:column;gap:16px}
+.scard{border:1px solid var(--border);border-radius:13px;padding:18px;background:var(--surface)}
+.scard.accent{border-color:rgba(56,189,248,.35);background:linear-gradient(165deg,rgba(56,189,248,.10),var(--surface) 65%)}
+.scard-t{font-family:var(--font-display);font-size:14.5px;font-weight:700;margin-bottom:6px}
+.scard-d{font-size:12.5px;color:var(--text-2);line-height:1.65;margin-bottom:14px}
+.btn-full{display:block;width:100%;text-align:center;background:var(--azure);color:#03202e;font-weight:700;font-size:13px;padding:11px;border-radius:9px;border:none;cursor:pointer;font-family:var(--font-body);margin-bottom:8px}
+.btn-full.sec{background:transparent;color:var(--text-1);border:1px solid var(--border)}
+.hist{display:flex;align-items:flex-end;gap:5px;height:62px;margin:14px 0 8px}
+.bar{flex:1;background:linear-gradient(180deg,var(--azure),rgba(56,189,248,.22));border-radius:3px 3px 0 0}
+.hist-x{display:flex;gap:5px;font-family:var(--font-mono);font-size:9px;color:var(--text-3)}
+.hist-x span{flex:1;text-align:center}
+
+/* A/B line-overlay comparison */
+.ab{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.abcard{border:1px solid var(--border);border-radius:14px;overflow:hidden;background:var(--surface);display:flex;flex-direction:column}
+.abcard.pick{border-color:rgba(16,185,129,.45);box-shadow:0 0 0 1px rgba(16,185,129,.12)}
+.abhead{padding:14px 18px;border-bottom:1px solid var(--border-soft);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.abt{font-family:var(--font-display);font-size:14.5px;font-weight:700}
+.abtag{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;font-weight:700;padding:4px 9px;border-radius:5px}
+.abtag.rec{background:var(--green-dim);color:var(--green);border:1px solid rgba(16,185,129,.32)}
+.abtag.alt{background:var(--surface-2);color:var(--text-3);border:1px solid var(--border)}
+.rockshot{position:relative;height:230px;background:linear-gradient(165deg,#2a3846 0%,#18222c 55%,#0e141a 100%);overflow:hidden}
+.rockshot::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(104deg,rgba(255,255,255,.03) 0 2px,transparent 2px 11px),repeating-linear-gradient(31deg,rgba(0,0,0,.22) 0 3px,transparent 3px 16px)}
+.rockshot > svg{position:absolute;inset:0;width:100%;height:100%;z-index:2}
+.linelock{
+  position:absolute;z-index:3;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;
+  background:rgba(10,10,10,.86);border:1px solid rgba(245,158,11,.32);border-radius:12px;padding:16px 20px;
+  backdrop-filter:blur(3px);width:78%;
+}
+.linelock .lk{width:32px;height:32px;border-radius:9px;background:var(--amber-dim);border:1px solid rgba(245,158,11,.35);display:grid;place-items:center;margin:0 auto 10px}
+.linelock .lt{font-family:var(--font-display);font-size:14px;font-weight:700;margin-bottom:5px}
+.linelock .ld{font-size:11.5px;color:var(--text-2);line-height:1.55;margin-bottom:12px}
+.abbody{padding:16px 18px;flex:1}
+.abn{font-size:13px;color:var(--text-2);line-height:1.68}
+.abn b{color:var(--text-1);font-weight:600}
+.abrisk{margin-top:11px;padding-top:11px;border-top:1px solid var(--border-soft);font-size:12.5px;color:var(--amber);line-height:1.6}
+.abrisk b{color:var(--amber);font-weight:700;font-family:var(--font-mono);font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;display:block;margin-bottom:4px}
+
+/* callouts */
+.callouts{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:22px}
+.co{border-left:2px solid var(--azure);padding:2px 0 2px 15px}
+.co.gate{border-left-color:var(--amber)}
+.co.good{border-left-color:var(--green)}
+.co-t{font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--azure);margin-bottom:6px}
+.co.gate .co-t{color:var(--amber)} .co.good .co-t{color:var(--green)}
+.co-d{font-size:13px;color:var(--text-2);line-height:1.62}
+.co-d code{font-family:var(--font-mono);font-size:.86em;color:var(--azure-bright);background:var(--azure-dim);padding:1px 5px;border-radius:4px}
+
+/* phone */
+.phone-row{display:grid;grid-template-columns:290px 1fr;gap:44px;align-items:start}
+.phone{border:1px solid var(--border);border-radius:32px;overflow:hidden;background:var(--bg);box-shadow:0 40px 90px -30px #000;padding:9px}
+.phone-in{border-radius:24px;overflow:hidden;background:var(--bg);border:1px solid var(--border-soft)}
+.ph-hero{height:120px;position:relative;background:linear-gradient(155deg,#1b2733,#0A0A0A)}
+.ph-hero::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(112deg,rgba(255,255,255,.02) 0 2px,transparent 2px 9px)}
+.ph-body{padding:14px}
+.ph-title{font-family:var(--font-display);font-size:20px;font-weight:800;letter-spacing:-.02em}
+.ph-sub{font-size:11px;color:var(--text-3);font-family:var(--font-mono);margin-top:3px;margin-bottom:14px}
+.smartbanner{display:flex;align-items:center;gap:11px;padding:11px;border-radius:12px;background:linear-gradient(150deg,rgba(56,189,248,.14),var(--surface));border:1px solid rgba(56,189,248,.32);margin-bottom:14px}
+.sb-icon{width:36px;height:36px;border-radius:9px;background:#0A0A0A;display:grid;place-items:center;flex:none;border:1px solid var(--border)}
+.sb-icon span{font-family:var(--font-display);font-weight:800;font-size:15px;color:var(--azure)}
+.sb-t{font-size:12.5px;font-weight:700;line-height:1.3}
+.sb-d{font-size:10.5px;color:var(--text-3);margin-top:1px}
+.sb-btn{margin-left:auto;background:var(--azure);color:#03202e;font-weight:700;font-size:11px;padding:7px 12px;border-radius:7px;border:none;flex:none}
+.notelist{display:flex;flex-direction:column;gap:20px}
+.note{border:1px solid var(--border);border-radius:12px;padding:18px 20px;background:var(--surface)}
+.note-t{font-family:var(--font-display);font-size:14.5px;font-weight:700;margin-bottom:7px;display:flex;gap:9px;align-items:center}
+.note-d{font-size:13.5px;color:var(--text-2);line-height:1.68}
+.note-d code{font-family:var(--font-mono);font-size:.86em;color:var(--azure-bright);background:var(--azure-dim);padding:1px 5px;border-radius:4px}
+
+/* table */
+.tbl{width:100%;border-collapse:collapse;margin-top:8px;font-size:13.5px}
+.tbl th{text-align:left;font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-3);font-weight:500;padding:0 16px 10px;border-bottom:1px solid var(--border)}
+.tbl td{padding:15px 16px;border-bottom:1px solid var(--border-soft);color:var(--text-2);vertical-align:top}
+.tbl td:first-child{color:var(--text-1);font-weight:600;width:24%}
+.tbl tr:last-child td{border-bottom:none}
+.win{color:var(--green);font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;font-weight:700;display:block;margin-top:6px}
+
+.arch{font-family:var(--font-mono);font-size:12.5px;line-height:2;color:var(--text-2);border:1px solid var(--border);border-radius:12px;padding:22px 24px;background:var(--surface);overflow-x:auto}
+.arch b{color:var(--azure)} .arch i{color:var(--text-3);font-style:normal}
+.arch u{color:var(--amber);text-decoration:none}
+
+@media (max-width:900px){
+  .pagebody,.phone-row,.callouts,.boulders,.ab{grid-template-columns:1fr}
+  .metastrip{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+<div class="doc">
+
+  <header class="doc-head">
+    <div class="eyebrow">Concept v1 &middot; 2026-08-11 &middot; not built</div>
+    <h1>The public web surface.<br>Built for <em>Google</em>, not for climbing.</h1>
+    <p class="dek">A read-only server-rendered site on the same Supabase. Its only job is to rank for climbing searches and hand the visitor to the app. <strong>The gated asset is the line, not the name.</strong> Names, grades and counts are indexable text. Which line on the rock is which problem stays behind sign-up.</p>
+    <div class="legend">
+      <div class="legend-item"><span class="swatch sw-pub"></span> Public &amp; indexed by Google</div>
+      <div class="legend-item"><span class="swatch sw-gate"></span> Gated &mdash; account required</div>
+    </div>
+    <div class="changebar">
+      <b>Changed in v1</b>
+      <p>v0 gated the problem list. It is now <em>public</em>: name, grade, and count are all crawlable. The gate moved onto the <em>line overlay</em>, which is the correct place because the line drawing is the thing your users actually contributed and the thing a competitor would want to copy. <em>This makes the SEO case substantially stronger</em>, because problem names are the long-tail search text.</p>
+    </div>
+  </header>
+
+  <!-- 1 -->
+  <section class="step">
+    <div class="step-head"><span class="step-n">01</span><h2>The acquisition moment</h2></div>
+    <p class="step-note">Two search shapes now win instead of one. Area queries, and problem-name queries. The second is only possible because names are public.</p>
+    <div class="serp">
+      <div class="serp-tag">what we're buying</div>
+      <div class="serp-bar">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9aa0a6" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+        忍者返し 初段 御岳
+      </div>
+      <div class="serp-r">
+        <div class="serp-url">
+          <span class="serp-fav"><span>C</span></span>
+          <span><b>ChalkMap</b><br><i>https://chalkmap.com › crags › mitake › ninjagaeshi</i></span>
+        </div>
+        <div class="serp-title">忍者返し (初段) | 忍者返し岩・御岳ボルダー | ChalkMap</div>
+        <div class="serp-desc"><mark>忍者返し</mark>、<mark>初段</mark>。東京都青梅市の御岳ボルダー、忍者返し岩にある課題。同じ岩に7課題（3級〜初段）。アクセスはJR御嶽駅から徒歩15分。ラインはアプリで。</div>
+        <div class="serp-sub"><a>忍者返し岩の課題</a><a>御岳エリア</a><a>アクセス</a></div>
+      </div>
+      <div class="serp-r serp-dim">
+        <div class="serp-url"><span class="serp-fav" style="background:#666"><span style="color:#fff">B</span></span><span><b>個人ブログ</b><br><i>https://blog.example.jp › 2011 › 03</i></span></div>
+        <div class="serp-title">御岳に行ってきた（2011年）</div>
+        <div class="serp-desc">先週末、御岳へ行ってきました。忍者返しを触ってみたものの…</div>
+      </div>
+    </div>
+    <div class="callouts">
+      <div class="co good"><div class="co-t">New in v1: long tail</div><div class="co-d">Every problem name becomes an indexable page or heading. A database of thousands of problems turns into thousands of low-competition landing pages that grow for free as users add data.</div></div>
+      <div class="co"><div class="co-t">Schema.org</div><div class="co-d">Emit <code>Place</code> + <code>TouristAttraction</code> + <code>BreadcrumbList</code> JSON-LD on crag pages so Google renders sub-links and the map card.</div></div>
+      <div class="co gate"><div class="co-t">The snippet still sells the app</div><div class="co-d">"ラインはアプリで" sits right in the meta description. The searcher knows before clicking that the answer exists and where it lives.</div></div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="step">
+    <div class="step-head"><span class="step-n">02</span><h2>The crag page</h2></div>
+    <p class="step-note">Everything here is public and crawlable. Access, parking, boulder names, and the full problem list with grades. Note the boulder thumbnails: <b>photos are shown without lines drawn on them.</b></p>
+
+    <div class="frame">
+      <div class="frame-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        <div class="frame-url">chalkmap.com/<b>crags/mitake</b></div></div>
+
+      <nav class="site-nav">
+        <div class="wordmark">Chalk<span>Map</span></div>
+        <div class="nav-links"><span>エリアを探す</span><span>地図</span><span>アプリ</span><span>EN</span></div>
+        <button class="btn-sm">アプリで開く</button>
+      </nav>
+
+      <div class="hero">
+        <div class="hero-img"></div><div class="hero-scrim"></div>
+        <div class="hero-body">
+          <div class="crumb">日本 &nbsp;/&nbsp; 東京都 &nbsp;/&nbsp; <b>御岳</b></div>
+          <div class="hero-title">御岳ボルダー<small>Mitake Boulder &middot; 青梅市, 東京都</small></div>
+        </div>
+      </div>
+
+      <div class="metastrip">
+        <div class="meta"><div class="meta-k">課題数</div><div class="meta-v">128</div></div>
+        <div class="meta"><div class="meta-k">グレード</div><div class="meta-v">6級<em>〜</em>初段</div></div>
+        <div class="meta"><div class="meta-k">アプローチ</div><div class="meta-v">15<em>分</em></div></div>
+        <div class="meta"><div class="meta-k">駐車場</div><div class="meta-v">あり<em>2ヶ所</em></div></div>
+      </div>
+
+      <div class="pagebody">
+        <main>
+          <div class="h3">アクセス <span class="pill pill-pub">public</span></div>
+          <p class="prose">JR青梅線<b>御嶽駅</b>から多摩川沿いを上流方向へ徒歩約15分。川沿いの遊歩道を進むと最初のボルダーが見えてきます。増水時は渡渉不可、対岸のエリアには入れません。トイレは駅と河原の公衆トイレが利用可能。</p>
+
+          <div class="h3">駐車場 <span class="pill pill-pub">public</span></div>
+          <p class="prose">河原の有料駐車場（1日800円、約20台）と、駅前のコインパーキング。<b>週末は8時までに満車</b>になることが多いため、公共交通機関を推奨します。路上駐車は近隣住民とのトラブルの原因になるため厳禁。</p>
+
+          <div class="h3">ボルダー一覧 <span class="pill pill-pub">public</span> <span style="font-size:12px;color:var(--text-3);font-weight:400;font-family:var(--font-body)">32個</span></div>
+          <div class="boulders">
+            <div class="bcard">
+              <div class="bthumb"><div class="bchip">
+                <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2.4"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>ライン非表示</div></div>
+              <div class="bmeta"><div class="bname">忍者返し岩</div><div class="bsub">7 problems &middot; 3級〜初段</div></div>
+            </div>
+            <div class="bcard">
+              <div class="bthumb"><div class="bchip">
+                <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2.4"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>ライン非表示</div></div>
+              <div class="bmeta"><div class="bname">デッドエンド岩</div><div class="bsub">4 problems &middot; 5級〜1級</div></div>
+            </div>
+            <div class="bcard">
+              <div class="bthumb"><div class="bchip">
+                <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2.4"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>ライン非表示</div></div>
+              <div class="bmeta"><div class="bname">マミ岩</div><div class="bsub">6 problems &middot; 6級〜2級</div></div>
+            </div>
+          </div>
+
+          <div class="h3">課題 <span class="pill pill-pub">public</span> <span class="pill pill-gate">lines gated</span></div>
+          <div class="plist">
+            <div class="prow"><span class="grade">初段</span><span class="pname">忍者返し<i>忍者返し岩</i></span>
+              <span class="plock"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2.4"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>ライン</span></div>
+            <div class="prow"><span class="grade">1級</span><span class="pname">ハイボール<i>忍者返し岩</i></span>
+              <span class="plock"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2.4"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>ライン</span></div>
+            <div class="prow"><span class="grade">2級</span><span class="pname">結晶カンテ<i>マミ岩</i></span>
+              <span class="plock"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2.4"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>ライン</span></div>
+            <div class="prow"><span class="grade">3級</span><span class="pname">スラブ左<i>デッドエンド岩</i></span>
+              <span class="plock"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2.4"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>ライン</span></div>
+            <div class="prow"><span class="grade">4級</span><span class="pname">river side<i>マミ岩</i></span>
+              <span class="plock"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2.4"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>ライン</span></div>
+            <div class="prow" style="justify-content:center;color:var(--text-3);font-size:12.5px;font-family:var(--font-mono)">＋ 123 more</div>
+          </div>
+        </main>
+
+        <aside class="side">
+          <div class="scard accent">
+            <div class="scard-t">アプリで開く</div>
+            <div class="scard-d">ライン・GPS・オフライン地図・完登記録。iOS / Android 無料。</div>
+            <button class="btn-full">App Store</button>
+            <button class="btn-full sec">Google Play</button>
+          </div>
+          <div class="scard">
+            <div class="scard-t">グレード分布</div>
+            <div class="hist">
+              <div class="bar" style="height:34%"></div><div class="bar" style="height:56%"></div>
+              <div class="bar" style="height:88%"></div><div class="bar" style="height:100%"></div>
+              <div class="bar" style="height:62%"></div><div class="bar" style="height:38%"></div>
+              <div class="bar" style="height:18%"></div>
+            </div>
+            <div class="hist-x"><span>6級</span><span>5級</span><span>4級</span><span>3級</span><span>2級</span><span>1級</span><span>初段</span></div>
+          </div>
+          <div class="scard">
+            <div class="scard-t">近くのエリア</div>
+            <div class="scard-d" style="margin:0">御前岩 &middot; 4.2km<br>鳩ノ巣 &middot; 8.6km<br>白丸 &middot; 11.3km</div>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <div class="callouts">
+      <div class="co good"><div class="co-t">Public, and now much richer</div><div class="co-d">Access, parking, boulder names, every problem name and grade, grade distribution. This is a genuinely useful page, which is also what Google rewards.</div></div>
+      <div class="co gate"><div class="co-t">Gated: the line</div><div class="co-d">Boulder photos render clean. No line paths are in the SVG, no coordinates are in the HTML, and <code>get_crag_public</code> never selects the line geometry column at all.</div></div>
+      <div class="co gate"><div class="co-t">The lock is per-row, not a wall</div><div class="co-d">Each problem row carries a small ライン lock instead of one big blur. It reads as "this page is complete, one specific thing lives in the app" rather than "this page is crippled".</div></div>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="step">
+    <div class="step-head"><span class="step-n">03</span><h2>The boulder page, and the one decision left</h2></div>
+    <p class="step-note">This is where the gate physically sits. The photo is public, the problem list is public, the line overlay is not. The open question is whether guests see the lines <b>anonymously</b> or <b>not at all</b>.</p>
+
+    <div class="ab">
+      <!-- A -->
+      <div class="abcard pick">
+        <div class="abhead"><div class="abt">A &nbsp;Clean photo</div><span class="abtag rec">recommended</span></div>
+        <div class="rockshot">
+          <div class="linelock">
+            <div class="lk"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></div>
+            <div class="lt">ラインはアプリで</div>
+            <div class="ld">このボルダーには7本のラインがあります。無料アカウントで表示。</div>
+            <button class="btn-sm" style="font-size:11.5px">無料で始める</button>
+          </div>
+        </div>
+        <div class="abbody">
+          <div class="abn">No line paths rendered at all. The photo shows the rock, the list below names all 7 problems and grades, and the overlay states how many lines exist without drawing any of them. <b>Zero leak by construction.</b></div>
+          <div class="abrisk"><b>cost</b>A guest cannot judge whether the line quality is good, so the sign-up is slightly more of a leap of faith.</div>
+        </div>
+      </div>
+      <!-- B -->
+      <div class="abcard">
+        <div class="abhead"><div class="abt">B &nbsp;Anonymous lines</div><span class="abtag alt">alternative</span></div>
+        <div class="rockshot">
+          <svg viewBox="0 0 400 230" preserveAspectRatio="none">
+            <g stroke="#5A6672" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-dasharray="7 6" opacity=".85">
+              <path d="M46 214 C58 158 66 108 88 34"/>
+              <path d="M104 218 C112 160 128 112 142 40"/>
+              <path d="M158 216 C170 162 178 106 196 32"/>
+              <path d="M214 220 C226 164 232 114 250 44"/>
+              <path d="M266 216 C278 158 288 108 302 36"/>
+              <path d="M318 218 C328 166 340 116 356 42"/>
+              <path d="M368 220 C376 176 382 140 392 96"/>
+            </g>
+          </svg>
+          <div class="linelock" style="width:70%;padding:13px 16px">
+            <div class="lt" style="font-size:13px">どのラインがどの課題か</div>
+            <div class="ld" style="font-size:11px;margin-bottom:10px">名前とグレードの対応はアプリで</div>
+            <button class="btn-sm" style="font-size:11px">無料で始める</button>
+          </div>
+        </div>
+        <div class="abbody">
+          <div class="abn">Lines drawn in neutral gray, dashed, with no labels or numbers. The guest sees that the line work is dense and well drawn, which is a stronger pitch, but cannot tell which line is 忍者返し.</div>
+          <div class="abrisk"><b>the flaw</b>Deduction by elimination. On a boulder with 1 or 2 problems the mapping is trivially obvious, and on any boulder a determined person can guess from grade order. The leak is small but it is real, and it scales with how many one-problem boulders you have.</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="step-note" style="margin-top:26px">My recommendation is <b>A</b>. B leaks by elimination on exactly the small boulders where a single line is the whole value, and the extra persuasion it buys is not worth writing a rule like "only show anonymous lines when the boulder has 4 or more problems". If you want B's persuasive effect without the leak, the safer version is a <b>count</b> plus a thumbnail of the line overlay <b>from a different boulder</b> used as a marketing image, which is what the app-store screenshots already do.</p>
+  </section>
+
+  <!-- 4 -->
+  <section class="step">
+    <div class="step-head"><span class="step-n">04</span><h2>Mobile is where the handoff happens</h2></div>
+    <p class="step-note">Most search traffic arrives on a phone. The page is a landing pad, not a product. Every path leads to the store.</p>
+    <div class="phone-row">
+      <div class="phone">
+        <div class="phone-in">
+          <div class="ph-hero"></div>
+          <div class="ph-body">
+            <div class="ph-title">忍者返し岩</div>
+            <div class="ph-sub">御岳ボルダー &middot; 7課題 &middot; 3級〜初段</div>
+            <div class="smartbanner">
+              <div class="sb-icon"><span>C</span></div>
+              <div><div class="sb-t">ChalkMap</div><div class="sb-d">ライン・完登記録</div></div>
+              <button class="sb-btn">入手</button>
+            </div>
+            <div class="rockshot" style="height:120px;border-radius:11px;margin-bottom:12px">
+              <div class="linelock" style="width:86%;padding:11px 12px">
+                <div class="lt" style="font-size:12px">ラインはアプリで</div>
+                <div class="ld" style="font-size:10px;margin-bottom:9px">7本のラインを表示</div>
+                <button class="btn-sm" style="font-size:10.5px;padding:6px 12px">無料で始める</button>
+              </div>
+            </div>
+            <div class="plist" style="border-radius:11px">
+              <div class="prow" style="padding:10px 12px"><span class="grade" style="font-size:11px;min-width:38px">初段</span><span class="pname" style="font-size:12.5px">忍者返し</span></div>
+              <div class="prow" style="padding:10px 12px"><span class="grade" style="font-size:11px;min-width:38px">1級</span><span class="pname" style="font-size:12.5px">ハイボール</span></div>
+              <div class="prow" style="padding:10px 12px"><span class="grade" style="font-size:11px;min-width:38px">2級</span><span class="pname" style="font-size:12.5px">右カンテ</span></div>
+              <div class="prow" style="padding:10px 12px"><span class="grade" style="font-size:11px;min-width:38px">3級</span><span class="pname" style="font-size:12.5px">スラブ</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="notelist">
+        <div class="note">
+          <div class="note-t"><span class="pill pill-pub">1</span> Deep link straight into the app</div>
+          <div class="note-d">You already ship <code>applinks:chalkmap.com</code>. If the app is installed, <code>/crags/mitake/ninjagaeshi</code> opens that problem in-app instead of loading the page at all. Free win the day the site goes live.</div>
+        </div>
+        <div class="note">
+          <div class="note-t"><span class="pill pill-pub">2</span> Sign-up happens in the app, not on the web</div>
+          <div class="note-d">The web CTA sends people to the store, not to a web sign-up form. One auth surface, RevenueCat stays clean, and the web build stays read-only forever.</div>
+        </div>
+        <div class="note">
+          <div class="note-t"><span class="pill pill-gate">3</span> The list is the proof, the lines are the ask</div>
+          <div class="note-d">A visitor who reads all 7 names and grades knows the data is real and complete. That is a far better place to ask for an account than an empty blurred box, because the ask is now for one specific missing thing.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="step">
+    <div class="step-head"><span class="step-n">05</span><h2>What the gate costs you in search, revised</h2></div>
+    <p class="step-note">Under v0 this table had a real loss in it. Under v1 it does not, because line geometry has no search demand. Nobody googles an SVG path.</p>
+    <table class="tbl">
+      <thead><tr><th>Query type</th><th>Example</th><th>Under the line-only gate</th></tr></thead>
+      <tbody>
+        <tr><td>Area / head</td><td>御岳 ボルダー &middot; 笠置 駐車場</td>
+          <td>Fully winnable. Access, parking and approach content is exactly what these searchers want and it is all public.<span class="win">win</span></td></tr>
+        <tr><td>Problem / long tail</td><td>忍者返し 初段 &middot; 特定の課題名</td>
+          <td>Now winnable. Names and grades are indexable text, so every problem in the database is a potential entry point. This is the single biggest gain from your correction.<span class="win">win, and it compounds</span></td></tr>
+        <tr><td>Discovery</td><td>東京 近郊 ボルダー &middot; 初心者 外岩</td>
+          <td>Winnable with prefecture and grade-range index pages built entirely from public fields.<span class="win">win</span></td></tr>
+        <tr><td>Line / beta</td><td>忍者返し ムーブ &middot; 登り方</td>
+          <td>Intentionally not served. These searchers get a page that names the problem and tells them the line overlay is in the app, which is the conversion you actually want.<span class="win">converts instead</span></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 6 -->
+  <section class="step">
+    <div class="step-head"><span class="step-n">06</span><h2>How it's actually built</h2></div>
+    <p class="step-note">No Expo Web, no app parity, no second auth system, no writes.</p>
+    <div class="arch">
+Google / 検索<br>
+&nbsp;&nbsp;&darr;<br>
+<b>Next.js</b> on Cloudflare or Vercel &nbsp;<i>— server-rendered, read-only, no client Supabase key</i><br>
+&nbsp;&nbsp;&darr;&nbsp;&nbsp;<i>service-role read, server side only</i><br>
+<b>get_crag_public(slug)</b> / <b>get_problem_public(slug)</b><br>
+&nbsp;&nbsp;<i>returns: name, grade, boulder, crag, access, parking, counts</i><br>
+&nbsp;&nbsp;<u>never selects: line geometry, hold coords, beta, comments, ascent rows</u><br>
+&nbsp;&nbsp;&darr;<br>
+<b>Supabase</b> &nbsp;<i>— same database the app uses, zero schema forks</i><br>
+<br>
+<i>The app is untouched. The gate is one column list in one SQL function.</i>
+    </div>
+    <div class="callouts" style="grid-template-columns:repeat(2,1fr)">
+      <div class="co"><div class="co-t">Why the whitelist matters</div><div class="co-d">The public field list lives in one place instead of scattered across page templates. If the geometry column is not in <code>get_problem_public</code>, it cannot leak no matter what a future page renders.</div></div>
+      <div class="co"><div class="co-t">Rough size</div><div class="co-d">Two RPCs, a crag route, a problem route, a prefecture index, a sitemap generator, and the JSON-LD. Days, not months, because there is no auth, no state, and no writes.</div></div>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>
