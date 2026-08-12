@@ -5,9 +5,14 @@
       {
         "appIDs": ["M969PWP3PU.app.chalkmap.v2"],
         "components": [
-          {
-            "/": "/*"
-          }
+          { "/": "/",                "exclude": true, "comment": "marketing home (any ?lang)" },
+          { "/": "/index*",          "exclude": true, "comment": "marketing home, explicit" },
+          { "/": "/terms*",          "exclude": true, "comment": "terms + terms-ja" },
+          { "/": "/privacy*",        "exclude": true, "comment": "privacy + privacy-ja" },
+          { "/": "/support*",        "exclude": true, "comment": "support + support-ja" },
+          { "/": "/delete-account*", "exclude": true, "comment": "account deletion, must stay on web" },
+          { "/": "/.well-known/*",   "exclude": true, "comment": "never hand off well-known" },
+          { "/": "/*",               "comment": "everything else keeps today's behaviour" }
         ]
       }
     ]
