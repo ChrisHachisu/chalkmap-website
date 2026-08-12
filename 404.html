@@ -179,7 +179,11 @@
           if (next) next();
         };
         try {
-          var p = navigator.clipboard && navigator.clipboard.writeText(invite.url);
+          // Copy the CODE, not the URL. The button says "Copy code", the toast
+          // says "Code copied", and the code is what the app's field expects —
+          // copying invite.url here meant pasting the link into the code box,
+          // which cannot work. Reported from device 2026-08-12.
+          var p = navigator.clipboard && navigator.clipboard.writeText(invite.code);
           if (p && typeof p.then === 'function') { p.then(done, done); } else { done(); }
         } catch (e) {
           done();
