@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "app.chalkmap.v2",
+      "sha256_cert_fingerprints": [
+        "A0:C7:C8:62:FB:A2:42:20:08:E2:24:EB:8E:83:25:D7:17:C4:AE:2B:26:CF:B1:CF:1D:78:B9:05:0B:1A:AB:89"
+      ]
+    }
+  }
+]
