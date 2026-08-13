@@ -67,7 +67,17 @@
       </div>
       <p class="copied" id="copiedMsg" aria-live="polite"></p>
 
-      <p class="invite-foot" data-en="Already have ChalkMap? Open this link on your phone and the code fills in for you." data-ja="すでにChalkMapをお使いの方は、スマートフォンでこのリンクを開くとコードが自動で入力されます。"></p>
+      <!-- Escape hatch for in-app browsers (LINE, Instagram, Facebook, X).
+           Those open links in an embedded webview, and iOS does NOT perform
+           the Universal Link handoff there, so a recipient who already has the
+           app still lands on this page. The custom scheme DOES work from
+           inside those webviews. The old copy here just told them to "open the
+           link on your phone", which is exactly what they had already done. -->
+      <p class="invite-foot" data-en="Already have ChalkMap?" data-ja="すでにChalkMapをお使いですか?"></p>
+      <div class="invite-actions">
+        <a class="btn btn-secondary" id="openAppBtn" href="#"
+           data-en="Open in ChalkMap" data-ja="ChalkMapで開く"></a>
+      </div>
     </section>
 
     <!-- Not-found view: also the genuine 404 for any other unmatched path. -->
@@ -125,7 +135,14 @@
       var code;
       try { code = decodeURIComponent(parts[1]).toUpperCase(); } catch (e) { return null; }
       if (!flow.re.test(code)) return null;
-      return { kind: flow.kind, code: code, url: 'https://chalkmap.com/' + parts[0] + '/' + code };
+      return {
+        kind: flow.kind,
+        code: code,
+        url: 'https://chalkmap.com/' + parts[0] + '/' + code,
+        // Custom-scheme twin of `url`, for the in-app-browser escape hatch
+        // below. Same path segment, so it stays in step with the https form.
+        deepLink: 'chalkmap://' + parts[0] + '/' + code,
+      };
     }
 
     function storeUrlFor(code) {
@@ -192,6 +209,20 @@
 
       document.getElementById('copyBtn').addEventListener('click', function () {
         copyThen(null);
+      });
+
+      // Custom scheme, not the https link: this button exists precisely for
+      // the case where the https Universal Link did NOT hand off (in-app
+      // browsers). Re-trying the https form here would just reload this page.
+      // The code is copied first so that if the app is not installed and
+      // nothing happens, the recipient still has it on the clipboard.
+      document.getElementById('openAppBtn').href = invite.deepLink;
+      document.getElementById('openAppBtn').addEventListener('click', function (ev) {
+        ev.preventDefault();
+        var target = this.href;
+        copyThen(function () {
+          setTimeout(function () { location.href = target; }, 150);
+        });
       });
 
       document.getElementById('storeBtn').addEventListener('click', function (ev) {
