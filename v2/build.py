@@ -7,7 +7,8 @@
 import base64, os, re, sys, mimetypes
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
-ORDER = ["hero", "map", "phone", "features", "lines", "establishers", "tail"]
+HERO = os.environ.get("HERO", "a")
+ORDER = ["hero-" + HERO, "why", "phone", "features", "establishers", "tail"]
 APPLE = "https://apps.apple.com/app/id6767085401"
 PLAY = "https://play.google.com/store/apps/details?id=app.chalkmap.v2"
 
@@ -39,18 +40,18 @@ def build():
             css.append("/* ---- %s ---- */\n" % name + read(c))
         if os.path.exists(j):
             js.append("/* ---- %s ---- */\n" % name + read(j))
-    with open(os.path.join(ROOT, "assets/site.css"), "w", encoding="utf-8") as f:
+    with open(os.path.join(ROOT, "assets/site-%s.css" % HERO), "w", encoding="utf-8") as f:
         f.write("\n".join(css))
-    with open(os.path.join(ROOT, "assets/site.js"), "w", encoding="utf-8") as f:
+    with open(os.path.join(ROOT, "assets/site-%s.js" % HERO), "w", encoding="utf-8") as f:
         f.write("\n".join(js))
     html = tpl.replace("{{SECTIONS}}", "\n".join(sections))
-    html = html.replace("{{CSS}}", '<link rel="stylesheet" href="assets/site.css">')
-    html = html.replace("{{JS}}", '<script src="assets/site.js"></script>')
+    html = html.replace("{{CSS}}", '<link rel="stylesheet" href="assets/site-%s.css">' % HERO)
+    html = html.replace("{{JS}}", '<script src="assets/site-%s.js"></script>' % HERO)
     html = fix_links(html)
-    with open(os.path.join(ROOT, "index.html"), "w", encoding="utf-8") as f:
+    with open(os.path.join(ROOT, "index-%s.html" % HERO), "w", encoding="utf-8") as f:
         f.write(html)
     em = html.count("—") + html.count("&mdash;")
-    print("built index.html: %d sections, %d bytes, emdash=%d, missing=%s" % (len(sections), len(html), em, [os.path.basename(m) for m in missing]))
+    print("built index-%s.html:" % HERO + " %d sections, %d bytes, emdash=%d, missing=%s" % (len(sections), len(html), em, [os.path.basename(m) for m in missing]))
     return html
 
 
@@ -62,8 +63,8 @@ def to_data_uri(path):
 
 def artifact(html):
     """Inline everything for a claude.ai artifact preview: CSS+JS inline, images as data URIs (prefer 1200 variants)."""
-    css = read(os.path.join(ROOT, "assets/site.css"))
-    js = read(os.path.join(ROOT, "assets/site.js"))
+    css = read(os.path.join(ROOT, "assets/site-%s.css" % HERO))
+    js = read(os.path.join(ROOT, "assets/site-%s.js" % HERO))
     # downgrade 1920 -> 1200 to keep under the 16MB cap
     for w in ("-1920", "-1200"):
         html = html.replace(w + ".webp", "-720.webp").replace(w + ".jpg", "-720.webp")
@@ -106,8 +107,8 @@ def artifact(html):
     css = re.sub(r"url\((['\"]?)(assets/img/[^)'\"]+)\1\)", lambda m: repl_css(type("M", (), {"group": lambda s, i: m.group(2)})()), css)
     # css written by sections may reference ../img/ from assets/css -> normalize
     css = re.sub(r"url\((['\"]?)\.\./img/([^)'\"]+)\1\)", lambda m: "url(%s)" % (img_uri("assets/img/" + m.group(2)) or "../img/" + m.group(2)), css)
-    out = html.replace('<link rel="stylesheet" href="assets/site.css">', "<style>\n" + css + "\n</style>")
-    out = out.replace('<script src="assets/site.js"></script>', "<script>" + inline_data + "</script>\n<script>\n" + js + "\n</script>")
+    out = html.replace('<link rel="stylesheet" href="assets/site-%s.css">' % HERO, "<style>\n" + css + "\n</style>")
+    out = out.replace('<script src="assets/site-%s.js"></script>' % HERO, "<script>" + inline_data + "</script>\n<script>\n" + js + "\n</script>")
     # strip doctype/html/head/body wrappers: the artifact host provides them; keep <title>, links, meta theme
     m = re.search(r"<head>(.*?)</head>", out, re.S)
     head = m.group(1) if m else ""
@@ -122,7 +123,7 @@ def artifact(html):
     page = page.replace("body[data-lang=", "#cm-root[data-lang=")
     page = page.replace("document.body.setAttribute('data-lang', lang);", "document.body.setAttribute('data-lang', lang); var r=document.getElementById('cm-root'); if(r) r.setAttribute('data-lang', lang);")
     os.makedirs(os.path.join(ROOT, "dist"), exist_ok=True)
-    with open(os.path.join(ROOT, "dist/preview.html"), "w", encoding="utf-8") as f:
+    with open(os.path.join(ROOT, "dist/preview-%s.html" % HERO), "w", encoding="utf-8") as f:
         f.write(page)
     print("artifact preview: %.1f MB, %d images inlined" % (len(page) / 1e6, len(cache)))
 

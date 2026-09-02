@@ -1,0 +1,12 @@
+.section-why { border-top: 1px solid var(--hair); }
+.section-why .why-layout { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: var(--s7); align-items: start; }
+.section-why .why-head h2 { font-size: clamp(32px, 4.2vw, 56px); }
+.section-why .why-body p { color: var(--muted); max-width: 58ch; }
+body[data-lang="ja"] .section-why .why-body p { color: var(--fg); opacity: .86; }
+.section-why .why-points { list-style: none; margin: var(--s6) 0 0; padding: 0; display: grid; gap: 0; border-top: 1px solid var(--hair); max-width: 58ch; }
+.section-why .why-points li { display: grid; grid-template-columns: 120px 1fr; gap: var(--s4); padding: var(--s4) 0; border-bottom: 1px solid var(--hair); align-items: baseline; }
+.section-why .why-points .mono { color: var(--accent); }
+@media (max-width: 899px) {
+  .section-why .why-layout { grid-template-columns: 1fr; gap: var(--s5); }
+  .section-why .why-points li { grid-template-columns: 96px 1fr; }
+}
