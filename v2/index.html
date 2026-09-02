@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>ChalkMap: The hub for outdoor bouldering</title>
+  <meta name="description" content="Every crag, every line, every bit of local knowledge, kept current by the climbers who actually climb there. Establishers stay in control.">
+  <meta name="theme-color" content="#0A0A0A">
+  <link rel="icon" type="image/png" href="assets/img/chalkmap_logo.png">
+  <link rel="apple-touch-icon" href="https://chalkmap.com/apple-touch-icon.png">
+  <meta property="og:title" content="ChalkMap: The hub for outdoor bouldering">
+  <meta property="og:description" content="Every crag, every line, every bit of local knowledge, kept current by the community, with establishers in control.">
+  <meta property="og:image" content="https://chalkmap.com/assets/images/og-icon-basshi.png">
+  <meta property="og:url" content="https://chalkmap.com/">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&family=Zen+Kaku+Gothic+New:wght@500;700;900&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/site.css">
+</head>
+<body data-lang="en">
+
+  <a class="sr-only" href="#main" data-en="Skip to content" data-ja="本文へ"></a>
+
+  <header class="site-header">
+    <nav class="nav container" aria-label="Main">
+      <a href="#hero" class="nav-brand">
+        <img src="assets/img/chalkmap_logo.png" alt="" width="26" height="26">
+        <span>ChalkMap<span class="dot">.</span></span>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#map" data-en="Crags" data-ja="エリア"></a></li>
+        <li><a href="#phone" data-en="In the app" data-ja="アプリ"></a></li>
+        <li><a href="#features" data-en="Features" data-ja="機能"></a></li>
+        <li><a href="#establishers" data-en="For Establishers" data-ja="開拓者の方へ"></a></li>
+        <li><a href="#faq" data-en="FAQ" data-ja="よくある質問"></a></li>
+        <li><a href="../support.html" data-en="Support" data-ja="サポート"></a></li>
+        <li>
+          <button class="lang-switch" id="langToggle" type="button" aria-label="Switch language / 言語を切り替え">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
+            <span id="langLabel">日本語</span>
+          </button>
+        </li>
+        <li><a class="nav-cta" href="#download" data-en="Get the app" data-ja="アプリを入手"></a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </header>
+
+  <main id="main">
+<section id="hero" class="section section-hero" aria-label="Hero">
+  <div class="hero-media">
+    <picture class="hero-photo">
+      <source type="image/webp" srcset="assets/img/web/hero-1920.webp 1920w, assets/img/web/hero-1200.webp 1200w, assets/img/web/hero-720.webp 720w" sizes="100vw">
+      <source type="image/jpeg" srcset="assets/img/web/hero-1920.jpg 1920w, assets/img/web/hero-1200.jpg 1200w, assets/img/web/hero-720.jpg 720w" sizes="100vw">
+      <img src="assets/img/web/hero-1920.jpg" alt="" data-alt-en="Rocky Boulder at Mitake, with four bouldering lines drawn including Egoisuto" data-alt-ja="御岳のロッキーボルダー。エゴイストを含む4本のラインを表示。" loading="eager" fetchpriority="high" decoding="async">
+    </picture>
+    <div class="hero-scrim" aria-hidden="true"></div>
+    <div class="hero-dim" aria-hidden="true"></div>
+    <svg class="hero-lines" viewBox="0 0 4032 3024" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+      <g class="hero-lines-secondary">
+        <path class="hero-line hero-line--secondary" data-line="in-tokyo" d="M1397.1,1871.6 C1402.5,1860.8 1418.7,1830.3 1429.5,1806.7 C1440.3,1783.2 1452.6,1753.7 1461.9,1730.1 C1471.2,1706.5 1476.6,1688.8 1485.5,1665.3 C1494.3,1641.7 1505.6,1613.7 1514.9,1588.6 C1524.3,1563.6 1533.6,1538.0 1541.5,1514.9 C1549.3,1491.9 1554.7,1471.2 1562.1,1450.1 C1569.5,1429.0 1578.3,1407.9 1585.7,1388.2 C1593.1,1368.6 1600.4,1352.4 1606.3,1332.2 C1612.2,1312.1 1615.6,1290.5 1621.1,1267.4 C1626.5,1244.3 1633.3,1219.2 1638.7,1193.7 C1644.1,1168.1 1649.1,1139.2 1653.5,1114.1 C1657.9,1089.1 1661.8,1066.0 1665.3,1043.4 C1668.7,1020.8 1671.2,999.2 1674.1,978.5 C1677.1,957.9 1679.5,939.2 1682.9,919.6 C1686.4,899.9 1690.8,881.8 1694.7,860.6 C1698.7,839.5 1702.1,816.9 1706.5,792.8 C1710.9,768.8 1716.4,743.2 1721.3,716.2 C1726.2,689.2 1731.6,659.2 1736.0,630.7 C1740.4,602.2 1744.8,572.8 1747.8,545.3 C1750.7,517.8 1750.7,491.2 1753.7,465.7 C1756.6,440.1 1760.6,416.1 1765.5,392.0 C1770.4,367.9 1778.2,343.4 1783.2,321.3 C1788.1,299.2 1791.5,280.0 1794.9,259.4 C1798.4,238.7 1802.3,207.8 1803.8,197.5" fill="none" stroke="var(--accent)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"></path>
+        <circle class="hero-hold hero-hold--secondary" cx="1308.6" cy="2033.7" r="30" fill="none" stroke="var(--accent)" stroke-width="11"></circle>
+        <path class="hero-line hero-line--secondary" data-line="super-egoist" d="M641.0,2638.6 C660.6,2563.4 739.0,2314.9 758.4,2187.7 C772.4,2096.0 793.6,2037.4 769.5,1948.6 C735.7,1823.8 564.2,1668.3 502.9,1520.1 C442.4,1373.8 419.1,1208.5 402.1,1065.4 C387.1,939.0 397.0,766.0 395.9,706.1" fill="none" stroke="var(--accent)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"></path>
+        <path class="hero-line hero-line--secondary" data-line="no-name" d="M3436.8,2824.6 C3477.9,2768.7 3626.9,2609.0 3683.4,2489.2 C3741.0,2367.1 3765.9,2227.9 3776.1,2098.0 C3786.1,1970.9 3769.7,1867.9 3746.5,1718.0 C3712.4,1497.4 3589.4,1041.0 3558.0,905.6" fill="none" stroke="var(--accent)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"></path>
+      </g>
+      <path id="hero-line-egoisuto" class="hero-line hero-line--feature" d="M728.0,1794.9 C713.3,1780.2 658.7,1728.1 639.6,1706.5 C620.4,1684.9 621.4,1679.5 613.1,1665.3 C604.7,1651.0 596.8,1634.3 589.5,1621.1 C582.1,1607.8 576.7,1599.4 568.8,1585.7 C561.0,1571.9 550.7,1555.7 542.3,1538.5 C534.0,1521.3 526.6,1503.2 518.7,1482.5 C510.9,1461.9 501.1,1431.9 495.2,1414.7 C489.3,1397.5 489.3,1396.6 483.4,1379.4 C477.5,1362.2 466.7,1333.2 459.8,1311.6 C452.9,1290.0 448.5,1269.8 442.1,1249.7 C435.7,1229.5 427.4,1210.4 421.5,1190.7 C415.6,1171.1 411.2,1150.9 406.7,1131.8 C402.3,1112.6 397.4,1094.5 394.9,1075.8 C392.5,1057.1 392.5,1037.5 392.0,1019.8 C391.5,1002.1 392.0,984.4 392.0,969.7 C392.0,954.9 392.0,945.1 392.0,931.4 C392.0,917.6 392.0,901.9 392.0,887.2 C392.0,872.4 392.0,857.7 392.0,842.9 C392.0,828.2 392.0,806.1 392.0,798.7" fill="none" stroke="var(--accent-bright)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"></path>
+      <circle id="hero-hold-egoisuto" class="hero-hold hero-hold--feature" cx="831.2" cy="2001.3" r="30" fill="none" stroke="var(--accent-bright)" stroke-width="11"></circle>
+    </svg>
+    <div class="hero-caption-chip" aria-hidden="true">
+      <span class="mono" data-en="EGOISUTO · 1D / V7 / 7a+" data-ja="エゴイスト · 初段 / V7 / 7a+"></span>
+    </div>
+  </div>
+  <div class="hero-content container">
+    <div class="hero-text">
+      <p class="eyebrow hero-eyebrow" data-en="MITAKE · TOKYO · ROCKY BOULDER" data-ja="御岳 · 東京 · ロッキーボルダー"></p>
+      <h1 class="hero-headline" data-en="Mitake." data-ja="御岳。"></h1>
+      <h3 class="hero-sub" data-en="The hub for outdoor bouldering" data-ja="外岩ボルダリングの情報を、ひとつの場所に。"></h3>
+      <p class="hero-lead" data-en="Every crag, every line, every bit of local knowledge, kept current by the climbers who actually climb there." data-ja="エリアも、課題も、登り方も。実際に登るクライマーの手で、いつも最新に。"></p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#download">
+          <span data-en="Download on the App Store" data-ja="App Storeでダウンロード"></span>
+        </a>
+        <a class="btn btn-ghost" href="#download">
+          <span data-en="Get it on Google Play" data-ja="Google Playでダウンロード"></span>
+        </a>
+      </div>
+      <p class="mono hero-meta" data-en="FREE · iOS &amp; ANDROID · 日本語 / EN" data-ja="FREE · iOS &amp; ANDROID · 日本語 / EN"></p>
+    </div>
+  </div>
+</section>
+
+<section id="map" class="section section-map">
+  <div class="container">
+    <div class="map-header" data-map-header>
+      <span class="eyebrow" data-en="PUBLIC CRAGS · 公開エリア" data-ja="PUBLIC CRAGS · 公開エリア"></span>
+      <h2 data-en="Real crags. Real access info." data-ja="本物のエリアと、本物のアクセス情報。"></h2>
+      <p class="map-intro" data-en="ChalkMap launched in summer 2026. These are the first public crags. More open as establishers publish them." data-ja="ChalkMapは2026年夏に公開されました。これが最初の公開エリアです。開拓者が公開するたびに、地図は広がります。"></p>
+    </div>
+
+    <div class="map-layout">
+      <div class="map-pin-col">
+        <div class="map-card">
+          <img class="map-bg-img" data-map-bg-img src="assets/img/japan-map.png" data-alt-en="Map of Japan" data-alt-ja="日本地図" alt="" loading="lazy" hidden onload="this.hidden=false" onerror="this.remove()">
+          <div class="map-dotgrid" aria-hidden="true"></div>
+          <div class="map-pins" data-map-pins>
+            <div class="map-pin map-pin--active" data-map-pin data-crag-index="0" style="left:52.55%;top:65.57%">
+              <span class="map-pin-marker"><span class="map-pin-halo" aria-hidden="true"></span><span class="map-pin-dot" aria-hidden="true"></span></span>
+              <span class="map-pin-label" data-en="Ogawayama" data-ja="小川山"></span>
+            </div>
+            <div class="map-pin" data-map-pin data-crag-index="1" style="left:53.83%;top:65.34%">
+              <span class="map-pin-marker"><span class="map-pin-halo" aria-hidden="true"></span><span class="map-pin-dot" aria-hidden="true"></span></span>
+              <span class="map-pin-label" data-en="Mitsumine" data-ja="三峰"></span>
+            </div>
+            <div class="map-pin" data-map-pin data-crag-index="2" style="left:53.17%;top:63.61%">
+              <span class="map-pin-marker"><span class="map-pin-halo" aria-hidden="true"></span><span class="map-pin-dot" aria-hidden="true"></span></span>
+              <span class="map-pin-label" data-en="Shimonita" data-ja="下仁田"></span>
+            </div>
+            <div class="map-pin" data-map-pin data-crag-index="3" style="left:54.66%;top:66.27%">
+              <span class="map-pin-marker"><span class="map-pin-halo" aria-hidden="true"></span><span class="map-pin-dot" aria-hidden="true"></span></span>
+              <span class="map-pin-label" data-en="Mitake" data-ja="御岳"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="map-steps-col">
+        <div class="map-step" data-map-step data-crag-index="0">
+          <div class="map-step-photo" data-map-photo>
+            <picture>
+              <source type="image/webp" srcset="assets/img/web/ogawayama-1200.webp">
+              <img src="assets/img/web/ogawayama-1200.jpg" data-alt-en="Ogawayama, Nagano" data-alt-ja="長野県、小川山" alt="" loading="lazy" width="1200" height="900">
+            </picture>
+          </div>
+          <span class="eyebrow" data-en="NAGANO" data-ja="長野"></span>
+          <h2 data-en="Ogawayama." data-ja="小川山。"></h2>
+          <p data-en="One of Japan's most iconic classic climbing areas." data-ja="日本を代表するクラシックなクライミングエリア。"></p>
+        </div>
+
+        <div class="map-step" data-map-step data-crag-index="1">
+          <div class="map-step-photo" data-map-photo>
+            <picture>
+              <source type="image/webp" srcset="assets/img/web/mitsumine-1200.webp">
+              <img src="assets/img/web/mitsumine-1200.jpg" data-alt-en="Mitsumine, Saitama" data-alt-ja="埼玉県、三峰" alt="" loading="lazy" width="1200" height="900">
+            </picture>
+          </div>
+          <span class="eyebrow" data-en="SAITAMA" data-ja="埼玉"></span>
+          <h2 data-en="Mitsumine." data-ja="三峰。"></h2>
+          <p data-en="Public on ChalkMap, with parking, access notes and every documented line." data-ja="ChalkMapで公開中。駐車場、アクセス情報、記録されたすべてのラインを確認できます。"></p>
+        </div>
+
+        <div class="map-step" data-map-step data-crag-index="2">
+          <div class="map-step-photo" data-map-photo>
+            <picture>
+              <source type="image/webp" srcset="assets/img/web/shimonita-1200.webp">
+              <img src="assets/img/web/shimonita-1200.jpg" data-alt-en="Shimonita, Gunma" data-alt-ja="群馬県、下仁田" alt="" loading="lazy" width="1200" height="900">
+            </picture>
+          </div>
+          <span class="eyebrow" data-en="GUNMA" data-ja="群馬"></span>
+          <h2 data-en="Shimonita." data-ja="下仁田。"></h2>
+          <p data-en="Public on ChalkMap, with parking, access notes and every documented line." data-ja="ChalkMapで公開中。駐車場、アクセス情報、記録されたすべてのラインを確認できます。"></p>
+        </div>
+
+        <div class="map-step" data-map-step data-crag-index="3">
+          <div class="map-step-photo" data-map-photo>
+            <picture>
+              <source type="image/webp" srcset="assets/img/web/mitake-1200.webp">
+              <img src="assets/img/web/mitake-1200.jpg" data-alt-en="Mitake, Tokyo" data-alt-ja="東京都、御岳" alt="" loading="lazy" width="1200" height="900">
+            </picture>
+          </div>
+          <span class="eyebrow" data-en="TOKYO" data-ja="東京"></span>
+          <h2 data-en="Mitake." data-ja="御岳。"></h2>
+          <p data-en="Public on ChalkMap, with parking, access notes and every documented line." data-ja="ChalkMapで公開中。駐車場、アクセス情報、記録されたすべてのラインを確認できます。"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="phone" class="section section-phone">
+  <div class="container">
+
+    <div class="phone-head">
+      <p class="eyebrow" data-en="IN THE APP · アプリの中" data-ja="IN THE APP · アプリの中"></p>
+      <h2 data-en="Built for the field." data-ja="現場で使える設計。"></h2>
+    </div>
+
+    <!-- Desktop: one pinned frame, screenshots slide through, captions flank it -->
+    <div class="phone-stage" data-phone-pin>
+
+      <div class="phone-side phone-side-left">
+        <div class="phone-caption is-active" data-phone-cap>
+          <p class="phone-caption-label" data-en="Map · Crags &amp; Boulders" data-ja="地図 · エリアとボルダー"></p>
+          <p class="phone-caption-desc" data-en="Discover crags and boulders on a map built for outdoor exploration. Public areas come with directions, parking, and access notes." data-ja="外岩のためにつくった地図で、行きたいエリアや課題を探せます。公開されているエリアには、行き方・駐車場・アクセスの情報もまとまっています。"></p>
+        </div>
+        <div class="phone-caption" data-phone-cap>
+          <p class="phone-caption-label" data-en="Recap · Your climbing" data-ja="まとめ · あなたの記録"></p>
+          <p class="phone-caption-desc" data-en="Log your sends, build your record, follow other climbers, and see what the community is up to." data-ja="完登を記録して履歴を積み重ね、ほかのクライマーをフォローしたり、みんなの活動をのぞいたり。"></p>
+        </div>
+      </div>
+
+      <div class="phone-frame-wrap">
+        <div class="phone-frame" data-phone-frame>
+          <div class="phone-notch" aria-hidden="true"></div>
+          <div class="phone-screen">
+            <img
+              class="phone-shot is-visible"
+              data-phone-shot
+              src="assets/img/screen-map.png"
+              data-src-en="assets/img/screen-map.png"
+              data-src-ja="assets/img/screen-map-ja.png"
+              data-alt-en="Map view with crag pins"
+              data-alt-ja="エリアのピンを表示した地図画面"
+              alt=""
+              loading="lazy">
+            <img
+              class="phone-shot"
+              data-phone-shot
+              src="assets/img/screen-line.png"
+              data-src-en="assets/img/screen-line.png"
+              data-src-ja="assets/img/screen-line-ja.png"
+              data-alt-en="A problem line drawn on a boulder photo"
+              data-alt-ja="ボルダーの写真に表示されたライン"
+              alt=""
+              loading="lazy">
+            <img
+              class="phone-shot"
+              data-phone-shot
+              src="assets/img/screen-recap.png"
+              data-src-en="assets/img/screen-recap.png"
+              data-src-ja="assets/img/screen-recap-ja.png"
+              data-alt-en="A climbing recap card"
+              data-alt-ja="クライミングのまとめカード"
+              alt=""
+              loading="lazy">
+          </div>
+        </div>
+      </div>
+
+      <div class="phone-side phone-side-right">
+        <div class="phone-caption" data-phone-cap>
+          <p class="phone-caption-label" data-en="Lines · Drawn on the rock" data-ja="ライン · 岩の上に表示"></p>
+          <p class="phone-caption-desc" data-en="See each problem drawn on the boulder photo with start holds, plus the original send videos from YouTube and Instagram, gathered in one place." data-ja="課題はボルダーの写真の上に、ラインとスタートホールドで表示。完登動画もまとめて見られるので、どこを登るのかで迷いません。"></p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Mobile: no pin, three small frames stacked, each with its caption underneath -->
+    <div class="phone-mobile">
+
+      <div class="phone-mobile-item" data-phone-mobile-item>
+        <div class="phone-frame phone-frame-sm">
+          <div class="phone-notch" aria-hidden="true"></div>
+          <div class="phone-screen">
+            <img
+              src="assets/img/screen-map.png"
+              data-src-en="assets/img/screen-map.png"
+              data-src-ja="assets/img/screen-map-ja.png"
+              data-alt-en="Map view with crag pins"
+              data-alt-ja="エリアのピンを表示した地図画面"
+              alt=""
+              loading="lazy">
+          </div>
+        </div>
+        <div class="phone-caption is-active">
+          <p class="phone-caption-label" data-en="Map · Crags &amp; Boulders" data-ja="地図 · エリアとボルダー"></p>
+          <p class="phone-caption-desc" data-en="Discover crags and boulders on a map built for outdoor exploration. Public areas come with directions, parking, and access notes." data-ja="外岩のためにつくった地図で、行きたいエリアや課題を探せます。公開されているエリアには、行き方・駐車場・アクセスの情報もまとまっています。"></p>
+        </div>
+      </div>
+
+      <div class="phone-mobile-item" data-phone-mobile-item>
+        <div class="phone-frame phone-frame-sm">
+          <div class="phone-notch" aria-hidden="true"></div>
+          <div class="phone-screen">
+            <img
+              src="assets/img/screen-line.png"
+              data-src-en="assets/img/screen-line.png"
+              data-src-ja="assets/img/screen-line-ja.png"
+              data-alt-en="A problem line drawn on a boulder photo"
+              data-alt-ja="ボルダーの写真に表示されたライン"
+              alt=""
+              loading="lazy">
+          </div>
+        </div>
+        <div class="phone-caption is-active">
+          <p class="phone-caption-label" data-en="Lines · Drawn on the rock" data-ja="ライン · 岩の上に表示"></p>
+          <p class="phone-caption-desc" data-en="See each problem drawn on the boulder photo with start holds, plus the original send videos from YouTube and Instagram, gathered in one place." data-ja="課題はボルダーの写真の上に、ラインとスタートホールドで表示。完登動画もまとめて見られるので、どこを登るのかで迷いません。"></p>
+        </div>
+      </div>
+
+      <div class="phone-mobile-item" data-phone-mobile-item>
+        <div class="phone-frame phone-frame-sm">
+          <div class="phone-notch" aria-hidden="true"></div>
+          <div class="phone-screen">
+            <img
+              src="assets/img/screen-recap.png"
+              data-src-en="assets/img/screen-recap.png"
+              data-src-ja="assets/img/screen-recap-ja.png"
+              data-alt-en="A climbing recap card"
+              data-alt-ja="クライミングのまとめカード"
+              alt=""
+              loading="lazy">
+          </div>
+        </div>
+        <div class="phone-caption is-active">
+          <p class="phone-caption-label" data-en="Recap · Your climbing" data-ja="まとめ · あなたの記録"></p>
+          <p class="phone-caption-desc" data-en="Log your sends, build your record, follow other climbers, and see what the community is up to." data-ja="完登を記録して履歴を積み重ね、ほかのクライマーをフォローしたり、みんなの活動をのぞいたり。"></p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<section id="features" class="section section-features">
+  <div class="container">
+    <div class="features-head">
+      <span class="eyebrow" data-en="FEATURES · できること" data-ja="FEATURES · できること"></span>
+      <h2 data-en="What you can do." data-ja="できること。"></h2>
+    </div>
+
+    <div class="features-stats" data-features-stats>
+      <div class="stat">
+        <span class="stat-value" data-stat="public_crags">0</span>
+        <span class="stat-label" data-en="PUBLIC CRAGS" data-ja="公開エリア"></span>
+      </div>
+      <div class="stat">
+        <span class="stat-value" data-stat="public_boulders">0</span>
+        <span class="stat-label" data-en="BOULDERS" data-ja="ボルダー"></span>
+      </div>
+      <div class="stat">
+        <span class="stat-value" data-stat="public_lines">0</span>
+        <span class="stat-label" data-en="LINES" data-ja="ライン"></span>
+      </div>
+      <div class="stat">
+        <span class="stat-value" data-stat="boulder_photos">0</span>
+        <span class="stat-label" data-en="PHOTOS" data-ja="写真"></span>
+      </div>
+    </div>
+
+    <div class="features-grid">
+      <div class="card feature-card">
+        <span class="feature-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M313.27 124.64L198.73 51.36a32 32 0 00-29.28.35L56.51 127.49A16 16 0 0048 141.63v295.8a16 16 0 0023.49 14.14l97.82-63.79a32 32 0 0129.5-.24l111.86 73a32 32 0 0029.27-.11l115.43-75.94a16 16 0 008.63-14.2V74.57a16 16 0 00-23.49-14.14l-98 63.86a32 32 0 01-29.24.35zM328 128v336M184 48v336" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="36"/></svg>
+        </span>
+        <h3 data-en="Find boulders on a map" data-ja="地図でエリアと課題を探す"></h3>
+        <p data-en="Discover crags and boulders on a map built for outdoor exploration. Public areas come with directions, parking, and access notes." data-ja="外岩のためにつくった地図で、行きたいエリアや課題を探せます。公開されているエリアには、行き方・駐車場・アクセスの情報もまとまっています。"></p>
+        <span class="feature-meta" data-en="OFFLINE · MAP TILES CACHED" data-ja="オフライン · 地図タイルを保存"></span>
+      </div>
+
+      <div class="card feature-card">
+        <span class="feature-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"><circle cx="6" cy="20" r="1.8" fill="currentColor"/><path d="M6 20 C 9 14, 14 12, 18 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="18" cy="4" r="2.2" stroke="currentColor" stroke-width="1.8" fill="none"/></svg>
+        </span>
+        <h3 data-en="The right line, made clear" data-ja="正しいラインがひと目でわかる"></h3>
+        <p data-en="See each problem drawn on the boulder photo with start holds, plus the original send videos from YouTube and Instagram, gathered in one place." data-ja="課題はボルダーの写真の上に、ラインとスタートホールドで表示。完登動画もまとめて見られるので、どこを登るのかで迷いません。"></p>
+        <span class="feature-meta" data-en="LINES · BÉZIER ON PHOTO" data-ja="ライン · 写真上にベジェ曲線"></span>
+      </div>
+
+      <div class="card feature-card">
+        <span class="feature-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M402 168c-2.93 40.67-33.1 72-66 72s-63.12-31.32-66-72c-3-42.31 26.37-72 66-72s69 30.46 66 72z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="36"/><path d="M336 304c-65.17 0-127.84 32.37-143.54 95.41-2.08 8.34 3.15 16.59 11.72 16.59h263.65c8.57 0 13.77-8.25 11.72-16.59C463.85 335.36 401.18 304 336 304z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="36"/><path d="M200 185.94c-2.34 32.48-26.72 58.06-53 58.06s-50.7-25.57-53-58.06C91.61 152.15 115.34 128 147 128s55.39 24.77 53 57.94z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="36"/><path d="M206 306c-18.05-8.27-37.93-11.45-59-11.45-52 0-102.1 25.85-114.65 76.2-1.65 6.66 2.53 13.25 9.37 13.25H154" fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="36"/></svg>
+        </span>
+        <h3 data-en="Community-consensus grades" data-ja="みんなの体感グレード"></h3>
+        <p data-en="Original grades alongside community 'felt grades,' so you know how a problem really climbs, and hold breaks or line changes get shared as they happen." data-ja="初登時のグレードに加えて、登った人たちの体感グレードも見られます。実際の登りごたえがわかり、ホールドの欠けやラインの変化もすぐに共有できます。"></p>
+        <span class="feature-meta" data-en="GRADES · 10級 – 5段 · VB – V17" data-ja="グレード · 10級 – 5段 · VB – V17"></span>
+      </div>
+
+      <div class="card feature-card">
+        <span class="feature-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M85.57 446.25h340.86a32 32 0 0028.17-47.17L284.18 82.58c-12.09-22.44-44.27-22.44-56.36 0L57.4 399.08a32 32 0 0028.17 47.17z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="36"/><path d="M250.26 195.39l5.74 122 5.73-121.95a5.74 5.74 0 00-5.79-6h0a5.74 5.74 0 00-5.68 5.95z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="36"/><path d="M256 397.25a20 20 0 1120-20 20 20 0 01-20 20z"/></svg>
+        </span>
+        <h3 data-en="Know the risk before you pull on" data-ja="取り付く前に、危険度がわかる"></h3>
+        <p data-en="Climbers can flag how dangerous a problem is (bad landings, highballs, sketchy spots), so you can make an informed call before getting on it." data-ja="下地の悪さ、ハイボール、危ない箇所など、課題のリスクを登った人が知らせてくれるので、取り付く前に自分で判断できます。"></p>
+        <span class="feature-meta" data-en="RISK · LANDING · HIGHBALL · SD" data-ja="リスク · 着地 · ハイボール · SD"></span>
+      </div>
+
+      <div class="card feature-card">
+        <span class="feature-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"><path d="M3 19 L8 12 L12 16 L18 10 L21 19 Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <h3 data-en="Built for establishers" data-ja="開拓者のための設計"></h3>
+        <p data-en="Log a crag once and share it on your terms. Keep crags private, invite co-establishers, and see real access data. Your crag, your call." data-ja="エリアの登録は一度だけ。公開の範囲は自分で決められます。非公開のまま使う、信頼できる人を共同開拓者として招く、実際のアクセス状況を見る。あなたのエリアは、あなたの判断で。"></p>
+        <span class="feature-meta" data-en="PRIVACY · INVITE ONLY" data-ja="公開範囲 · 招待制"></span>
+      </div>
+
+      <div class="card feature-card">
+        <span class="feature-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect x="64" y="320" width="48" height="160" rx="8" ry="8" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="36"/><rect x="288" y="224" width="48" height="256" rx="8" ry="8" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="36"/><rect x="400" y="112" width="48" height="368" rx="8" ry="8" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="36"/><rect x="176" y="32" width="48" height="448" rx="8" ry="8" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="36"/></svg>
+        </span>
+        <h3 data-en="Track your climbing" data-ja="自分のクライミングを記録"></h3>
+        <p data-en="Log your sends, build your record, follow other climbers, and see what the community is up to." data-ja="完登を記録して履歴を積み重ね、ほかのクライマーをフォローしたり、みんなの活動をのぞいたり。"></p>
+        <span class="feature-meta" data-en="LOG · SENDS · FLASHES · PROJECTS" data-ja="記録 · 完登 · フラッシュ · プロジェクト"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="lines" class="section section-lines" aria-labelledby="lines-heading">
+  <div class="container lines-header">
+    <p class="eyebrow lines-eyebrow" data-en="MITAKE · NINJAGAESHI ROCK · 8 LINES" data-ja="御岳 · 忍者返しの岩 · 8ライン"></p>
+    <h2 id="lines-heading" class="lines-heading" data-en="The right line, made clear." data-ja="正しいラインがひと目でわかる。"></h2>
+    <p class="lines-lead" data-en="See each problem drawn on the boulder photo with start holds, plus the original send videos from YouTube and Instagram, gathered in one place." data-ja="課題はボルダーの写真の上に、ラインとスタートホールドで表示。完登動画もまとめて見られるので、どこを登るのかで迷いません。"></p>
+  </div>
+
+  <div class="lines-stage">
+    <div class="lines-photo-wrap">
+      <div class="lines-parallax">
+        <picture>
+          <source
+            type="image/webp"
+            srcset="assets/img/web/lines-720.webp 720w, assets/img/web/lines-1200.webp 1200w, assets/img/web/lines-1920.webp 1920w"
+            sizes="100vw">
+          <img
+            class="lines-photo"
+            src="assets/img/web/lines-1200.jpg"
+            srcset="assets/img/web/lines-720.jpg 720w, assets/img/web/lines-1200.jpg 1200w, assets/img/web/lines-1920.jpg 1920w"
+            sizes="100vw"
+            width="4032"
+            height="3024"
+            loading="lazy"
+            decoding="async"
+            alt=""
+            data-alt-en="Ninjagaeshi rock at Mitake with eight bouldering lines drawn on the photo"
+            data-alt-ja="御岳・忍者返しの岩に8本のラインを描いた写真">
+        </picture>
+        <svg class="lines-svg" viewBox="0 0 4032 3024" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
+        <div class="lines-labels" aria-hidden="true"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="establishers" class="section section-establishers">
+  <div class="container establishers-inner">
+    <div class="establishers-rail" aria-hidden="false">
+      <span class="establishers-vlabel" data-en="WITH ESTABLISHERS" data-ja="開拓者とともに"></span>
+    </div>
+
+    <div class="establishers-main">
+      <div class="section-title establishers-header">
+        <span class="eyebrow" data-en="FOR ESTABLISHERS · 開拓者の方へ" data-ja="FOR ESTABLISHERS · 開拓者の方へ"></span>
+        <h2 data-en="Your crag, your call." data-ja="あなたのエリアは、あなたの判断で。"></h2>
+      </div>
+
+      <p class="establishers-intro" data-en="ChalkMap exists because of establishers: the people who find, clean, and open the crags the rest of us get to climb. We built it to take the load of documenting and sharing off your shoulders, never to take control away from you." data-ja="ChalkMapは、開拓者がいてこそ成り立つアプリです。エリアを見つけ、掃除し、登れる状態にして、みんなに共有してくれる。その記録と共有の手間を、少しでも軽くしたい。そう思ってつくりました。"></p>
+
+      <div class="establishers-photos">
+        <figure class="establishers-photo establishers-photo--a">
+          <picture>
+            <source type="image/webp" srcset="assets/img/web/chapter1-720.webp 720w, assets/img/web/chapter1-1200.webp 1200w" sizes="(min-width: 900px) 46vw, 90vw">
+            <img src="assets/img/web/chapter1-1200.jpg" srcset="assets/img/web/chapter1-720.jpg 720w, assets/img/web/chapter1-1200.jpg 1200w" sizes="(min-width: 900px) 46vw, 90vw" loading="lazy" decoding="async" width="2048" height="1536" data-alt-en="Rocky boulder at Mitake, seen from the other face" data-alt-ja="御岳のロッキーボルダー、反対の面から見た様子">
+          </picture>
+          <figcaption class="establishers-caption mono-caption" data-en="ROCKY BOULDER · MITAKE" data-ja="ロッキーボルダー · 御岳"></figcaption>
+        </figure>
+
+        <figure class="establishers-photo establishers-photo--b">
+          <picture>
+            <source type="image/webp" srcset="assets/img/web/chapter2-720.webp 720w, assets/img/web/chapter2-1200.webp 1200w" sizes="(min-width: 900px) 46vw, 90vw">
+            <img src="assets/img/web/chapter2-1200.jpg" srcset="assets/img/web/chapter2-720.jpg 720w, assets/img/web/chapter2-1200.jpg 1200w" sizes="(min-width: 900px) 46vw, 90vw" loading="lazy" decoding="async" width="2048" height="1536" data-alt-en="Kujira boulder at Ogawayama" data-alt-ja="小川山のクジラ岩">
+          </picture>
+          <figcaption class="establishers-caption mono-caption" data-en="KUJIRA BOULDER · OGAWAYAMA" data-ja="クジラ岩 · 小川山"></figcaption>
+        </figure>
+      </div>
+
+      <div class="promise-grid">
+        <div class="promise-item">
+          <h3 data-en="Private is a promise" data-ja="非公開は、約束です"></h3>
+          <p data-en="A crag you keep private stays completely private. Only the people you invite can see it. Full stop." data-ja="非公開にしたエリアは、ずっと非公開のまま。あなたが招いた人だけが見られます。"></p>
+        </div>
+        <div class="promise-item">
+          <h3 data-en="Open it when you're ready" data-ja="公開のタイミングは、自分で"></h3>
+          <p data-en="Make a crag public when the time is right. Invite trusted climbers as co-establishers, and see real access data (who's visiting and how often), so you can decide based on what's actually happening on the ground." data-ja="準備ができたら公開すればいい。信頼できる人を共同開拓者として招いたり、実際のアクセス状況（どれくらいの人が訪れているか）を見たりしながら、現場の様子を見て決められます。"></p>
+        </div>
+        <div class="promise-item">
+          <h3 data-en="Change your mind, safely" data-ja="非公開に戻したいときも、安心して"></h3>
+          <p data-en="Need to take a public crag back to private if an access issue comes up? You can. To protect everyone, un-publishing a public crag goes through a quick review by our team rather than flipping instantly." data-ja="アクセスの問題が起きたなど、公開したエリアを非公開に戻したいとき。それもできます。ただ、公開済みのエリアを非公開に戻すときは、すぐに切り替わるのではなく、運営の確認をはさんでから反映されます。"></p>
+        </div>
+        <div class="promise-item">
+          <h3 data-en="Not a topo, but a tool for topos" data-ja="トポの代わりではなく、トポを支える道具に"></h3>
+          <p data-en="ChalkMap isn't a guidebook and won't replace yours. It's an information-sharing platform, and the felt-grade and access data it gathers can make keeping your own material current easier." data-ja="ChalkMapはガイドブックでも、トポの代わりでもありません。あくまで情報を共有する場所です。集まった体感グレードやアクセスの情報は、あなた自身のトポを最新に保つのにも役立ちます。"></p>
+        </div>
+      </div>
+
+      <div class="establishers-manners">
+        <h3 data-en="Climb with respect" data-ja="クライミングエリアへのリスペクト"></h3>
+        <p data-en="Outdoor climbing only stays open if we look after it. ChalkMap is built to grow the community without overrunning the crags that make it possible." data-ja="外岩は、みんなで大切にしてはじめて、登り続けられる場所です。ChalkMapは、エリアに負担をかけずにクライマーの輪を広げることを大事にしています。"></p>
+        <p class="establishers-manners-lead" data-en="We ask everyone to:" data-ja="みなさんにお願いしたいこと："></p>
+        <ul class="establishers-manners-list">
+          <li>
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span data-en="Respect local access rules and landowners" data-ja="エリアごとのアクセスルールと土地の所有者を尊重する"></span>
+          </li>
+          <li>
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span data-en="Care for the rock and the natural environment" data-ja="岩や自然を傷つけない"></span>
+          </li>
+          <li>
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span data-en="Share accurate, responsible information" data-ja="正確で、責任のある情報を共有する"></span>
+          </li>
+          <li>
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            <span data-en="Honor each establisher's wishes for their crags" data-ja="それぞれのエリアについての開拓者の意向を尊重する"></span>
+          </li>
+        </ul>
+        <p class="establishers-manners-note" data-en="Reporting tools let the community flag issues so they can be reviewed." data-ja="問題のある投稿は報告でき、確認のうえ対応されます。"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="tail" class="section section-tail">
+
+  <!-- (a) How it works -->
+  <div class="tail-steps">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow" data-en="HOW IT WORKS · 使い方" data-ja="HOW IT WORKS · 使い方"></span>
+        <h2 data-en="Discover · Climb · Log · Share" data-ja="使い方"></h2>
+      </div>
+
+      <div class="steps-row" data-steps-row>
+        <div class="steps-rule" aria-hidden="true"><span class="steps-rule-fill" data-steps-fill></span></div>
+
+        <div class="step-item">
+          <span class="step-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M221.09 64a157.09 157.09 0 10157.09 157.09A157.1 157.1 0 00221.09 64z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="36"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="36" d="M338.29 338.29L448 448"/></svg>
+          </span>
+          <span class="step-index mono">01</span>
+          <h3 data-en="Discover" data-ja="探す"></h3>
+          <p data-en="Find crags and boulders on the map, and browse the problems, info, and grades shared by the community." data-ja="地図でエリアや課題を探し、みんなが共有した情報やグレードを見る。"></p>
+        </div>
+
+        <div class="step-item">
+          <span class="step-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"><path d="M4 19 L7 12 L13 9 L20 14 L18 19 Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="step-index mono">02</span>
+          <h3 data-en="Climb" data-ja="登る"></h3>
+          <p data-en="Head out, and check the line, the felt grade, and the danger notes before you pull on." data-ja="現地で取り付く前に、ライン・体感グレード・危険度をチェック。"></p>
+        </div>
+
+        <div class="step-item">
+          <span class="step-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M448 256c0-106-86-192-192-192S64 150 64 256s86 192 192 192 192-86 192-192z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="36"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="36" d="M352 176L217.6 336 160 272"/></svg>
+          </span>
+          <span class="step-index mono">03</span>
+          <h3 data-en="Log" data-ja="記録する"></h3>
+          <p data-en="Record your sends and build your climbing record over time." data-ja="完登を記録して、自分のクライミングを積み重ねる。"></p>
+        </div>
+
+        <div class="step-item">
+          <span class="step-icon" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M53.12 199.94l400-151.39a8 8 0 0110.33 10.33l-151.39 400a8 8 0 01-15-.34l-67.4-166.09a16 16 0 00-10.11-10.11L53.46 215a8 8 0 01-.34-15.06zM460 52L227 285" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="36"/></svg>
+          </span>
+          <span class="step-index mono">04</span>
+          <h3 data-en="Share" data-ja="共有する"></h3>
+          <p data-en="Add boulders, problems, photos, and how-to so the shared map keeps growing, for the next climber." data-ja="新しい課題や写真、登り方を追加して、クライマーのコミュニティを作り上げる。次に登りに来る人のために。"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- (b) FAQ -->
+  <div class="tail-faq">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow" data-en="FAQ · よくある質問" data-ja="FAQ · よくある質問"></span>
+        <h2 data-en="Questions, answered." data-ja="よくある質問。"></h2>
+      </div>
+
+      <div class="faq-list" data-faq-list>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span data-en="What is ChalkMap, and how do I get started?" data-ja="ChalkMapとは？どう始めればいいですか？"></span>
+            <svg class="faq-caret" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner" data-en="ChalkMap is a community-built information platform for outdoor bouldering. Every crag, boulder, and problem on the map is contributed and kept current by the climbers who actually climb there: grades, photos, line drawings, danger notes, and local access info in one place.&#10;&#10;To get started, download the app, create a free account, and open the map to explore crags near you. You can browse and log climbs right away; adding content is available once you're signed in." data-ja="ChalkMapは、外岩ボルダリングのためのコミュニティ型情報プラットフォームです。地図上のエリア・ボルダー・課題はすべて、実際にそこで登るクライマーが投稿し、最新に保っています。グレード、写真、ライン、危険度、アクセス情報がひとつにまとまっています。&#10;&#10;まずはアプリをダウンロードして無料アカウントを作成し、地図を開いて近くのエリアを探してみてください。閲覧と完登の記録はすぐに使えます。コンテンツの追加はサインイン後に可能です。"></div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span data-en="How do I add content: crags, boulders, problems, and photos?" data-ja="エリアやボルダー、課題、写真はどうやって追加しますか？"></span>
+            <svg class="faq-caret" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner" data-en="Tap the + button on the map or crag detail screen to add a new crag, boulder, problem, or parking spot. All new content starts private, and only you can see it until you choose to make it public.&#10;&#10;When you're ready to share, tap Make public and the app runs a quick content check; if it passes, the item goes live on the public map. Photos can be added to any boulder or crag from the detail screen." data-ja="地図またはエリア詳細画面の「＋」ボタンから、新しいエリア・ボルダー・課題・駐車場を追加できます。新しく追加した情報はすべて非公開から始まり、公開するまで自分にしか見えません。&#10;&#10;共有する準備ができたら「公開する」をタップします。簡単な内容チェックを通過すると、公開マップに表示されます。写真はボルダーやエリアの詳細画面からいつでも追加できます。"></div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span data-en="Who can add to a crag? Creator, co-establishers, and guests" data-ja="エリアに追加できるのは誰？（作成者・共同開拓者・ゲスト）"></span>
+            <svg class="faq-caret" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner" data-en="Every crag has a creator: the climber who adds it to ChalkMap and controls it. From Manage Access, the creator can invite other climbers as co-establishers (who can add boulders and problems) or as guests (who can view the crag and log climbs, but not add content).&#10;&#10;On a public crag, any signed-in climber can add content. On a private crag, only the creator and co-establishers can add; guests get view-and-log access. Being the creator is about managing the crag in the app, which is separate from who is credited as its establisher (see below)." data-ja="どのエリアにも作成者がいます。そのエリアをChalkMapに追加して管理するクライマーです。作成者は「アクセス管理」から、ほかのクライマーを共同開拓者（ボルダーや課題を追加できる）またはゲスト（閲覧と完登の記録はできるが、追加はできない）として招待できます。&#10;&#10;公開エリアでは、サインインしているクライマーなら誰でも情報を追加できます。非公開エリアで追加できるのは作成者と共同開拓者のみで、ゲストは閲覧と完登の記録のみです。作成者とは、アプリ上でそのエリアを管理する人のことで、開拓者として認定される人とは別です（下記参照）。"></div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span data-en="Who is the establisher (FA)? What if I add a line someone else first climbed?" data-ja="開拓者（初登者）とは？自分が初登していないラインを追加するときは？"></span>
+            <svg class="faq-caret" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner" data-en="Establishing is a credit, separate from who created the entry in the app. The establisher is the climber recognized as having established a crag, boulder, or problem; for a problem, that is the first ascensionist (FA).&#10;&#10;You can claim it yourself (Claim as establisher, or Claim FA), or the creator can set it for the actual climber and send them an establisher invite code. The creator reviews establisher claims. So the climber who creates a crag in the app and the climber credited as its establisher can be the same person, but they don't have to be." data-ja="開拓は功績であり、アプリ上で誰が情報を追加したかとは別です。開拓者とは、そのエリア・ボルダー・課題を開拓したと認定されるクライマーで、課題の場合は初登者（FA）にあたります。&#10;&#10;自分で「開拓者として申請」「初登者として申請」することもできますし、作成者が実際のクライマーを「開拓者を設定」で設定したり、開拓者コードを発行して渡したりもできます。開拓者の申請は作成者が確認します。つまり、アプリ上でエリアを作成した人と、その開拓者として認定される人は、同じでも、別々でもかまいません。"></div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span data-en="How do I invite people to a private crag?" data-ja="非公開エリアに人を招待するには？"></span>
+            <svg class="faq-caret" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner" data-en="From the crag's Manage Access screen, tap Invite climbers. You can search by username, invite followers, or generate a single-use invite code (valid 7 days) to share however you like.&#10;&#10;Invited climbers join as guests by default. You can promote anyone to co-establisher from Manage Access at any time, and change it back later." data-ja="エリアの「アクセス管理」画面から「クライマーを招待」をタップします。ユーザー名で検索する、フォロワーから選ぶ、7日間有効の使い切り招待コードを発行して好きな方法で共有する、のいずれの方法でも招待できます。&#10;&#10;招待されたクライマーは最初はゲストとして参加します。アクセス管理からいつでも共同開拓者に昇格でき、後から戻すことも可能です。"></div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span data-en="Who can see my content? Public vs. private" data-ja="自分の投稿は誰に見えますか？（公開と非公開）"></span>
+            <svg class="faq-caret" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner" data-en="When a crag is private, it is invisible to everyone except the creator, co-establishers, and invited guests. When a crag is public (after passing review), it appears on the map and in search for everyone. Boulders and problems inherit the visibility of their parent crag.&#10;&#10;If you need to take a public crag back to private (say an access issue arises), you can request that. To protect the community, un-publishing goes through a quick review by our team rather than flipping instantly." data-ja="非公開のエリアは、作成者・共同開拓者・招待されたゲスト以外には一切見えません。公開エリアは（確認を通過した後）すべてのユーザーの地図と検索に表示されます。ボルダーや課題の公開範囲は、属するエリアに従います。&#10;&#10;アクセス上の問題などで公開エリアを非公開に戻したい場合も、申請できます。コミュニティを守るため、非公開化はすぐには反映されず、運営による確認を経て行われます。"></div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span data-en="How do I report a problem or flag unsafe content?" data-ja="問題のある投稿や危険な情報を報告するには？"></span>
+            <svg class="faq-caret" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner" data-en="Tap Report on any crag, boulder, problem, parking spot, send, comment, user, or photo, then choose a type: a safety / access concern (closures, dangerous landings, access issues, visible to the community on that content's page), inappropriate content (spam, false info, harassment, goes to the ChalkMap team only), or a removal request.&#10;&#10;You can attach a photo to safety reports. Once submitted, you'll see a confirmation." data-ja="エリア・ボルダー・課題・駐車場・完登・コメント・ユーザー・写真のどれでも、「報告」から知らせることができます。種類は3つ：安全・アクセスに関する報告（閉鎖、危険な下地、アクセス問題など、その情報のページでコミュニティにも表示されます）、不適切なコンテンツ（スパム、虚偽情報、嫌がらせなど、運営のみに届きます）、削除のリクエスト。&#10;&#10;安全に関する報告には写真も添付できます。送信後、確認メッセージが表示されます。"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- (c) Download band -->
+  <div class="tail-download" id="download">
+    <div class="container tail-download-inner">
+      <h2 data-en="Free on iOS and Android." data-ja="iOSとAndroidで、無料。"></h2>
+      <div class="btn-row">
+        <a href="https://apps.apple.com/app/id6767085401" class="btn btn-primary">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          <span data-en="Download on the App Store" data-ja="App Storeでダウンロード"></span>
+        </a>
+        <a href="https://play.google.com/store/apps/details?id=app.chalkmap.v2" class="btn btn-primary">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor"><path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/></svg>
+          <span data-en="Get it on Google Play" data-ja="Google Playでダウンロード"></span>
+        </a>
+        <a href="../support.html" class="btn btn-ghost">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <span data-en="Contact Support" data-ja="サポートに問い合わせ"></span>
+        </a>
+      </div>
+      <p class="mono tail-download-note" data-en="FREE TO START · PREMIUM OPTIONAL · 無料で始められます" data-ja="FREE TO START · PREMIUM OPTIONAL · 無料で始められます"></p>
+    </div>
+  </div>
+
+</section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#hero" class="nav-brand"><img src="assets/img/chalkmap_logo.png" alt="" width="26" height="26"><span>ChalkMap<span class="dot">.</span></span></a>
+          <p data-en="The hub for outdoor bouldering. Built in Japan, for the crags and the people who look after them." data-ja="外岩ボルダリングの情報を、ひとつの場所に。日本のエリアと、それを守る人たちのためにつくりました。"></p>
+          <p class="mono" data-en="Operated by ChalkMap LLC (合同会社ChalkMap), Japan" data-ja="運営：合同会社ChalkMap"></p>
+        </div>
+        <div class="footer-col">
+          <h4 data-en="App" data-ja="アプリ"></h4>
+          <ul>
+            <li><a href="https://apps.apple.com/app/id6767085401" rel="noopener">App Store</a></li>
+            <li><a href="https://play.google.com/store/apps/details?id=app.chalkmap.v2" rel="noopener">Google Play</a></li>
+            <li><a href="#features" data-en="Features" data-ja="機能"></a></li>
+            <li><a href="#faq" data-en="FAQ" data-ja="よくある質問"></a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 data-en="Community" data-ja="コミュニティ"></h4>
+          <ul>
+            <li><a href="#establishers" data-en="For Establishers" data-ja="開拓者の方へ"></a></li>
+            <li><a href="#map" data-en="Public crags" data-ja="公開エリア"></a></li>
+            <li><a href="https://www.instagram.com/chalkmap.app/" rel="noopener">Instagram</a></li>
+            <li><a href="../support.html" data-en="Support" data-ja="サポート"></a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 data-en="Legal" data-ja="規約"></h4>
+          <ul>
+            <li><a href="../privacy.html" data-en="Privacy Policy" data-ja="プライバシーポリシー"></a></li>
+            <li><a href="../terms.html" data-en="Terms of Service" data-ja="利用規約"></a></li>
+            <li><a href="../delete-account.html" data-en="Delete account" data-ja="アカウント削除"></a></li>
+            <li><a href="../support.html" data-en="Contact" data-ja="お問い合わせ"></a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-legal">
+        <span>© 2026 ChalkMap LLC · 合同会社ChalkMap</span>
+        <span data-en="Photos: real crags, taken in the app" data-ja="写真：アプリ内で撮影した実際のエリア"></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+  <script src="assets/site.js"></script>
+</body>
+</html>

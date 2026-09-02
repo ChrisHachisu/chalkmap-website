@@ -1,0 +1,167 @@
+/* features section — scoped under .section-features. Tokens from base.css only, no hex. */
+
+.section-features .features-head {
+  max-width: 62ch;
+  margin-bottom: var(--s7);
+}
+
+.section-features .features-head h2 {
+  margin-top: var(--s2);
+  color: var(--fg);
+}
+
+/* mono eyebrow caption */
+.section-features .eyebrow {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* numbers strip */
+.section-features .features-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--s5);
+  padding-bottom: var(--s6);
+  margin-bottom: var(--s7);
+  border-bottom: 1px solid var(--hair);
+}
+
+.section-features .stat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s1);
+}
+
+.section-features .stat-value {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(28px, 4vw, 48px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--fg);
+  font-variant-numeric: tabular-nums;
+}
+
+.section-features .stat-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--tertiary);
+}
+
+body[data-lang="ja"] .section-features .stat-label {
+  font-family: var(--font-ja-body);
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* dense data grid */
+.section-features .features-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s5);
+}
+
+.section-features .feature-card {
+  display: flex;
+  flex-direction: column;
+  padding: var(--s5);
+  border-radius: var(--r-lg);
+  transition: border-color 0.2s ease-out;
+}
+
+.section-features .feature-card:hover,
+.section-features .feature-card:focus-within {
+  border-color: var(--accent-border);
+}
+
+.section-features .feature-icon {
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+  margin-bottom: var(--s4);
+  color: var(--accent);
+}
+
+.section-features .feature-icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.section-features .feature-card h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+  margin-bottom: var(--s2);
+}
+
+body[data-lang="ja"] .section-features .feature-card h3 {
+  font-family: var(--font-ja-display);
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.section-features .feature-card p {
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--muted);
+  flex: 1 0 auto;
+}
+
+body[data-lang="ja"] .section-features .feature-card p {
+  font-family: var(--font-ja-body);
+  font-weight: 500;
+  line-height: 1.7;
+}
+
+.section-features .feature-meta {
+  display: block;
+  margin-top: var(--s4);
+  padding-top: var(--s3);
+  border-top: 1px solid var(--hair);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.4;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--tertiary);
+}
+
+body[data-lang="ja"] .section-features .feature-meta {
+  font-family: var(--font-ja-body);
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+@media (min-width: 900px) {
+  .section-features .features-stats {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .section-features .features-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section-features .feature-card {
+    transition: none;
+  }
+}

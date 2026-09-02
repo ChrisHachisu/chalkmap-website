@@ -1,0 +1,273 @@
+/* ChalkMap v2 — establishers section (the quiet chapter) */
+
+.section-establishers {
+  position: relative;
+  background: var(--bg);
+  color: var(--fg);
+  overflow: hidden;
+}
+
+.establishers-inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s6);
+}
+
+/* -- vertical JA/EN rail label, desktop only -------------------------- */
+.establishers-rail {
+  display: none;
+}
+
+.establishers-vlabel {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  font-weight: 500;
+  color: var(--muted);
+  white-space: nowrap;
+  opacity: 0.85;
+}
+
+/* -- header ------------------------------------------------------------ */
+.establishers-header {
+  max-width: 62ch;
+}
+
+.establishers-header .eyebrow {
+  display: inline-block;
+  margin-bottom: var(--s3);
+}
+
+.section-establishers h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(28px, 3.6vw, 48px);
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin: 0 0 var(--s5) 0;
+  color: var(--fg);
+}
+
+.establishers-intro {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--muted);
+  max-width: 62ch;
+  margin: 0 0 var(--s8) 0;
+}
+
+/* -- offset photo pair --------------------------------------------------- */
+.establishers-photos {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s6);
+  margin: 0 0 var(--s9) 0;
+}
+
+.establishers-photo {
+  position: relative;
+  margin: 0;
+}
+
+.establishers-photo picture {
+  display: block;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  border: 1px solid var(--hair);
+  background: var(--surface);
+}
+
+.establishers-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.establishers-caption {
+  position: absolute;
+  left: var(--s4);
+  bottom: var(--s4);
+  display: inline-flex;
+  align-items: center;
+  padding: var(--s2) var(--s3);
+  border-radius: var(--r-sm);
+  border: 1px solid var(--hair);
+  background: var(--elevated);
+  color: var(--fg);
+}
+
+.mono-caption {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 500;
+}
+
+/* -- promise grid --------------------------------------------------------- */
+.promise-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  max-width: 62ch;
+  margin: 0 0 var(--s9) 0;
+}
+
+.promise-item {
+  padding: var(--s6) 0;
+  border-top: 1px solid var(--hair);
+}
+
+.promise-item:last-child {
+  border-bottom: 1px solid var(--hair);
+}
+
+.section-establishers h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  margin: 0 0 var(--s3) 0;
+  color: var(--fg);
+}
+
+.promise-item p {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--muted);
+  margin: 0;
+}
+
+/* -- manners block --------------------------------------------------------- */
+.establishers-manners {
+  max-width: 62ch;
+  padding-top: var(--s7);
+  border-top: 1px solid var(--hair);
+}
+
+.establishers-manners > p {
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--muted);
+  margin: 0 0 var(--s5) 0;
+}
+
+.establishers-manners-lead {
+  color: var(--fg) !important;
+  font-weight: 500;
+}
+
+.establishers-manners-list {
+  list-style: none;
+  margin: 0 0 var(--s5) 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s3);
+}
+
+.establishers-manners-list li {
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+}
+
+.establishers-manners-list svg {
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  color: var(--accent);
+}
+
+.establishers-manners-list span {
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--fg);
+}
+
+.establishers-manners-note {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--tertiary) !important;
+  margin: 0 !important;
+}
+
+/* -- focus visibility ------------------------------------------------------- */
+.section-establishers a:focus-visible,
+.section-establishers button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* -- Japanese type adjustments ---------------------------------------------- */
+body[data-lang="ja"] .section-establishers h2,
+body[data-lang="ja"] .section-establishers h3 {
+  font-family: var(--font-ja-display);
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+body[data-lang="ja"] .section-establishers .establishers-intro,
+body[data-lang="ja"] .section-establishers .promise-item p,
+body[data-lang="ja"] .section-establishers .establishers-manners > p,
+body[data-lang="ja"] .section-establishers .establishers-manners-list span {
+  font-family: var(--font-ja-body);
+  font-weight: 500;
+  line-height: 1.7;
+}
+
+/* -- reduced motion: nothing to animate via CSS here, but guard anyway ------ */
+@media (prefers-reduced-motion: reduce) {
+  .section-establishers * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* -- desktop layout: rail + offset photos ----------------------------------- */
+@media (min-width: 900px) {
+  .establishers-inner {
+    grid-template-columns: var(--s7) 1fr;
+    align-items: start;
+  }
+
+  .establishers-rail {
+    display: block;
+    position: relative;
+    height: 100%;
+  }
+
+  .establishers-vlabel {
+    position: sticky;
+    top: 42svh;
+    display: block;
+  }
+
+  .establishers-photos {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+
+  .establishers-photo--a {
+    margin-top: 0;
+    margin-right: var(--s7);
+  }
+
+  .establishers-photo--b {
+    margin-top: var(--s8);
+    margin-left: var(--s7);
+  }
+}

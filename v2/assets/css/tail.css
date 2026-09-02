@@ -1,0 +1,237 @@
+/* ChalkMap v2 — tail section: how it works / faq / download band */
+
+.section-tail {
+  position: relative;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+.section-tail > div + div {
+  margin-top: var(--s9);
+}
+
+/* -- (a) how it works ---------------------------------------------------- */
+
+.tail-steps .section-head {
+  margin-bottom: var(--s8);
+}
+
+.steps-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--s6);
+}
+
+.steps-rule {
+  position: absolute;
+  top: 22px;
+  left: 22px;
+  right: 22px;
+  height: 1px;
+  background: var(--hair);
+  overflow: hidden;
+}
+
+.steps-rule-fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--accent);
+  transform-origin: left center;
+  transform: scaleX(0);
+}
+
+.step-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s2);
+}
+
+.step-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--r);
+  background: var(--surface);
+  border: 1px solid var(--hair);
+  color: var(--accent);
+  margin-bottom: var(--s3);
+}
+
+.step-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.step-index {
+  color: var(--tertiary);
+  font-size: 11px;
+}
+
+.step-item h3 {
+  margin-top: var(--s1);
+}
+
+.step-item p {
+  color: var(--muted);
+  font-size: 15px;
+  max-width: 32ch;
+}
+
+@media (max-width: 899px) {
+  .steps-row {
+    grid-template-columns: 1fr;
+    gap: var(--s7);
+  }
+  .steps-rule {
+    top: 0;
+    bottom: 0;
+    left: 22px;
+    right: auto;
+    width: 1px;
+    height: auto;
+  }
+  .steps-rule-fill {
+    transform-origin: top center;
+    transform: scaleY(0);
+  }
+  .step-item {
+    padding-left: var(--s7);
+  }
+  .step-icon {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}
+
+/* -- (b) faq -------------------------------------------------------------- */
+
+.tail-faq .section-head {
+  margin-bottom: var(--s7);
+}
+
+.faq-list {
+  max-width: 78ch;
+  border-top: 1px solid var(--hair);
+}
+
+.faq-item {
+  border-bottom: 1px solid var(--hair);
+}
+
+.faq-question {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s4);
+  padding-block: var(--s5);
+  text-align: left;
+  font-family: var(--font-display);
+  font-weight: 650;
+  font-size: 17px;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+}
+
+body[data-lang="ja"] .faq-question {
+  font-family: var(--font-ja-display);
+  font-weight: 700;
+}
+
+.faq-caret {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  color: var(--muted);
+  transition: transform 0.3s var(--ease);
+}
+
+.faq-item[data-open="true"] .faq-caret {
+  transform: rotate(180deg);
+  color: var(--accent);
+}
+
+.faq-answer {
+  overflow: hidden;
+  height: 0;
+}
+
+.faq-answer-inner {
+  padding-bottom: var(--s5);
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.6;
+  max-width: 66ch;
+  white-space: pre-line;
+}
+
+body[data-lang="ja"] .faq-answer-inner {
+  color: var(--fg);
+  opacity: 0.86;
+}
+
+.faq-answer-inner p + p {
+  margin-top: var(--s3);
+}
+
+/* no-JS / static fallback: first item's answer stays reachable, rest collapsed by CSS only when JS never runs */
+.no-js .faq-answer {
+  height: auto !important;
+}
+
+/* -- (c) download band ----------------------------------------------------- */
+
+.tail-download {
+  padding-bottom: var(--s9);
+}
+
+.tail-download-inner {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s6);
+  padding: var(--s8) var(--s6);
+  background: var(--surface);
+  border: 1px solid var(--hair);
+  border-radius: var(--r-xl);
+}
+
+.tail-download-inner h2 {
+  max-width: 20ch;
+}
+
+.tail-download-inner .btn-row {
+  justify-content: center;
+}
+
+.tail-download-note {
+  color: var(--tertiary);
+}
+
+@media (max-width: 520px) {
+  .tail-download-inner {
+    padding: var(--s6) var(--s4);
+  }
+  .tail-download-inner .btn-row {
+    flex-direction: column;
+    width: 100%;
+  }
+  .tail-download-inner .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faq-caret {
+    transition-duration: 0.001ms;
+  }
+}
