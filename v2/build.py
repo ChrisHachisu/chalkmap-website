@@ -65,8 +65,14 @@ def artifact(html):
     css = read(os.path.join(ROOT, "assets/site.css"))
     js = read(os.path.join(ROOT, "assets/site.js"))
     # downgrade 1920 -> 1200 to keep under the 16MB cap
-    html = html.replace("-1920.webp", "-1200.webp").replace("-1920.jpg", "-1200.jpg")
-    css = css.replace("-1920.webp", "-1200.webp").replace("-1920.jpg", "-1200.jpg")
+    for w in ("-1920", "-1200"):
+        html = html.replace(w + ".webp", "-720.webp").replace(w + ".jpg", "-720.webp")
+        css = css.replace(w + ".webp", "-720.webp").replace(w + ".jpg", "-720.webp")
+    html = html.replace("-720.jpg", "-720.webp").replace("japan-map.png", "japan-map.webp")
+    css = css.replace("-720.jpg", "-720.webp").replace("japan-map.png", "japan-map.webp")
+    html = re.sub(r'(screen-[a-z]+(?:-ja)?)\.png', r"\1-sm.webp", html)
+    html = re.sub(r'\s(srcset|sizes)="[^"]*"', "", html)
+    html = re.sub(r'<source type="image/jpeg"[^>]*>', "", html)
     # srcset with multiple candidates: keep only the first candidate
     def srcset_fix(m):
         first = m.group(1).split(",")[0].strip().split(" ")[0]
