@@ -7,7 +7,7 @@
 import base64, os, re, sys, mimetypes
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
-HERO = os.environ.get("HERO", "a")
+HERO = os.environ.get("HERO", "b")
 ORDER = ["hero-" + HERO, "why", "phone", "features", "establishers", "tail"]
 APPLE = "https://apps.apple.com/app/id6767085401"
 PLAY = "https://play.google.com/store/apps/details?id=app.chalkmap.v2"
@@ -50,6 +50,13 @@ def build():
     html = fix_links(html)
     with open(os.path.join(ROOT, "index-%s.html" % HERO), "w", encoding="utf-8") as f:
         f.write(html)
+    if HERO == "b":
+        canon = html.replace("assets/site-b.css", "assets/site.css").replace("assets/site-b.js", "assets/site.js")
+        with open(os.path.join(ROOT, "index.html"), "w", encoding="utf-8") as f:
+            f.write(canon)
+        import shutil
+        shutil.copy(os.path.join(ROOT, "assets/site-b.css"), os.path.join(ROOT, "assets/site.css"))
+        shutil.copy(os.path.join(ROOT, "assets/site-b.js"), os.path.join(ROOT, "assets/site.js"))
     em = html.count("—") + html.count("&mdash;")
     print("built index-%s.html:" % HERO + " %d sections, %d bytes, emdash=%d, missing=%s" % (len(sections), len(html), em, [os.path.basename(m) for m in missing]))
     return html

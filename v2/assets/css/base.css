@@ -45,6 +45,7 @@ body[data-lang="ja"] h1, body[data-lang="ja"] h2, body[data-lang="ja"] h3, body[
 .display { font-size:clamp(40px,6vw,88px); letter-spacing:-.035em; line-height:.98; }
 h2, .h2 { font-size:clamp(28px,3.6vw,48px); }
 h3, .h3 { font-size:22px; font-weight:650; line-height:1.25; letter-spacing:-.02em; }
+body[data-lang="ja"] h1, body[data-lang="ja"] h2, body[data-lang="ja"] h3 { word-break:auto-phrase; overflow-wrap:anywhere; }
 body[data-lang="ja"] .display-xl { line-height:1.02; }
 body[data-lang="ja"] .display { line-height:1.08; }
 p { margin:0; }
