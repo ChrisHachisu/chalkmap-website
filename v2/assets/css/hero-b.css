@@ -1,6 +1,6 @@
 /* hero B: typographic, one azure line drawn over the empty canvas */
 .section-hero-b { min-height: 100svh; padding: calc(64px + var(--s8)) 0 var(--s9); overflow: hidden; display: flex; align-items: center; }
-.section-hero-b .hero-line-art { position: absolute; top: 0; right: 0; bottom: 0; width: 100%; height: 100%; pointer-events: none; }
+
 .section-hero-b .hero-text { max-width: 760px; }
 .section-hero-b .hero-scroll { left: auto; right: var(--gutter); transform: none; }
 .section-hero-b .hero-b-path { opacity: .9; }
@@ -34,4 +34,15 @@ body[data-lang="ja"] .section-hero-b .lead { color: var(--fg); opacity: .86; }
 .section-hero-b .hero-line-art--mobile { display: none; position: static; width: 100%; max-width: 360px; height: auto; margin-top: var(--s6); }
 @media (max-width: 899px) {
   .section-hero-b .hero-line-art--mobile { display: block; }
+}
+
+/* line column: always inside the page, beside the text, never over it */
+.section-hero-b .hero-b-layout { display: grid; grid-template-columns: minmax(0, 1fr) clamp(240px, 30vw, 420px); gap: var(--s7); align-items: end; }
+.section-hero-b .hero-line-col { position: relative; align-self: stretch; display: flex; align-items: flex-end; justify-content: center; min-height: 0; }
+.section-hero-b .hero-line-art { display: block; width: 100%; height: min(72svh, 760px); pointer-events: none; }
+.section-hero-b .hero-line-art--mobile { display: none; }
+@media (max-width: 899px) {
+  .section-hero-b .hero-b-layout { grid-template-columns: 1fr; }
+  .section-hero-b .hero-line-col { display: none; }
+  .section-hero-b .hero-line-art--mobile { display: block; position: static; width: 100%; max-width: 360px; height: auto; margin-top: var(--s6); }
 }
