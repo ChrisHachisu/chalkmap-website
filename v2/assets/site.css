@@ -192,6 +192,15 @@ body[data-lang="ja"] .section-hero-b .lead { color: var(--fg); opacity: .86; }
   .section-hero-b .hero-line-art { height: min(64svh, 600px); }
 }
 
+/* first placement restored: full-height background stroke on the right, always fully visible */
+.section-hero-b .hero-b-layout { display: block; }
+.section-hero-b .hero-line-col { display: none; }
+.section-hero-b .hero-line-art:not(.hero-line-art--mobile) { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+.section-hero-b .hero-b-layout { position: relative; z-index: 1; }
+@media (max-width: 899px) {
+  .section-hero-b .hero-line-art:not(.hero-line-art--mobile) { display: none; }
+}
+
 /* ---- why ---- */
 .section-why { border-top: 1px solid var(--hair); }
 .section-why .why-layout { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: var(--s7); align-items: start; }
