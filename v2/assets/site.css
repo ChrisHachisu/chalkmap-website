@@ -425,239 +425,68 @@ body[data-lang="ja"] .section-features .feature-meta {
 }
 
 /* ---- establishers ---- */
-/* ChalkMap v2 — establishers section (the quiet chapter) */
+/* establishers: the quiet chapter, now with the publish ladder and iconed promises */
+.section-establishers { --private: #C084FC; --private-soft: rgba(192,132,252,.14); --private-border: rgba(192,132,252,.38); }
+.section-establishers .establishers-inner { position: relative; }
+.section-establishers .establishers-rail { position: absolute; left: calc(-1 * var(--gutter) + 8px); top: 0; bottom: 0; width: 24px; display: flex; align-items: flex-start; justify-content: center; pointer-events: none; }
+.section-establishers .establishers-vlabel { writing-mode: vertical-rl; font-family: var(--font-mono); font-size: 12px; letter-spacing: .18em; color: var(--tertiary); text-transform: uppercase; }
+body[data-lang="ja"] .section-establishers .establishers-vlabel { font-family: var(--font-ja-body); letter-spacing: .3em; }
+.section-establishers .establishers-header { max-width: 62ch; margin-bottom: var(--s7); }
+.section-establishers .establishers-header h2 { margin: var(--s4) 0 var(--s4); }
+.section-establishers .establishers-intro { color: var(--muted); }
+body[data-lang="ja"] .section-establishers .establishers-intro { color: var(--fg); opacity: .86; }
 
-.section-establishers {
-  position: relative;
-  background: var(--bg);
-  color: var(--fg);
-  overflow: hidden;
+/* ladder */
+.section-establishers .ladder { position: relative; margin: 0 0 var(--s8); padding: var(--s6) 0 0; }
+.section-establishers .ladder-track { position: absolute; left: 0; right: 0; top: calc(var(--s6) + 17px); height: 1px; background: var(--hair-strong); }
+.section-establishers .ladder-fill { position: absolute; left: 0; top: 0; height: 100%; width: 0%; background: linear-gradient(90deg, var(--private), var(--accent) 60%, var(--private)); }
+.section-establishers .ladder-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--s5); }
+.section-establishers .ladder-step { display: grid; gap: var(--s3); align-content: start; }
+.section-establishers .ladder-chip { position: relative; z-index: 1; display: inline-flex; align-items: center; gap: var(--s2); height: 34px; padding: 0 var(--s4) 0 var(--s3); border-radius: var(--r-pill); border: 1px solid var(--hair-strong); background: var(--surface); font-family: var(--font-mono); font-size: 11.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); width: max-content; transition: color .35s var(--ease), border-color .35s var(--ease), background .35s var(--ease); }
+body[data-lang="ja"] .section-establishers .ladder-chip { font-family: var(--font-ja-body); font-size: 12.5px; letter-spacing: .04em; font-weight: 700; }
+.section-establishers .ladder-chip svg { width: 15px; height: 15px; }
+.section-establishers .ladder-step.is-on .ladder-chip { color: var(--accent); border-color: var(--accent-border); background: var(--accent-soft); }
+.section-establishers .ladder-step--private.is-on .ladder-chip, .section-establishers .ladder-step--back.is-on .ladder-chip { color: var(--private); border-color: var(--private-border); background: var(--private-soft); }
+.section-establishers .ladder-text { font-size: 14px; line-height: 1.5; color: var(--muted); max-width: 26ch; }
+body[data-lang="ja"] .section-establishers .ladder-text { color: var(--fg); opacity: .8; line-height: 1.65; }
+.section-establishers .ladder-step--back .ladder-chip::before { content: ""; position: absolute; left: -14px; top: 50%; width: 10px; height: 1px; background: var(--private-border); }
+
+/* promises */
+.section-establishers .promise-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s4); margin: 0 0 var(--s8); }
+.section-establishers .promise-item { display: grid; gap: var(--s3); align-content: start; padding: var(--s5); }
+.section-establishers .promise-icon { width: 36px; height: 36px; border-radius: var(--r); display: grid; place-items: center; background: var(--accent-bg); border: 1px solid var(--accent-border); color: var(--accent); }
+.section-establishers .promise-icon svg { width: 20px; height: 20px; }
+.section-establishers .promise-item h3 { font-size: 19px; }
+.section-establishers .promise-item p { color: var(--muted); font-size: 15.5px; line-height: 1.55; }
+body[data-lang="ja"] .section-establishers .promise-item p { color: var(--fg); opacity: .8; line-height: 1.7; }
+
+/* manners */
+.section-establishers .establishers-manners { padding-top: var(--s7); border-top: 1px solid var(--hair); display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: var(--s7); align-items: start; }
+.section-establishers .manners-head h3 { font-size: 22px; margin-bottom: var(--s3); }
+.section-establishers .manners-head p { color: var(--muted); }
+body[data-lang="ja"] .section-establishers .manners-head p { color: var(--fg); opacity: .86; }
+.section-establishers .establishers-manners-lead { color: var(--fg); font-weight: 600; margin-top: var(--s4); }
+.section-establishers .establishers-manners-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: var(--s3); }
+.section-establishers .establishers-manners-list li { display: grid; grid-template-columns: 34px 1fr; gap: var(--s3); align-items: start; padding: var(--s4); border: 1px solid var(--hair); border-radius: var(--r-lg); background: var(--surface); font-size: 15px; line-height: 1.45; }
+.section-establishers .manners-icon { width: 34px; height: 34px; border-radius: var(--r); display: grid; place-items: center; background: var(--elevated); border: 1px solid var(--hair); color: var(--success); }
+.section-establishers .manners-icon svg { width: 18px; height: 18px; }
+.section-establishers .establishers-manners-note { grid-column: 1 / -1; color: var(--muted); font-size: 12.5px; letter-spacing: .04em; text-transform: none; margin: 0; }
+
+@media (max-width: 899px) {
+  .section-establishers .establishers-rail { display: none; }
+  .section-establishers .ladder-steps { grid-template-columns: 1fr; gap: var(--s4); }
+  .section-establishers .ladder-track { left: 16px; right: auto; top: var(--s6); bottom: 0; width: 1px; height: auto; }
+  .section-establishers .ladder-fill { width: 100%; height: 0%; background: linear-gradient(180deg, var(--private), var(--accent) 60%, var(--private)); }
+  .section-establishers .ladder-step { padding-left: var(--s7); }
+  .section-establishers .ladder-step--back .ladder-chip::before { display: none; }
+  .section-establishers .promise-grid { grid-template-columns: 1fr; }
+  .section-establishers .establishers-manners { grid-template-columns: 1fr; gap: var(--s5); }
+  .section-establishers .establishers-manners-list { grid-template-columns: 1fr; }
 }
-
-.establishers-inner {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--s6);
-}
-
-/* -- vertical JA/EN rail label, desktop only -------------------------- */
-.establishers-rail {
-  display: none;
-}
-
-.establishers-vlabel {
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  font-weight: 500;
-  color: var(--muted);
-  white-space: nowrap;
-  opacity: 0.85;
-}
-
-/* -- header ------------------------------------------------------------ */
-.establishers-header {
-  max-width: 62ch;
-}
-
-.establishers-header .eyebrow {
-  display: inline-block;
-  margin-bottom: var(--s3);
-}
-
-.section-establishers h2 {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: clamp(28px, 3.6vw, 48px);
-  letter-spacing: -0.03em;
-  line-height: 1.05;
-  margin: 0 0 var(--s5) 0;
-  color: var(--fg);
-}
-
-.establishers-intro {
-  font-family: var(--font-body);
-  font-weight: 400;
-  font-size: 17px;
-  line-height: 1.55;
-  color: var(--muted);
-  max-width: 62ch;
-  margin: 0 0 var(--s8) 0;
-}
-
-/* -- offset photo pair --------------------------------------------------- */
-
-
-
-
-
-.mono-caption {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-weight: 500;
-}
-
-/* -- promise grid --------------------------------------------------------- */
-.promise-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  max-width: 62ch;
-  margin: 0 0 var(--s9) 0;
-}
-
-.promise-item {
-  padding: var(--s6) 0;
-  border-top: 1px solid var(--hair);
-}
-
-.promise-item:last-child {
-  border-bottom: 1px solid var(--hair);
-}
-
-.section-establishers h3 {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 22px;
-  line-height: 1.25;
-  letter-spacing: -0.02em;
-  margin: 0 0 var(--s3) 0;
-  color: var(--fg);
-}
-
-.promise-item p {
-  font-family: var(--font-body);
-  font-weight: 400;
-  font-size: 17px;
-  line-height: 1.55;
-  color: var(--muted);
-  margin: 0;
-}
-
-/* -- manners block --------------------------------------------------------- */
-.establishers-manners {
-  max-width: 62ch;
-  padding-top: var(--s7);
-  border-top: 1px solid var(--hair);
-}
-
-.establishers-manners > p {
-  font-family: var(--font-body);
-  font-size: 17px;
-  line-height: 1.55;
-  color: var(--muted);
-  margin: 0 0 var(--s5) 0;
-}
-
-.establishers-manners-lead {
-  color: var(--fg) !important;
-  font-weight: 500;
-}
-
-.establishers-manners-list {
-  list-style: none;
-  margin: 0 0 var(--s5) 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--s3);
-}
-
-.establishers-manners-list li {
-  display: flex;
-  align-items: center;
-  gap: var(--s3);
-}
-
-.establishers-manners-list svg {
-  flex: 0 0 auto;
-  width: 20px;
-  height: 20px;
-  color: var(--accent);
-}
-
-.establishers-manners-list span {
-  font-family: var(--font-body);
-  font-size: 17px;
-  line-height: 1.55;
-  color: var(--fg);
-}
-
-.establishers-manners-note {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--tertiary) !important;
-  margin: 0 !important;
-}
-
-/* -- focus visibility ------------------------------------------------------- */
-.section-establishers a:focus-visible,
-.section-establishers button:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-}
-
-/* -- Japanese type adjustments ---------------------------------------------- */
-body[data-lang="ja"] .section-establishers h2,
-body[data-lang="ja"] .section-establishers h3 {
-  font-family: var(--font-ja-display);
-  font-weight: 700;
-  letter-spacing: 0;
-}
-
-body[data-lang="ja"] .section-establishers .establishers-intro,
-body[data-lang="ja"] .section-establishers .promise-item p,
-body[data-lang="ja"] .section-establishers .establishers-manners > p,
-body[data-lang="ja"] .section-establishers .establishers-manners-list span {
-  font-family: var(--font-ja-body);
-  font-weight: 500;
-  line-height: 1.7;
-}
-
-/* -- reduced motion: nothing to animate via CSS here, but guard anyway ------ */
 @media (prefers-reduced-motion: reduce) {
-  .section-establishers * {
-    animation: none !important;
-    transition: none !important;
-  }
+  .section-establishers .ladder-fill { width: 100% !important; height: 100% !important; }
+  .section-establishers .ladder-step { --on: 1; }
 }
-
-/* -- desktop layout: rail + offset photos ----------------------------------- */
-@media (min-width: 900px) {
-  .establishers-inner {
-    grid-template-columns: var(--s7) 1fr;
-    align-items: start;
-  }
-
-  .establishers-rail {
-    display: block;
-    position: relative;
-    height: 100%;
-  }
-
-  .establishers-vlabel {
-    position: sticky;
-    top: 42svh;
-    display: block;
-  }
-
-  
-  
-  }
-
-/* review fixes: fill the width, rail inside the gutter, two-column promises */
-@media (min-width: 900px) {
-  .section-establishers .establishers-main { max-width: none; }
-  .section-establishers .promise-grid { display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--s7); row-gap: 0; max-width: none; }
-  .section-establishers .establishers-vlabel { font-size: 13px; letter-spacing: .18em; }
-}
-.section-establishers .establishers-manners-note { color: var(--muted); max-width: 60ch; }
-.section-establishers .establishers-manners-note { text-transform: none !important; letter-spacing: .04em !important; font-size: 12.5px !important; color: var(--muted) !important; }
 
 /* ---- tail ---- */
 /* ChalkMap v2 — tail section: how it works / faq / download band */
@@ -904,3 +733,11 @@ body[data-lang="ja"] .faq-answer-inner {
 .section-tail .tail-download-support a { color: var(--muted); font-size: 14px; text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--hair-strong); }
 .section-tail .tail-download-support a:hover { color: var(--fg); }
 .section-tail .tail-download-note { color: var(--muted); }
+
+/* how-it-works: icon and number share one row, title and text sit under both, rule crosses the icon centre */
+.section-tail .step-item { display: grid; grid-template-columns: 44px minmax(0, 1fr); column-gap: var(--s3); row-gap: var(--s2); align-items: center; }
+.section-tail .step-icon { grid-column: 1; margin: 0; }
+.section-tail .step-index { grid-column: 2; align-self: center; line-height: 1; }
+.section-tail .step-item h3 { grid-column: 1 / -1; margin-top: var(--s2); }
+.section-tail .step-item p { grid-column: 1 / -1; }
+@media (max-width: 899px) { .section-tail .steps-rule { display: none; } }

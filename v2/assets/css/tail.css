@@ -242,3 +242,11 @@ body[data-lang="ja"] .faq-answer-inner {
 .section-tail .tail-download-support a { color: var(--muted); font-size: 14px; text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--hair-strong); }
 .section-tail .tail-download-support a:hover { color: var(--fg); }
 .section-tail .tail-download-note { color: var(--muted); }
+
+/* how-it-works: icon and number share one row, title and text sit under both, rule crosses the icon centre */
+.section-tail .step-item { display: grid; grid-template-columns: 44px minmax(0, 1fr); column-gap: var(--s3); row-gap: var(--s2); align-items: center; }
+.section-tail .step-icon { grid-column: 1; margin: 0; }
+.section-tail .step-index { grid-column: 2; align-self: center; line-height: 1; }
+.section-tail .step-item h3 { grid-column: 1 / -1; margin-top: var(--s2); }
+.section-tail .step-item p { grid-column: 1 / -1; }
+@media (max-width: 899px) { .section-tail .steps-rule { display: none; } }

@@ -325,118 +325,39 @@
 
 /* ---- establishers ---- */
 (function () {
-  'use strict';
-
-  function init(ctx) {
-    var section = document.getElementById('establishers');
+  window.CM.register('establishers', function init(ctx) {
+    var section = document.querySelector('.section-establishers');
     if (!section) return;
-
-    var gsap = ctx && ctx.gsap;
-    var ScrollTrigger = ctx && ctx.ScrollTrigger;
-    if (!gsap || !ScrollTrigger) return;
-
-    // Reduced motion: leave the static layout exactly as authored, no hiding, no animating.
-    if (ctx.reduced) return;
-
-    var headerWrap = section.querySelector('.establishers-header');
-    var headerEls = section.querySelectorAll('.establishers-header .eyebrow, .establishers-header h2, .establishers-intro');
-    var vlabel = section.querySelector('.establishers-vlabel');
-    var photos = section.querySelectorAll('.establishers-photo');
-    var promiseWrap = section.querySelector('.promise-grid');
-    var promiseItems = section.querySelectorAll('.promise-item');
-    var mannersWrap = section.querySelector('.establishers-manners');
-    var mannersEls = mannersWrap
-      ? mannersWrap.querySelectorAll('h3, .establishers-manners-lead, .establishers-manners > p')
-      : [];
-    var mannersListWrap = section.querySelector('.establishers-manners-list');
-    var mannersListItems = section.querySelectorAll('.establishers-manners-list li');
-    var mannersNote = section.querySelector('.establishers-manners-note');
-
-    function revealGroup(els, trigger, opts) {
-      if (!els || !els.length || !trigger) return;
-      opts = opts || {};
-      gsap.set(els, { opacity: 0, y: opts.y || 24 });
-      ScrollTrigger.create({
-        trigger: trigger,
-        start: opts.start || 'top 85%',
-        once: true,
-        onEnter: function () {
-          gsap.to(els, {
-            opacity: 1,
-            y: 0,
-            duration: opts.duration || 0.95,
-            ease: opts.ease || 'power2.out',
-            stagger: opts.stagger || 0,
-            delay: opts.delay || 0
-          });
-        }
-      });
+    var reveals = section.querySelectorAll('[data-est-reveal]');
+    var steps = section.querySelectorAll('[data-ladder-step]');
+    var fill = section.querySelector('[data-ladder-fill]');
+    var ladder = section.querySelector('[data-ladder]');
+    var mobile = window.matchMedia('(max-width: 899px)').matches;
+    function allOn() {
+      for (var i = 0; i < steps.length; i++) steps[i].classList.add('is-on');
+      if (fill) { fill.style.width = '100%'; fill.style.height = '100%'; }
+      for (var r = 0; r < reveals.length; r++) reveals[r].style.opacity = '1';
     }
-
-    // Header: eyebrow, headline, intro paragraph.
-    revealGroup(headerEls, headerWrap, { y: 24, duration: 1.0, stagger: 0.12 });
-
-    // Vertical rail label: slow fade, no movement (it is sticky already).
-    if (vlabel) {
-      gsap.set(vlabel, { opacity: 0 });
-      ScrollTrigger.create({
-        trigger: section,
-        start: 'top 70%',
-        once: true,
-        onEnter: function () {
-          gsap.to(vlabel, { opacity: 0.85, duration: 1.1, ease: 'power2.out' });
+    if (ctx.reduced || !ctx.gsap || !ctx.ScrollTrigger) { allOn(); return; }
+    var gsap = ctx.gsap, ST = ctx.ScrollTrigger;
+    // slow reveals: the quiet chapter
+    gsap.set(reveals, { opacity: 0, y: 28 });
+    ST.batch(reveals, { start: 'top 85%', once: true, onEnter: function (b) { gsap.to(b, { opacity: 1, y: 0, duration: 1, ease: 'power2.out', stagger: .12 }); } });
+    // the ladder fills and lights each state in turn as it comes into view
+    if (ladder && fill) {
+      var prop = mobile ? 'height' : 'width';
+      var state = { p: 0 };
+      gsap.to(state, {
+        p: 1, ease: 'none',
+        scrollTrigger: { trigger: ladder, start: 'top 75%', end: 'bottom 45%', scrub: .6 },
+        onUpdate: function () {
+          fill.style[prop] = (state.p * 100) + '%';
+          for (var i = 0; i < steps.length; i++) steps[i].classList.toggle('is-on', state.p >= (i + .5) / steps.length);
         }
       });
+      gsap.from(steps, { opacity: 0, y: 16, duration: .7, ease: 'power2.out', stagger: .1, scrollTrigger: { trigger: ladder, start: 'top 80%', once: true } });
     }
-
-    // Offset photo pair: slowest reveal on the page, staggered.
-    photos.forEach(function (photo, i) {
-      gsap.set(photo, { opacity: 0, y: 32 });
-      ScrollTrigger.create({
-        trigger: photo,
-        start: 'top 85%',
-        once: true,
-        onEnter: function () {
-          gsap.to(photo, { opacity: 1, y: 0, duration: 1.05, ease: 'power3.out', delay: i * 0.15 });
-        }
-      });
-    });
-
-    // Four promise blocks.
-    revealGroup(promiseItems, promiseWrap, { y: 24, duration: 0.95, stagger: 0.1 });
-
-    // Manners block heading / intro / lead line.
-    revealGroup(mannersEls, mannersWrap, { y: 24, duration: 0.95, stagger: 0.1 });
-
-    // Manners bullet list.
-    revealGroup(mannersListItems, mannersListWrap, { y: 16, duration: 0.75, stagger: 0.08, delay: 0.2 });
-
-    // Reporting note, last to settle.
-    if (mannersNote) {
-      gsap.set(mannersNote, { opacity: 0, y: 12 });
-      ScrollTrigger.create({
-        trigger: mannersNote,
-        start: 'top 90%',
-        once: true,
-        onEnter: function () {
-          gsap.to(mannersNote, { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out', delay: 0.5 });
-        }
-      });
-    }
-
-    // JA/EN text length differs enough to shift section height; recompute trigger positions.
-    if (ctx.onLang && typeof ctx.onLang === 'function') {
-      ctx.onLang(function () {
-        if (ScrollTrigger && typeof ScrollTrigger.refresh === 'function') {
-          ScrollTrigger.refresh();
-        }
-      });
-    }
-  }
-
-  if (window.CM && typeof window.CM.register === 'function') {
-    window.CM.register('establishers', init);
-  }
+  });
 })();
 
 /* ---- tail ---- */

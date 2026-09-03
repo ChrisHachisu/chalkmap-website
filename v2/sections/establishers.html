@@ -1,61 +1,75 @@
 <section id="establishers" class="section section-chapter section-establishers">
   <div class="container establishers-inner">
-    <div class="establishers-rail" aria-hidden="false">
+    <div class="establishers-rail" aria-hidden="true">
       <span class="establishers-vlabel" data-en="WITH ESTABLISHERS" data-ja="開拓者とともに"></span>
     </div>
 
     <div class="establishers-main">
-      <div class="section-title establishers-header">
+      <div class="section-title establishers-header" data-est-reveal>
         <span class="eyebrow" data-en="For establishers" data-ja="For establishers"></span>
         <h2 data-en="Your crag, your call." data-ja="あなたのエリアは、あなたの判断で。"></h2>
+        <p class="establishers-intro" data-en="ChalkMap exists because of establishers: the people who find, clean, and open the crags the rest of us get to climb. We built it to take the load of documenting and sharing off your shoulders, never to take control away from you." data-ja="ChalkMapは、開拓者がいてこそ成り立つアプリです。エリアを見つけ、掃除し、登れる状態にして、みんなに共有してくれる。その記録と共有の手間を、少しでも軽くしたい。そう思ってつくりました。"></p>
       </div>
 
-      <p class="establishers-intro" data-en="ChalkMap exists because of establishers: the people who find, clean, and open the crags the rest of us get to climb. We built it to take the load of documenting and sharing off your shoulders, never to take control away from you." data-ja="ChalkMapは、開拓者がいてこそ成り立つアプリです。エリアを見つけ、掃除し、登れる状態にして、みんなに共有してくれる。その記録と共有の手間を、少しでも軽くしたい。そう思ってつくりました。"></p>
-
-      
+      <!-- The publish ladder: the states a crag moves through, in the app's own chip colours -->
+      <div class="ladder" data-ladder aria-label="How a crag moves between private and public">
+        <div class="ladder-track" aria-hidden="true"><span class="ladder-fill" data-ladder-fill></span></div>
+        <ol class="ladder-steps">
+          <li class="ladder-step ladder-step--private" data-ladder-step>
+            <span class="ladder-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><span data-en="Private" data-ja="非公開"></span></span>
+            <span class="ladder-text" data-en="Every new crag starts here. Only you can see it." data-ja="新しいエリアは、ここから。見えるのは、あなただけ。"></span>
+          </li>
+          <li class="ladder-step ladder-step--invite" data-ladder-step>
+            <span class="ladder-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0 1 14 0"/><path d="M19 8v6M16 11h6"/></svg><span data-en="Invited" data-ja="招待"></span></span>
+            <span class="ladder-text" data-en="Add co-establishers and guests by name or with a code." data-ja="共同開拓者やゲストを、名前かコードで招待。"></span>
+          </li>
+          <li class="ladder-step ladder-step--public" data-ladder-step>
+            <span class="ladder-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg><span data-en="Public" data-ja="公開"></span></span>
+            <span class="ladder-text" data-en="On the map for everyone, with your access rules attached." data-ja="みんなのマップに。アクセスのルールも一緒に。"></span>
+          </li>
+          <li class="ladder-step ladder-step--back" data-ladder-step>
+            <span class="ladder-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-3"/></svg><span data-en="Back to private" data-ja="非公開に戻す"></span></span>
+            <span class="ladder-text" data-en="If access changes, you can pull it back. Reviewed, never instant." data-ja="アクセスに問題が出たら、戻せます。確認のうえで、慎重に。"></span>
+          </li>
+        </ol>
+      </div>
 
       <div class="promise-grid">
-        <div class="promise-item">
+        <div class="promise-item card" data-est-reveal>
+          <span class="promise-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/><path d="M12 15v3"/></svg></span>
           <h3 data-en="Private is a promise" data-ja="非公開は、約束です"></h3>
           <p data-en="A crag you keep private stays completely private. Only the people you invite can see it. Full stop." data-ja="非公開にしたエリアは、ずっと非公開のまま。あなたが招いた人だけが見られます。"></p>
         </div>
-        <div class="promise-item">
+        <div class="promise-item card" data-est-reveal>
+          <span class="promise-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
           <h3 data-en="Open it when you're ready" data-ja="公開のタイミングは、自分で"></h3>
           <p data-en="Make a crag public when the time is right. Invite trusted climbers as co-establishers, and see real access data (who's visiting and how often), so you can decide based on what's actually happening on the ground." data-ja="準備ができたら公開すればいい。信頼できる人を共同開拓者として招いたり、実際のアクセス状況（どれくらいの人が訪れているか）を見たりしながら、現場の様子を見て決められます。"></p>
         </div>
-        <div class="promise-item">
+        <div class="promise-item card" data-est-reveal>
+          <span class="promise-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/></svg></span>
           <h3 data-en="Change your mind, safely" data-ja="非公開に戻したいときも、安心して"></h3>
-          <p data-en="Need to take a public crag back to private if an access issue comes up? You can. To protect everyone, un-publishing a public crag goes through a quick review by our team rather than flipping instantly." data-ja="アクセスの問題が起きたなど、公開したエリアを非公開に戻したいとき。それもできます。ただ、公開済みのエリアを非公開に戻すときは、すぐに切り替わるのではなく、運営の確認をはさんでから反映されます。"></p>
+          <p data-en="Need to take a public crag back to private if an access issue comes up? You can. To protect everyone, un-publishing a public crag goes through a quick review by our team rather than flipping instantly." data-ja="アクセスの問題が起きたなど、公開したエリアを非公開に戻したいとき。それもできます。ただ、公開済みのエリアを非公開に戻すときは、すぐに切り替わるのではなく、運営の確認を経てから反映されます。"></p>
         </div>
-        <div class="promise-item">
+        <div class="promise-item card" data-est-reveal>
+          <span class="promise-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5V5.5"/><path d="M9 8h7M9 12h5"/></svg></span>
           <h3 data-en="Not a guidebook. A tool for keeping yours current." data-ja="ガイドブックの代わりではなく、支える道具に"></h3>
           <p data-en="ChalkMap isn't a guidebook and won't replace yours. It's an information-sharing platform, and the felt-grade and access data it gathers can make keeping your own guidebook current easier." data-ja="ChalkMapはガイドブックの代わりではありません。あくまで情報を共有する場所です。集まった体感グレードやアクセスの情報は、あなた自身のガイドブックを最新に保つのにも役立ちます。"></p>
         </div>
       </div>
 
-      <div class="establishers-manners">
-        <h3 data-en="Climb with respect" data-ja="クライミングエリアへのリスペクト"></h3>
-        <p data-en="Outdoor climbing only stays open if we look after it. ChalkMap is built to grow the community without overrunning the crags that make it possible." data-ja="外岩は、みんなで大切にしてはじめて、登り続けられる場所です。ChalkMapは、エリアに負担をかけずにクライマーの輪を広げることを大事にしています。"></p>
-        <p class="establishers-manners-lead" data-en="We ask everyone to:" data-ja="みなさんにお願いしたいこと："></p>
+      <div class="establishers-manners" data-est-reveal>
+        <div class="manners-head">
+          <h3 data-en="Climb with respect" data-ja="クライミングエリアへのリスペクト"></h3>
+          <p data-en="Outdoor climbing only stays open if we look after it. ChalkMap is built to grow the community without overrunning the crags that make it possible." data-ja="外岩は、みんなで大切にしてはじめて、登り続けられる場所です。ChalkMapは、エリアに負担をかけずにクライマーの輪を広げることを大事にしています。"></p>
+          <p class="establishers-manners-lead" data-en="We ask everyone to:" data-ja="みなさんにお願いしたいこと："></p>
+        </div>
         <ul class="establishers-manners-list">
-          <li>
-            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            <span data-en="Respect local access rules and landowners" data-ja="エリアごとのアクセスルールと土地の所有者を尊重する"></span>
-          </li>
-          <li>
-            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            <span data-en="Care for the rock and the natural environment" data-ja="岩や自然を傷つけない"></span>
-          </li>
-          <li>
-            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            <span data-en="Share accurate, responsible information" data-ja="正確で、責任のある情報を共有する"></span>
-          </li>
-          <li>
-            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            <span data-en="Honor each establisher's wishes for their crags" data-ja="それぞれのエリアについての開拓者の意向を尊重する"></span>
-          </li>
+          <li><span class="manners-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V8l7-5 7 5v13"/><path d="M10 21v-5h4v5"/></svg></span><span data-en="Respect local access rules and landowners" data-ja="エリアごとのアクセスルールと土地の所有者を尊重する"></span></li>
+          <li><span class="manners-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 4 13c0-4 3-7 7-8 0 4 3 6 6 6a5 5 0 0 1-6 9z"/><path d="M4 20c3-3 6-5 9-7"/></svg></span><span data-en="Care for the rock and the natural environment" data-ja="岩や自然を傷つけない"></span></li>
+          <li><span class="manners-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="M12 8v5"/><circle cx="12" cy="16" r=".6"/></svg></span><span data-en="Share accurate, responsible information" data-ja="正確で、責任のある情報を共有する"></span></li>
+          <li><span class="manners-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 11V7a5 5 0 0 1 10 0v4"/><path d="M5 11h14l-1 9H6z"/><path d="M12 14v3"/></svg></span><span data-en="Honor each establisher's wishes for their crags" data-ja="それぞれのエリアについての開拓者の意向を尊重する"></span></li>
         </ul>
-        <p class="establishers-manners-note" data-en="Reporting tools let the community flag issues so they can be reviewed." data-ja="問題のある投稿は報告でき、確認のうえ対応されます。"></p>
+        <p class="mono no-caps establishers-manners-note" data-en="Reporting tools let the community flag issues so they can be reviewed." data-ja="問題のある投稿は報告でき、確認のうえ対応されます。"></p>
       </div>
     </div>
   </div>
