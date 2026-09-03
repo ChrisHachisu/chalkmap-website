@@ -251,3 +251,7 @@ body[data-lang="ja"] .faq-answer-inner {
 .section-tail .step-item p { margin: 0; }
 .section-tail .steps-rule { top: 22px; left: 22px; right: 22px; }
 @media (max-width: 899px) { .section-tail .steps-rule { display: none; } }
+/* icon glyph flush with the text edge: no box, so icon, number, title and text share one left edge */
+.section-tail .step-icon { width: 26px; height: 26px; background: transparent; border: 0; border-radius: 0; justify-content: flex-start; margin: 0 0 var(--s3) 0; }
+.section-tail .step-icon svg { width: 24px; height: 24px; }
+.section-tail .steps-rule { top: 13px; left: 30px; right: 0; }
