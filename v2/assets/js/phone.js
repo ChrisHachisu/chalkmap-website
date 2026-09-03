@@ -22,7 +22,9 @@
     if (!desktop) return;
     var timer = null;
     function pick() {
-      var mid = window.innerHeight * .5, best = 0, bestD = Infinity;
+      var top = section.getBoundingClientRect().top;
+      if (top > window.innerHeight * .4) { show(0); return; }
+      var mid = window.innerHeight * .42, best = 0, bestD = Infinity;
       for (var c = 0; c < captions.length; c++) {
         var r = captions[c].getBoundingClientRect(); var d = Math.abs((r.top + r.bottom) / 2 - mid);
         if (d < bestD) { bestD = d; best = c; }

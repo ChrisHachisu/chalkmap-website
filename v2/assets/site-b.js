@@ -127,8 +127,10 @@
     if (!section) return;
     var reveals = section.querySelectorAll('[data-reveal]');
     var words = section.querySelectorAll('.hero-b-word');
-    var path = section.querySelector('.hero-b-path');
-    var holds = section.querySelectorAll('.hero-b-hold');
+    var desktopNow = window.matchMedia('(min-width: 900px)').matches;
+    var art = section.querySelector(desktopNow ? '.hero-line-art:not(.hero-line-art--mobile)' : '.hero-line-art--mobile');
+    var path = art ? art.querySelector('.hero-b-path') : null;
+    var holds = art ? art.querySelectorAll('.hero-b-hold') : [];
     if (ctx.reduced || !ctx.gsap) {
       for (var i = 0; i < reveals.length; i++) reveals[i].style.opacity = '1';
       return;
@@ -151,7 +153,7 @@
     var cue = section.querySelector('.hero-scroll');
     if (ST && cue) gsap.to(cue, { opacity: 0, ease: 'none', scrollTrigger: { trigger: section, start: 'top top', end: '30% top', scrub: true } });
     if (ST && window.matchMedia('(min-width: 900px)').matches) {
-      gsap.to(section.querySelector('.hero-line-art'), { y: -80, ease: 'none', scrollTrigger: { trigger: section, start: 'top top', end: 'bottom top', scrub: true } });
+      gsap.to(art, { y: -80, ease: 'none', scrollTrigger: { trigger: section, start: 'top top', end: 'bottom top', scrub: true } });
       gsap.to(section.querySelector('.hero-text'), { y: -30, opacity: .35, ease: 'none', scrollTrigger: { trigger: section, start: '40% top', end: 'bottom top', scrub: true } });
     }
   });
@@ -197,7 +199,9 @@
     if (!desktop) return;
     var timer = null;
     function pick() {
-      var mid = window.innerHeight * .5, best = 0, bestD = Infinity;
+      var top = section.getBoundingClientRect().top;
+      if (top > window.innerHeight * .4) { show(0); return; }
+      var mid = window.innerHeight * .42, best = 0, bestD = Infinity;
       for (var c = 0; c < captions.length; c++) {
         var r = captions[c].getBoundingClientRect(); var d = Math.abs((r.top + r.bottom) / 2 - mid);
         if (d < bestD) { bestD = d; best = c; }

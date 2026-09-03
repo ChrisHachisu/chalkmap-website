@@ -29,3 +29,9 @@ body[data-lang="ja"] .section-hero-b .lead { color: var(--fg); opacity: .86; }
   .section-hero-b { min-height: 0; padding-bottom: var(--s8); }
   .section-hero-b .hero-scroll { display: none; }
 }
+
+/* mobile line: a short fragment under the buttons, never over the title */
+.section-hero-b .hero-line-art--mobile { display: none; position: static; width: 100%; max-width: 360px; height: auto; margin-top: var(--s6); }
+@media (max-width: 899px) {
+  .section-hero-b .hero-line-art--mobile { display: block; }
+}
