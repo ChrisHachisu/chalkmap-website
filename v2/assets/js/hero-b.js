@@ -21,10 +21,12 @@
       .to(section.querySelector('h1'), { opacity: 1, y: 0, duration: .01 }, .1)
       .to(words, { opacity: 1, y: 0, duration: .8, stagger: .14 }, .15)
       .to(section.querySelectorAll('.lead, .btn-row, .hero-meta, .hero-scroll'), { opacity: 1, y: 0, duration: .7, stagger: .08 }, .6)
-      .to(holds[0] ? [holds[0], holds[1]] : [], { opacity: .9, scale: 1, duration: .5 }, .3);
+      .to(holds[0] ? [holds[0]] : [], { opacity: .9, scale: 1, duration: .5 }, .3);
     if (path) tl.to(path, { strokeDashoffset: 0, duration: 1.8, ease: 'power2.inOut' }, .4);
-    if (holds[2]) tl.to(holds[2], { opacity: 1, scale: 1, duration: .4 }, 2.1);
+    if (holds[1]) tl.to(holds[1], { opacity: 1, scale: 1, duration: .4 }, 2.1);
     // scroll: the line and grid drift up slower than the page (parallax), text eases away
+    var cue = section.querySelector('.hero-scroll');
+    if (ST && cue) gsap.to(cue, { opacity: 0, ease: 'none', scrollTrigger: { trigger: section, start: 'top top', end: '30% top', scrub: true } });
     if (ST && window.matchMedia('(min-width: 900px)').matches) {
       gsap.to(section.querySelector('.hero-line-art'), { y: -80, ease: 'none', scrollTrigger: { trigger: section, start: 'top top', end: 'bottom top', scrub: true } });
       gsap.to(section.querySelector('.hero-text'), { y: -30, opacity: .35, ease: 'none', scrollTrigger: { trigger: section, start: '40% top', end: 'bottom top', scrub: true } });

@@ -1,136 +1,120 @@
 <section id="phone" class="section section-phone">
   <div class="container">
-
-    <div class="phone-head">
-      <p class="eyebrow" data-en="IN THE APP · アプリの中" data-ja="IN THE APP · アプリの中"></p>
+    <div class="section-head phone-head">
+      <p class="eyebrow" data-en="In the app" data-ja="In the app"></p>
       <h2 data-en="Built for the field." data-ja="現場で使える設計。"></h2>
+      <p data-en="Three screens, no manual. Sample data shown, not a real crag." data-ja="説明書のいらない3つの画面。表示はサンプルデータで、実在のエリアではありません。"></p>
     </div>
 
-    <!-- Desktop: one pinned frame, screenshots slide through, captions flank it -->
-    <div class="phone-stage" data-phone-pin>
-
-      <div class="phone-side phone-side-left">
-        <div class="phone-caption is-active" data-phone-cap>
-          <p class="phone-caption-label" data-en="Map · Crags &amp; Boulders" data-ja="地図 · エリアとボルダー"></p>
-          <p class="phone-caption-desc" data-en="Discover crags and boulders on a map built for outdoor exploration. Public areas come with directions, parking, and access notes." data-ja="外岩のためにつくった地図で、行きたいエリアや課題を探せます。公開されているエリアには、行き方・駐車場・アクセスの情報もまとまっています。"></p>
-        </div>
-        <div class="phone-caption" data-phone-cap>
-          <p class="phone-caption-label" data-en="Recap · Your climbing" data-ja="まとめ · あなたの記録"></p>
-          <p class="phone-caption-desc" data-en="Log your sends, build your record, follow other climbers, and see what the community is up to." data-ja="完登を記録して履歴を積み重ね、ほかのクライマーをフォローしたり、みんなの活動をのぞいたり。"></p>
-        </div>
-      </div>
+    <div class="phone-stage" data-phone-stage>
+      <ol class="phone-captions" aria-label="App screens">
+        <li class="phone-caption is-active" data-shot="0">
+          <button type="button" class="phone-caption-btn" data-shot-btn="0">
+            <span class="mono phone-caption-label" data-en="Map" data-ja="地図"></span>
+            <span class="phone-caption-title" data-en="Crags and boulders, with access notes." data-ja="エリアとボルダー、アクセス情報つき。"></span>
+            <span class="phone-caption-body" data-en="Discover crags and boulders on a map built for outdoor exploration. Public areas come with directions, parking, and access notes." data-ja="外岩のためにつくった地図で、エリアやボルダーを探せます。公開エリアには、行き方や駐車場、アクセス情報がついています。"></span>
+          </button>
+        </li>
+        <li class="phone-caption" data-shot="1">
+          <button type="button" class="phone-caption-btn" data-shot-btn="1">
+            <span class="mono phone-caption-label" data-en="Lines" data-ja="ライン"></span>
+            <span class="phone-caption-title" data-en="The right line, drawn on the rock." data-ja="正しいラインを、岩の上に。"></span>
+            <span class="phone-caption-body" data-en="See each problem drawn on the boulder photo with start holds, plus the original send videos from YouTube and Instagram, gathered in one place." data-ja="課題はボルダーの写真の上に、ラインとスタートホールドで表示。YouTubeやInstagramの完登動画も、ひとつの場所にまとまっています。"></span>
+          </button>
+        </li>
+        <li class="phone-caption" data-shot="2">
+          <button type="button" class="phone-caption-btn" data-shot-btn="2">
+            <span class="mono phone-caption-label" data-en="Recap" data-ja="まとめ"></span>
+            <span class="phone-caption-title" data-en="Your climbing, as a record." data-ja="あなたの登攀を、記録に。"></span>
+            <span class="phone-caption-body" data-en="Log your sends, build your record, follow other climbers, and see what the community is up to." data-ja="完登を記録して、自分の記録を積み上げ、ほかのクライマーをフォローして、コミュニティの動きを見られます。"></span>
+          </button>
+        </li>
+      </ol>
 
       <div class="phone-frame-wrap">
-        <div class="phone-frame" data-phone-frame>
-          <div class="phone-notch" aria-hidden="true"></div>
-          <div class="phone-screen">
-            <img
-              class="phone-shot is-visible"
-              data-phone-shot
-              src="assets/img/screen-map.png"
-              data-src-en="assets/img/screen-map.png"
-              data-src-ja="assets/img/screen-map-ja.png"
-              data-alt-en="Map view with crag pins"
-              data-alt-ja="エリアのピンを表示した地図画面"
-              alt=""
-              loading="lazy">
-            <img
-              class="phone-shot"
-              data-phone-shot
-              src="assets/img/screen-line.png"
-              data-src-en="assets/img/screen-line.png"
-              data-src-ja="assets/img/screen-line-ja.png"
-              data-alt-en="A problem line drawn on a boulder photo"
-              data-alt-ja="ボルダーの写真に表示されたライン"
-              alt=""
-              loading="lazy">
-            <img
-              class="phone-shot"
-              data-phone-shot
-              src="assets/img/screen-recap.png"
-              data-src-en="assets/img/screen-recap.png"
-              data-src-ja="assets/img/screen-recap-ja.png"
-              data-alt-en="A climbing recap card"
-              data-alt-ja="クライミングのまとめカード"
-              alt=""
-              loading="lazy">
+        <div class="phone-frame" aria-hidden="true">
+          <div class="phone-notch"></div>
+
+          <!-- Screen 0: map (abstract terrain, fictional pins) -->
+          <div class="phone-shot is-active" data-shot-index="0">
+            <div class="app-bar"><span class="app-back">&lsaquo;</span><span class="app-title" data-en="Map" data-ja="地図"></span><span class="app-dot"></span></div>
+            <div class="app-map">
+              <svg viewBox="0 0 300 520" preserveAspectRatio="none" aria-hidden="true">
+                <g fill="none" stroke="var(--hair-strong)" stroke-width="1">
+                  <path d="M-20,120 C60,80 120,140 200,110 S320,60 340,90"/>
+                  <path d="M-20,170 C70,130 130,190 210,160 S320,110 340,140"/>
+                  <path d="M-20,220 C80,180 140,240 220,210 S320,160 340,190"/>
+                  <path d="M-20,280 C60,250 150,300 230,270 S320,230 340,250"/>
+                  <path d="M-20,340 C70,310 140,360 240,330 S320,290 340,310"/>
+                  <path d="M-20,400 C60,370 150,420 230,390 S320,350 340,370"/>
+                  <path d="M-20,460 C70,430 140,480 240,450 S320,410 340,430"/>
+                </g>
+                <path d="M40,520 C90,440 60,360 120,300 S200,200 260,120" fill="none" stroke="var(--subdued)" stroke-width="10" stroke-linecap="round"/>
+                <path d="M40,520 C90,440 60,360 120,300 S200,200 260,120" fill="none" stroke="var(--elevated)" stroke-width="6" stroke-linecap="round"/>
+              </svg>
+              <div class="app-pin app-pin--public" style="left:38%;top:34%"><i></i><b data-en="Public crag" data-ja="公開エリア"></b></div>
+              <div class="app-pin app-pin--private" style="left:64%;top:52%"><i></i><b data-en="Private" data-ja="非公開"></b></div>
+              <div class="app-pin app-pin--parking" style="left:22%;top:62%"><i>P</i><b data-en="Parking" data-ja="駐車場"></b></div>
+              <div class="app-you" style="left:50%;top:78%"></div>
+            </div>
+            <div class="app-card">
+              <span class="mono app-card-eyebrow" data-en="Public crag · 12 boulders" data-ja="公開エリア · ボルダー12"></span>
+              <span class="app-card-title" data-en="Sample crag" data-ja="サンプルエリア"></span>
+              <span class="app-card-meta" data-en="Parking · Access notes · Toilet" data-ja="駐車場 · アクセス情報 · トイレ"></span>
+            </div>
+            <div class="app-tabbar"><span class="is-on" data-en="Home" data-ja="ホーム"></span><span data-en="Map" data-ja="地図"></span><span data-en="Profile" data-ja="プロフィール"></span></div>
+          </div>
+
+          <!-- Screen 1: line on an abstract boulder -->
+          <div class="phone-shot" data-shot-index="1">
+            <div class="app-bar"><span class="app-back">&lsaquo;</span><span class="app-title" data-en="Problem" data-ja="課題"></span><span class="app-dot"></span></div>
+            <div class="app-rock">
+              <svg viewBox="0 0 300 260" aria-hidden="true">
+                <defs>
+                  <linearGradient id="rockg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2A2A2E"/><stop offset="1" stop-color="#151517"/></linearGradient>
+                </defs>
+                <path d="M10,250 C20,170 60,90 130,60 C190,35 250,60 285,120 C300,150 292,210 290,250 Z" fill="url(#rockg)"/>
+                <path d="M60,200 C90,150 140,130 200,120" fill="none" stroke="var(--hair)" stroke-width="1"/>
+                <path d="M120,240 C130,190 150,160 190,140" fill="none" stroke="var(--hair)" stroke-width="1"/>
+                <path class="app-line" d="M96,226 C104,190 128,172 150,150 C172,128 176,104 196,86" fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity=".85"/>
+                <circle cx="96" cy="226" r="7" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+                <circle cx="118" cy="232" r="7" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+                <circle cx="196" cy="86" r="5" fill="var(--accent)"/>
+              </svg>
+            </div>
+            <div class="app-card">
+              <span class="mono app-card-eyebrow" data-en="Sample boulder · Line 3" data-ja="サンプル岩 · ライン3"></span>
+              <span class="app-card-title" data-en="Sample problem." data-ja="サンプル課題。"></span>
+              <span class="app-chips"><span class="app-chip app-chip--grade">2級 · V4</span><span class="app-chip" data-en="Felt grade 3級" data-ja="体感 3級"></span><span class="app-chip app-chip--warn" data-en="Highball" data-ja="ハイボール"></span></span>
+              <span class="app-card-meta" data-en="2 send videos · 14 sends · 3 projects" data-ja="完登動画2 · 完登14 · プロジェクト3"></span>
+            </div>
+            <div class="app-cta" data-en="Log a send" data-ja="完登を記録"></div>
+            <div class="app-tabbar"><span data-en="Home" data-ja="ホーム"></span><span class="is-on" data-en="Map" data-ja="地図"></span><span data-en="Profile" data-ja="プロフィール"></span></div>
+          </div>
+
+          <!-- Screen 2: recap -->
+          <div class="phone-shot" data-shot-index="2">
+            <div class="app-bar"><span class="app-back">&lsaquo;</span><span class="app-title" data-en="Recap" data-ja="まとめ"></span><span class="app-dot"></span></div>
+            <div class="app-recap">
+              <span class="mono app-recap-eyebrow" data-en="ChalkMap · This month" data-ja="ChalkMap · 今月"></span>
+              <span class="app-recap-big">V6</span>
+              <span class="app-recap-sub" data-en="Your hardest send yet" data-ja="これまでで最高の完登"></span>
+              <div class="app-recap-stats">
+                <div><b>9</b><span class="mono" data-en="Sends" data-ja="完登"></span></div>
+                <div><b>3</b><span class="mono" data-en="Flashes" data-ja="フラッシュ"></span></div>
+                <div><b>2</b><span class="mono" data-en="Crags" data-ja="エリア"></span></div>
+              </div>
+              <div class="app-recap-bars" aria-hidden="true">
+                <i style="height:22%"></i><i style="height:40%"></i><i style="height:70%"></i><i style="height:100%"></i><i style="height:48%"></i><i style="height:28%"></i>
+              </div>
+              <span class="mono app-recap-axis">V1 · V2 · V3 · V4 · V5 · V6</span>
+              <div class="app-recap-actions"><span class="app-cta app-cta--inline" data-en="Share" data-ja="シェア"></span><span class="app-cta app-cta--ghost" data-en="Save image" data-ja="画像を保存"></span></div>
+            </div>
+            <div class="app-tabbar"><span data-en="Home" data-ja="ホーム"></span><span data-en="Map" data-ja="地図"></span><span class="is-on" data-en="Profile" data-ja="プロフィール"></span></div>
           </div>
         </div>
+        <p class="mono phone-note" data-en="Sample data. Not a real crag." data-ja="サンプルデータです。実在のエリアではありません。"></p>
       </div>
-
-      <div class="phone-side phone-side-right">
-        <div class="phone-caption" data-phone-cap>
-          <p class="phone-caption-label" data-en="Lines · Drawn on the rock" data-ja="ライン · 岩の上に表示"></p>
-          <p class="phone-caption-desc" data-en="See each problem drawn on the boulder photo with start holds, plus the original send videos from YouTube and Instagram, gathered in one place." data-ja="課題はボルダーの写真の上に、ラインとスタートホールドで表示。完登動画もまとめて見られるので、どこを登るのかで迷いません。"></p>
-        </div>
-      </div>
-
     </div>
-
-    <!-- Mobile: no pin, three small frames stacked, each with its caption underneath -->
-    <div class="phone-mobile">
-
-      <div class="phone-mobile-item" data-phone-mobile-item>
-        <div class="phone-frame phone-frame-sm">
-          <div class="phone-notch" aria-hidden="true"></div>
-          <div class="phone-screen">
-            <img
-              src="assets/img/screen-map.png"
-              data-src-en="assets/img/screen-map.png"
-              data-src-ja="assets/img/screen-map-ja.png"
-              data-alt-en="Map view with crag pins"
-              data-alt-ja="エリアのピンを表示した地図画面"
-              alt=""
-              loading="lazy">
-          </div>
-        </div>
-        <div class="phone-caption is-active">
-          <p class="phone-caption-label" data-en="Map · Crags &amp; Boulders" data-ja="地図 · エリアとボルダー"></p>
-          <p class="phone-caption-desc" data-en="Discover crags and boulders on a map built for outdoor exploration. Public areas come with directions, parking, and access notes." data-ja="外岩のためにつくった地図で、行きたいエリアや課題を探せます。公開されているエリアには、行き方・駐車場・アクセスの情報もまとまっています。"></p>
-        </div>
-      </div>
-
-      <div class="phone-mobile-item" data-phone-mobile-item>
-        <div class="phone-frame phone-frame-sm">
-          <div class="phone-notch" aria-hidden="true"></div>
-          <div class="phone-screen">
-            <img
-              src="assets/img/screen-line.png"
-              data-src-en="assets/img/screen-line.png"
-              data-src-ja="assets/img/screen-line-ja.png"
-              data-alt-en="A problem line drawn on a boulder photo"
-              data-alt-ja="ボルダーの写真に表示されたライン"
-              alt=""
-              loading="lazy">
-          </div>
-        </div>
-        <div class="phone-caption is-active">
-          <p class="phone-caption-label" data-en="Lines · Drawn on the rock" data-ja="ライン · 岩の上に表示"></p>
-          <p class="phone-caption-desc" data-en="See each problem drawn on the boulder photo with start holds, plus the original send videos from YouTube and Instagram, gathered in one place." data-ja="課題はボルダーの写真の上に、ラインとスタートホールドで表示。完登動画もまとめて見られるので、どこを登るのかで迷いません。"></p>
-        </div>
-      </div>
-
-      <div class="phone-mobile-item" data-phone-mobile-item>
-        <div class="phone-frame phone-frame-sm">
-          <div class="phone-notch" aria-hidden="true"></div>
-          <div class="phone-screen">
-            <img
-              src="assets/img/screen-recap.png"
-              data-src-en="assets/img/screen-recap.png"
-              data-src-ja="assets/img/screen-recap-ja.png"
-              data-alt-en="A climbing recap card"
-              data-alt-ja="クライミングのまとめカード"
-              alt=""
-              loading="lazy">
-          </div>
-        </div>
-        <div class="phone-caption is-active">
-          <p class="phone-caption-label" data-en="Recap · Your climbing" data-ja="まとめ · あなたの記録"></p>
-          <p class="phone-caption-desc" data-en="Log your sends, build your record, follow other climbers, and see what the community is up to." data-ja="完登を記録して履歴を積み重ね、ほかのクライマーをフォローしたり、みんなの活動をのぞいたり。"></p>
-        </div>
-      </div>
-
-    </div>
-
   </div>
 </section>

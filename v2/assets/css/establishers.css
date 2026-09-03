@@ -61,47 +61,10 @@
 }
 
 /* -- offset photo pair --------------------------------------------------- */
-.establishers-photos {
-  position: relative;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--s6);
-  margin: 0 0 var(--s9) 0;
-}
 
-.establishers-photo {
-  position: relative;
-  margin: 0;
-}
 
-.establishers-photo picture {
-  display: block;
-  border-radius: var(--r-lg);
-  overflow: hidden;
-  border: 1px solid var(--hair);
-  background: var(--surface);
-}
 
-.establishers-photo img {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-}
 
-.establishers-caption {
-  position: absolute;
-  left: var(--s4);
-  bottom: var(--s4);
-  display: inline-flex;
-  align-items: center;
-  padding: var(--s2) var(--s3);
-  border-radius: var(--r-sm);
-  border: 1px solid var(--hair);
-  background: var(--elevated);
-  color: var(--fg);
-}
 
 .mono-caption {
   font-family: var(--font-mono);
@@ -256,18 +219,15 @@ body[data-lang="ja"] .section-establishers .establishers-manners-list span {
     display: block;
   }
 
-  .establishers-photos {
-    grid-template-columns: 1fr 1fr;
-    align-items: start;
+  
+  
   }
 
-  .establishers-photo--a {
-    margin-top: 0;
-    margin-right: var(--s7);
-  }
-
-  .establishers-photo--b {
-    margin-top: var(--s8);
-    margin-left: var(--s7);
-  }
+/* review fixes: fill the width, rail inside the gutter, two-column promises */
+@media (min-width: 900px) {
+  .section-establishers .establishers-main { max-width: none; }
+  .section-establishers .promise-grid { display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--s7); row-gap: 0; max-width: none; }
+  .section-establishers .establishers-vlabel { font-size: 13px; letter-spacing: .18em; }
 }
+.section-establishers .establishers-manners-note { color: var(--muted); max-width: 60ch; }
+.section-establishers .establishers-manners-note { text-transform: none !important; letter-spacing: .04em !important; font-size: 12.5px !important; color: var(--muted) !important; }

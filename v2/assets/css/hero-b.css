@@ -1,7 +1,8 @@
 /* hero B: typographic, one azure line drawn over the empty canvas */
 .section-hero-b { min-height: 100svh; padding: calc(64px + var(--s8)) 0 var(--s9); overflow: hidden; display: flex; align-items: center; }
-.section-hero-b .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(var(--hair) 1px, transparent 1px), linear-gradient(90deg, var(--hair) 1px, transparent 1px); background-size: 96px 96px; opacity: .35; mask-image: radial-gradient(ellipse at 30% 40%, rgba(0,0,0,.9), transparent 75%); -webkit-mask-image: radial-gradient(ellipse at 30% 40%, rgba(0,0,0,.9), transparent 75%); pointer-events: none; }
-.section-hero-b .hero-line-art { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.section-hero-b .hero-line-art { position: absolute; top: 0; right: 0; bottom: 0; width: 100%; height: 100%; pointer-events: none; }
+.section-hero-b .hero-text { max-width: 760px; }
+.section-hero-b .hero-scroll { left: auto; right: var(--gutter); transform: none; }
 .section-hero-b .hero-b-path { opacity: .9; }
 .section-hero-b .hero-b-hold { opacity: .9; }
 .section-hero-b .hero-b-layout { position: relative; z-index: 1; }
@@ -16,6 +17,15 @@ body[data-lang="ja"] .section-hero-b .lead { color: var(--fg); opacity: .86; }
 .section-hero-b .hero-scroll::after { content: ""; display: block; width: 1px; height: 28px; margin: var(--s2) auto 0; background: linear-gradient(var(--accent), transparent); }
 @media (max-width: 899px) {
   .section-hero-b { padding-top: calc(64px + var(--s7)); align-items: flex-start; }
-  .section-hero-b .hero-line-art { opacity: .55; }
+  .section-hero-b .hero-line-art { display: none; }
+  .section-hero-b .hero-scroll { display: block; position: static; margin-top: var(--s7); transform: none; text-align: left; }
+  .section-hero-b .hero-scroll::after { margin-left: 0; }
+}
+
+/* overrides (must come last) */
+.section-hero-b .hero-text { max-width: 760px; }
+.section-hero-b .hero-scroll { left: auto; right: var(--gutter); transform: none; text-align: center; }
+@media (max-width: 899px) {
+  .section-hero-b { min-height: 0; padding-bottom: var(--s8); }
   .section-hero-b .hero-scroll { display: none; }
 }

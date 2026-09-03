@@ -235,3 +235,10 @@ body[data-lang="ja"] .faq-answer-inner {
     transition-duration: 0.001ms;
   }
 }
+
+/* review fixes */
+.section-tail .tail-download { border-top: 1px solid var(--hair); }
+.section-tail .tail-download-support { margin-top: var(--s4); }
+.section-tail .tail-download-support a { color: var(--muted); font-size: 14px; text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--hair-strong); }
+.section-tail .tail-download-support a:hover { color: var(--fg); }
+.section-tail .tail-download-note { color: var(--muted); }
