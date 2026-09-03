@@ -750,10 +750,11 @@ body[data-lang="ja"] .faq-answer-inner {
 .section-tail .tail-download-support a:hover { color: var(--fg); }
 .section-tail .tail-download-note { color: var(--muted); }
 
-/* how-it-works: icon and number share one row, title and text sit under both, rule crosses the icon centre */
-.section-tail .step-item { display: grid; grid-template-columns: 44px minmax(0, 1fr); column-gap: var(--s3); row-gap: var(--s2); align-items: center; }
-.section-tail .step-icon { grid-column: 1; margin: 0; }
-.section-tail .step-index { grid-column: 2; align-self: center; line-height: 1; }
-.section-tail .step-item h3 { grid-column: 1 / -1; margin-top: var(--s2); }
-.section-tail .step-item p { grid-column: 1 / -1; }
+/* how-it-works: vertical stack kept; everything left-aligned on one edge; the rule crosses the icon centres only */
+.section-tail .step-item { display: flex; flex-direction: column; align-items: flex-start; gap: 0; }
+.section-tail .step-icon { margin: 0 0 var(--s3) 0; }
+.section-tail .step-index { margin: 0 0 var(--s1) 0; padding: 0; line-height: 1; }
+.section-tail .step-item h3 { margin: 0 0 var(--s2) 0; }
+.section-tail .step-item p { margin: 0; }
+.section-tail .steps-rule { top: 22px; left: 22px; right: 22px; }
 @media (max-width: 899px) { .section-tail .steps-rule { display: none; } }
