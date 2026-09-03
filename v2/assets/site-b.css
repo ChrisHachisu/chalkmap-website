@@ -212,6 +212,14 @@ body[data-lang="ja"] .section-hero-b .lead { color: var(--fg); opacity: .86; }
   .section-hero-b .hero-b-headline h1 { margin-bottom: var(--s5); }
 }
 
+/* phone: bigger, thicker line running from beside the lead text up past the headline */
+.section-hero-b .hero-b-block { position: relative; }
+@media (max-width: 899px) {
+  .section-hero-b .hero-b-block .lead { max-width: 62%; margin-bottom: var(--s6); }
+  .section-hero-b .hero-line-art--mobile { display: block; position: absolute; top: 0; right: -4px; bottom: 0; width: 36%; height: 100%; margin: 0; max-width: none; pointer-events: none; }
+  .section-hero-b .hero-b-headline h1 { margin-bottom: var(--s5); }
+}
+
 /* ---- why ---- */
 .section-why { border-top: 1px solid var(--hair); }
 .section-why .why-layout { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: var(--s7); align-items: start; }
