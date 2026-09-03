@@ -315,6 +315,14 @@ body[data-lang="ja"] .section-phone .app-card-title { font-family: var(--font-ja
 
 @media (min-width: 900px) and (max-height: 820px) { .section-phone .phone-frame { width: min(300px, calc((100svh - 64px - var(--s8)) * 900 / 1956)); } }
 
+/* the screenshot already carries the real status bar and island: the frame is just a thin bezel around it */
+.section-phone .phone-notch { display: none; }
+.section-phone .phone-frame { box-shadow: none; padding: 8px; background: var(--elevated); border: 1px solid var(--hair-strong); border-radius: 46px; aspect-ratio: auto; height: auto; }
+.section-phone .phone-frame::before { content: ""; display: block; width: 100%; aspect-ratio: 900 / 1956; }
+.section-phone .phone-shot { position: absolute; inset: 8px; border-radius: 38px; overflow: hidden; background: var(--bg); }
+.section-phone .phone-shot img { object-fit: cover; object-position: top center; border-radius: 0; background: var(--bg); }
+@media (min-width: 900px) and (max-height: 820px) { .section-phone .phone-frame { width: min(300px, calc((100svh - 64px - var(--s8)) * 900 / 1956)); } }
+
 /* ---- features ---- */
 /* features section — scoped under .section-features. Tokens from base.css only, no hex. */
 
