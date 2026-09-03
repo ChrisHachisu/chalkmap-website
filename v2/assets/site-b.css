@@ -130,6 +130,13 @@ body[data-lang="ja"] .btn { font-family:var(--font-ja-body); font-weight:700; }
 .js [data-reveal] { opacity:0; }
 .js.reduced [data-reveal], .no-js [data-reveal] { opacity:1; }
 
+/* mobile menu must escape the header's containing block (backdrop-filter creates one) */
+.site-header:has(.nav-links.active) { backdrop-filter:none; -webkit-backdrop-filter:none; background:var(--bg); }
+@media (max-width:899px) {
+  .nav-links { height:calc(100svh - 64px); }
+}
+.footer-legal, .footer-legal span { text-transform:none; letter-spacing:.04em; color:var(--muted); }
+
 /* ---- hero-b ---- */
 /* hero B: typographic, one azure line drawn over the empty canvas */
 .section-hero-b { min-height: 100svh; padding: calc(64px + var(--s8)) 0 var(--s9); overflow: hidden; display: flex; align-items: center; }
