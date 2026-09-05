@@ -466,6 +466,52 @@
     try { saved = localStorage.getItem('cmLang'); } catch (e) {}
     var initLang = params.get('lang') === 'ja' ? 'ja' : params.get('lang') === 'en' ? 'en' : (saved === 'ja' ? 'ja' : 'en');
     setLang(initLang);
+
+    // Inbound link attribution: a tagged link (?s=ig-bio) records one arrival per browser
+    // session, so growth can tell which surface actually sends traffic. Instagram's own
+    // metrics only ever describe a published post, never a profile visit or a bio tap.
+    // Spec: chalkmap-v2/docs/specs/2026-09-05-inbound-link-attribution.md
+    (function () {
+      var LINK_HIT_URL = 'https://qwqijqfbfddwdxfiaxpz.supabase.co/functions/v1/link-hit';
+      var src = (params.get('s') || '').toLowerCase();
+      if (!/^[a-z0-9_-]{1,32}$/.test(src)) return;
+
+      // One hit per TAB (sessionStorage is per-tab), so a refresh or a back-navigation is
+      // not a second arrival. Two tabs on the same tagged link still count twice.
+      // If storage is unavailable (private mode) we send anyway - overcounting a refresh
+      // is a smaller error than losing the arrival entirely.
+      var once = 'cmHit:' + src;
+      try {
+        if (sessionStorage.getItem(once)) return;
+      } catch (e) {}
+
+      // sendBeacon: no CORS preflight, and it survives the visitor navigating straight
+      // to the App Store. fetch is the fallback when it is missing, returns false, OR
+      // throws - a blocker extension throwing here must not swallow the retry.
+      var payload = JSON.stringify({ s: src, p: location.pathname, r: document.referrer || null });
+      var sent = false;
+      try {
+        sent = !!(navigator.sendBeacon && navigator.sendBeacon(LINK_HIT_URL, new Blob([payload], { type: 'text/plain' })));
+      } catch (e) {}
+      if (!sent) {
+        try {
+          fetch(LINK_HIT_URL, { method: 'POST', keepalive: true, body: payload }).catch(function () {});
+          sent = true;
+        } catch (e) {}
+      }
+      // Only claim the session marker once something was actually dispatched, so a
+      // visitor whose first attempt failed outright can still be counted on a reload.
+      if (sent) { try { sessionStorage.setItem(once, '1'); } catch (e) {} }
+
+      // Drop only ?s= from the visible URL so a shared link cannot re-attribute.
+      // ?lang= and the hash survive.
+      try {
+        var rest = new URLSearchParams(location.search);
+        rest.delete('s');
+        var q = rest.toString();
+        history.replaceState(null, '', location.pathname + (q ? '?' + q : '') + location.hash);
+      } catch (e) {}
+    })();
   </script>
 
 </body>

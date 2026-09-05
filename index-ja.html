@@ -6,7 +6,16 @@
   <!-- The site is now a single bilingual page; this stub keeps old /index-ja.html links working. -->
   <meta http-equiv="refresh" content="0; url=index.html?lang=ja">
   <link rel="canonical" href="https://chalkmap.com/index.html?lang=ja">
-  <script>location.replace('index.html?lang=ja');</script>
+  <!-- Carry any inbound attribution tag (?s=) through the redirect, or a tagged link
+       pointed at this stub would arrive untracked. Falls back to the plain redirect. -->
+  <script>
+    (function () {
+      var s = '';
+      try { s = new URLSearchParams(location.search).get('s') || ''; } catch (e) {}
+      var q = 'index.html?lang=ja' + (/^[a-z0-9_-]{1,32}$/i.test(s) ? '&s=' + encodeURIComponent(s) : '');
+      location.replace(q);
+    })();
+  </script>
 </head>
 <body>
   <p><a href="index.html?lang=ja">ChalkMap（日本語）はこちら</a></p>
