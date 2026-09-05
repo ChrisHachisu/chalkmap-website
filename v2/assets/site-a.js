@@ -120,6 +120,54 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 })();
 
+// Inbound link attribution: a tagged link (?s=ig-bio) records one arrival per browser
+// session, so growth can tell which surface actually sends traffic. Instagram's own
+// metrics only ever describe a published post, never a profile visit or a bio tap.
+// Spec: chalkmap-v2/docs/specs/2026-09-05-inbound-link-attribution.md
+// NOTE: index.html (the currently live page) carries an identical inline copy. When v2
+// replaces it, delete that copy - do not leave both running or arrivals double-count.
+(function () {
+  var LINK_HIT_URL = 'https://qwqijqfbfddwdxfiaxpz.supabase.co/functions/v1/link-hit';
+  var src = (new URLSearchParams(location.search).get('s') || '').toLowerCase();
+  if (!/^[a-z0-9_-]{1,32}$/.test(src)) return;
+
+  // One hit per TAB (sessionStorage is per-tab), so a refresh or a back-navigation is
+  // not a second arrival. Two tabs on the same tagged link still count twice.
+  // If storage is unavailable (private mode) we send anyway - overcounting a refresh
+  // is a smaller error than losing the arrival entirely.
+  var once = 'cmHit:' + src;
+  try {
+    if (sessionStorage.getItem(once)) return;
+  } catch (e) {}
+
+  // sendBeacon: no CORS preflight, and it survives the visitor navigating straight
+  // to the App Store. fetch is the fallback when it is missing, returns false, OR
+  // throws - a blocker extension throwing here must not swallow the retry.
+  var payload = JSON.stringify({ s: src, p: location.pathname, r: document.referrer || null });
+  var sent = false;
+  try {
+    sent = !!(navigator.sendBeacon && navigator.sendBeacon(LINK_HIT_URL, new Blob([payload], { type: 'text/plain' })));
+  } catch (e) {}
+  if (!sent) {
+    try {
+      fetch(LINK_HIT_URL, { method: 'POST', keepalive: true, body: payload }).catch(function () {});
+      sent = true;
+    } catch (e) {}
+  }
+  // Only claim the tab marker once something was actually dispatched, so a visitor whose
+  // first attempt failed outright can still be counted on a reload.
+  if (sent) { try { sessionStorage.setItem(once, '1'); } catch (e) {} }
+
+  // Drop only ?s= from the visible URL so a shared link cannot re-attribute.
+  // ?lang= and the hash survive.
+  try {
+    var rest = new URLSearchParams(location.search);
+    rest.delete('s');
+    var q = rest.toString();
+    history.replaceState(null, '', location.pathname + (q ? '?' + q : '') + location.hash);
+  } catch (e) {}
+})();
+
 /* ---- hero-a ---- */
 (function () {
   window.CM.register('hero-a', function init(ctx) {
@@ -168,114 +216,44 @@
 })();
 
 /* ---- phone ---- */
-/* phone.js — BUILD-SPEC §5 "phone" choreography. */
 (function () {
-  'use strict';
-
-  function init(ctx) {
-    ctx = ctx || {};
-    var gsap = ctx.gsap;
-    var ScrollTrigger = ctx.ScrollTrigger;
-    var reduced = !!ctx.reduced;
-
-    var root = document.querySelector('.section-phone');
-    if (!root) return;
-
-    // Reduced motion: leave the CSS static layout exactly as authored.
-    if (reduced || !gsap) return;
-
-    var pinTarget = root.querySelector('[data-phone-pin]');
-    var frame = root.querySelector('[data-phone-frame]');
-    var shots = toArray(root.querySelectorAll('[data-phone-shot]'));
-    var caps = toArray(root.querySelectorAll('[data-phone-cap]'));
-    var mobileItems = toArray(root.querySelectorAll('[data-phone-mobile-item]'));
-
-    if (typeof gsap.matchMedia !== 'function') return;
-    var mm = gsap.matchMedia();
-
-    // ---- Desktop: pinned frame, screenshots slide through, captions light up ----
-    mm.add('(min-width: 900px)', function () {
-      if (!pinTarget || !frame || shots.length < 3 || caps.length < 3) {
-        return function () {};
+  window.CM.register('phone', function init(ctx) {
+    var section = document.querySelector('.section-phone');
+    if (!section) return;
+    var captions = section.querySelectorAll('.phone-caption');
+    var shots = section.querySelectorAll('.phone-shot');
+    var buttons = section.querySelectorAll('[data-shot-btn]');
+    var current = 0;
+    function show(i) {
+      if (i === current && shots[i] && shots[i].classList.contains('is-active')) return;
+      current = i;
+      for (var k = 0; k < shots.length; k++) shots[k].classList.toggle('is-active', k === i);
+      for (var c = 0; c < captions.length; c++) captions[c].classList.toggle('is-active', c === i);
+    }
+    // tap/click a caption anywhere; keyboard works because they are buttons
+    for (var b = 0; b < buttons.length; b++) {
+      buttons[b].addEventListener('click', function () { show(Number(this.getAttribute('data-shot-btn'))); });
+    }
+    if (ctx.reduced || !ctx.ScrollTrigger) return;
+    // desktop: the screen follows the caption that is nearest the middle of the viewport (no pinning, no scroll capture)
+    var desktop = window.matchMedia('(min-width: 900px)').matches;
+    if (!desktop) return;
+    var timer = null;
+    function pick() {
+      var top = section.getBoundingClientRect().top;
+      if (top > window.innerHeight * .4) { show(0); return; }
+      var mid = window.innerHeight * .42, best = 0, bestD = Infinity;
+      for (var c = 0; c < captions.length; c++) {
+        var r = captions[c].getBoundingClientRect(); var d = Math.abs((r.top + r.bottom) / 2 - mid);
+        if (d < bestD) { bestD = d; best = c; }
       }
-
-      gsap.set(frame, { transformPerspective: 1000, rotateY: 12 });
-      gsap.set(shots[0], { yPercent: 0, opacity: 1 });
-      gsap.set(shots[1], { yPercent: 100, opacity: 1 });
-      gsap.set(shots[2], { yPercent: 100, opacity: 1 });
-      gsap.set(caps[0], { opacity: 1 });
-      gsap.set(caps[1], { opacity: 0.45 });
-      gsap.set(caps[2], { opacity: 0.45 });
-
-      var tl = gsap.timeline({
-        defaults: { ease: 'power2.out' },
-        scrollTrigger: {
-          trigger: pinTarget,
-          start: 'top top',
-          end: '+=250%',
-          scrub: 1,
-          pin: pinTarget,
-          anticipatePin: 1
-        }
-      });
-
-      // entry tilt
-      tl.to(frame, { rotateY: 0, duration: 0.1 }, 0);
-
-      // shot 1 -> shot 2
-      tl.to(shots[0], { yPercent: -100, duration: 0.1 }, 0.34);
-      tl.to(shots[1], { yPercent: 0, duration: 0.1 }, 0.34);
-      tl.to(caps[0], { opacity: 0.45, duration: 0.08 }, 0.34);
-      tl.to(caps[1], { opacity: 1, duration: 0.08 }, 0.34);
-
-      // shot 2 -> shot 3
-      tl.to(shots[1], { yPercent: -100, duration: 0.1 }, 0.67);
-      tl.to(shots[2], { yPercent: 0, duration: 0.1 }, 0.67);
-      tl.to(caps[1], { opacity: 0.45, duration: 0.08 }, 0.67);
-      tl.to(caps[2], { opacity: 1, duration: 0.08 }, 0.67);
-
-      return function () {
-        if (tl.scrollTrigger) tl.scrollTrigger.kill();
-        tl.kill();
-      };
-    });
-
-    // ---- Mobile: no pin, three small frames reveal one at a time ----
-    mm.add('(max-width: 899.98px)', function () {
-      if (!mobileItems.length) return function () {};
-
-      var triggers = [];
-
-      mobileItems.forEach(function (item) {
-        gsap.set(item, { y: 24, opacity: 0 });
-
-        triggers.push(
-          ScrollTrigger.create({
-            trigger: item,
-            start: 'top 85%',
-            onEnter: function () { reveal(item); },
-            onEnterBack: function () { reveal(item); }
-          })
-        );
-      });
-
-      function reveal(item) {
-        gsap.to(item, { y: 0, opacity: 1, duration: 0.7, ease: 'power2.out' });
-      }
-
-      return function () {
-        triggers.forEach(function (t) { t.kill(); });
-      };
-    });
-  }
-
-  function toArray(nodeList) {
-    return Array.prototype.slice.call(nodeList || []);
-  }
-
-  if (window.CM && typeof window.CM.register === 'function') {
-    window.CM.register('phone', init);
-  }
+      show(best);
+    }
+    window.addEventListener('scroll', function () { if (timer) return; timer = setTimeout(function () { timer = null; pick(); }, 80); }, { passive: true });
+    pick();
+    // gentle entry for the frame
+    ctx.gsap.from(section.querySelector('.phone-frame'), { y: 32, opacity: 0, duration: .9, ease: 'power3.out', scrollTrigger: { trigger: section, start: 'top 75%', once: true } });
+  });
 })();
 
 /* ---- features ---- */
@@ -388,118 +366,49 @@
 
 /* ---- establishers ---- */
 (function () {
-  'use strict';
-
-  function init(ctx) {
-    var section = document.getElementById('establishers');
+  window.CM.register('establishers', function init(ctx) {
+    var section = document.querySelector('.section-establishers');
     if (!section) return;
-
-    var gsap = ctx && ctx.gsap;
-    var ScrollTrigger = ctx && ctx.ScrollTrigger;
-    if (!gsap || !ScrollTrigger) return;
-
-    // Reduced motion: leave the static layout exactly as authored, no hiding, no animating.
-    if (ctx.reduced) return;
-
-    var headerWrap = section.querySelector('.establishers-header');
-    var headerEls = section.querySelectorAll('.establishers-header .eyebrow, .establishers-header h2, .establishers-intro');
-    var vlabel = section.querySelector('.establishers-vlabel');
-    var photos = section.querySelectorAll('.establishers-photo');
-    var promiseWrap = section.querySelector('.promise-grid');
-    var promiseItems = section.querySelectorAll('.promise-item');
-    var mannersWrap = section.querySelector('.establishers-manners');
-    var mannersEls = mannersWrap
-      ? mannersWrap.querySelectorAll('h3, .establishers-manners-lead, .establishers-manners > p')
-      : [];
-    var mannersListWrap = section.querySelector('.establishers-manners-list');
-    var mannersListItems = section.querySelectorAll('.establishers-manners-list li');
-    var mannersNote = section.querySelector('.establishers-manners-note');
-
-    function revealGroup(els, trigger, opts) {
-      if (!els || !els.length || !trigger) return;
-      opts = opts || {};
-      gsap.set(els, { opacity: 0, y: opts.y || 24 });
-      ScrollTrigger.create({
-        trigger: trigger,
-        start: opts.start || 'top 85%',
-        once: true,
-        onEnter: function () {
-          gsap.to(els, {
-            opacity: 1,
-            y: 0,
-            duration: opts.duration || 0.95,
-            ease: opts.ease || 'power2.out',
-            stagger: opts.stagger || 0,
-            delay: opts.delay || 0
-          });
-        }
-      });
+    var reveals = section.querySelectorAll('[data-est-reveal]');
+    var steps = section.querySelectorAll('[data-ladder-step]');
+    var fill = section.querySelector('[data-ladder-fill]');
+    var ladder = section.querySelector('[data-ladder]');
+    var mobile = window.matchMedia('(max-width: 899px)').matches;
+    function allOn() {
+      for (var i = 0; i < steps.length; i++) steps[i].classList.add('is-on');
+      if (fill) { fill.style.width = '100%'; fill.style.height = '100%'; }
+      for (var r = 0; r < reveals.length; r++) reveals[r].style.opacity = '1';
     }
-
-    // Header: eyebrow, headline, intro paragraph.
-    revealGroup(headerEls, headerWrap, { y: 24, duration: 1.0, stagger: 0.12 });
-
-    // Vertical rail label: slow fade, no movement (it is sticky already).
-    if (vlabel) {
-      gsap.set(vlabel, { opacity: 0 });
-      ScrollTrigger.create({
-        trigger: section,
-        start: 'top 70%',
-        once: true,
-        onEnter: function () {
-          gsap.to(vlabel, { opacity: 0.85, duration: 1.1, ease: 'power2.out' });
-        }
-      });
+    if (ctx.reduced || !ctx.gsap || !ctx.ScrollTrigger) { allOn(); return; }
+    var gsap = ctx.gsap, ST = ctx.ScrollTrigger;
+    // slow reveals: the quiet chapter
+    gsap.set(reveals, { opacity: 0, y: 28 });
+    ST.batch(reveals, { start: 'top 85%', once: true, onEnter: function (b) { gsap.to(b, { opacity: 1, y: 0, duration: 1, ease: 'power2.out', stagger: .12 }); } });
+    // manners tiles pop in (a different move from the fades): scale up with a short settle, icons swing in
+    var tiles = section.querySelectorAll('.establishers-manners-list li');
+    if (tiles.length) {
+      gsap.set(tiles, { opacity: 0, scale: .86, y: 14, transformOrigin: '50% 60%' });
+      gsap.set(section.querySelectorAll('.manners-icon'), { rotate: -25, transformOrigin: '50% 50%' });
+      ST.create({ trigger: section.querySelector('.establishers-manners-list'), start: 'top 82%', once: true, onEnter: function () {
+        gsap.to(tiles, { opacity: 1, scale: 1, y: 0, duration: .6, ease: 'back.out(1.6)', stagger: .11 });
+        gsap.to(section.querySelectorAll('.manners-icon'), { rotate: 0, duration: .7, ease: 'back.out(2)', stagger: .11, delay: .1 });
+      } });
     }
-
-    // Offset photo pair: slowest reveal on the page, staggered.
-    photos.forEach(function (photo, i) {
-      gsap.set(photo, { opacity: 0, y: 32 });
-      ScrollTrigger.create({
-        trigger: photo,
-        start: 'top 85%',
-        once: true,
-        onEnter: function () {
-          gsap.to(photo, { opacity: 1, y: 0, duration: 1.05, ease: 'power3.out', delay: i * 0.15 });
+    // the ladder fills and lights each state in turn as it comes into view
+    if (ladder && fill) {
+      var prop = mobile ? 'height' : 'width';
+      var state = { p: 0 };
+      gsap.to(state, {
+        p: 1, ease: 'none',
+        scrollTrigger: { trigger: ladder, start: 'top 75%', end: 'bottom 45%', scrub: .6 },
+        onUpdate: function () {
+          fill.style[prop] = (state.p * 100) + '%';
+          for (var i = 0; i < steps.length; i++) steps[i].classList.toggle('is-on', state.p >= (i + .5) / steps.length);
         }
       });
-    });
-
-    // Four promise blocks.
-    revealGroup(promiseItems, promiseWrap, { y: 24, duration: 0.95, stagger: 0.1 });
-
-    // Manners block heading / intro / lead line.
-    revealGroup(mannersEls, mannersWrap, { y: 24, duration: 0.95, stagger: 0.1 });
-
-    // Manners bullet list.
-    revealGroup(mannersListItems, mannersListWrap, { y: 16, duration: 0.75, stagger: 0.08, delay: 0.2 });
-
-    // Reporting note, last to settle.
-    if (mannersNote) {
-      gsap.set(mannersNote, { opacity: 0, y: 12 });
-      ScrollTrigger.create({
-        trigger: mannersNote,
-        start: 'top 90%',
-        once: true,
-        onEnter: function () {
-          gsap.to(mannersNote, { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out', delay: 0.5 });
-        }
-      });
+      gsap.from(steps, { opacity: 0, y: 16, duration: .7, ease: 'power2.out', stagger: .1, scrollTrigger: { trigger: ladder, start: 'top 80%', once: true } });
     }
-
-    // JA/EN text length differs enough to shift section height; recompute trigger positions.
-    if (ctx.onLang && typeof ctx.onLang === 'function') {
-      ctx.onLang(function () {
-        if (ScrollTrigger && typeof ScrollTrigger.refresh === 'function') {
-          ScrollTrigger.refresh();
-        }
-      });
-    }
-  }
-
-  if (window.CM && typeof window.CM.register === 'function') {
-    window.CM.register('establishers', init);
-  }
+  });
 })();
 
 /* ---- tail ---- */
